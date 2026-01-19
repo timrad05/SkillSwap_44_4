@@ -1,0 +1,30 @@
+.button {
+	position: relative;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	background: none;
+	border: none;
+	cursor: pointer;
+	pointer-events: auto;
+}
+
+.dark::before {
+	position: absolute;
+	width: 87%;
+	height: 86%;
+	border-radius: 67% 50% 50% 77%;
+	clip-path: ellipse(50% 50% at 50% 50%);
+	pointer-events: none;
+	content: '';
+}
+
+.light::before {
+	position: absolute;
+	width: 89%;
+	height: 85%;
+	border-radius: 50%;
+	clip-path: ellipse(50% 50% at 50% 50%);
+	pointer-events: none;
+	content: '';
+}
