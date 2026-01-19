@@ -1,4 +1,4 @@
-@forward './reset';
-@forward './fonts';
-@forward './variables';
-@forward './mixins';
+@import url('./_reset.scss');
+@import url('./_fonts.scss');
+@import url('./_variables.scss');
+@import url('./_mixins.scss');
