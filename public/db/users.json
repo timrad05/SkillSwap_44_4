@@ -1,0 +1,114 @@
+{
+	"users": [
+		{
+			"id": 1,
+			"avatarUrl": "https://i.pravatar.cc",
+			"name": "Иван",
+			"email": "ivan.ivanov@gmail.com",
+			"about": "Люблю ритм, кофе по утрам и людей, которые не боятся пробовать новое.",
+			"cityId": 1,
+			"dateOfBirth": "1992-01-01",
+			"gender": "male",
+			"registrationDate": "2026-01-19"
+		},
+		{
+			"id": 2,
+			"avatarUrl": "https://i.pravatar.cc",
+			"name": "Елена",
+			"email": "elena.petrova@gmail.com",
+			"about": "Книголюб, путешественница и просто хороший человек.",
+			"cityId": 2,
+			"dateOfBirth": "1995-05-15",
+			"gender": "female",
+			"registrationDate": "2026-01-19"
+		},
+		{
+			"id": 3,
+			"avatarUrl": "https://i.pravatar.cc",
+			"name": "Алексей",
+			"email": "alexey.smirnov@gmail.com",
+			"about": "Разработчик программного обеспечения, увлекаюсь фотографией и горным туризмом.",
+			"cityId": 39,
+			"dateOfBirth": "1988-11-30",
+			"gender": "male",
+			"registrationDate": "2026-01-19"
+		},
+		{
+			"id": 4,
+			"avatarUrl": "https://i.pravatar.cc",
+			"name": "Мария",
+			"email": "maria.kuznetsova@gmail.com",
+			"about": "Фитнес-тренер, люблю активный образ жизни и здоровую пищу.",
+			"cityId": 16,
+			"dateOfBirth": "1998-08-22",
+			"gender": "female",
+			"registrationDate": "2026-01-19"
+		},
+		{
+			"id": 5,
+			"avatarUrl": "https://i.pravatar.cc",
+			"name": "Дмитрий",
+			"email": "dmitry.morozov@gmail.com",
+			"about": "Предприниматель, интересуюсь стартапами и инновациями. Всегда открыт для новых идей.",
+			"cityId": 5,
+			"dateOfBirth": "1985-03-10",
+			"gender": "male",
+			"registrationDate": "2026-01-19"
+		},
+		{
+			"id": 6,
+			"avatarUrl": "https://i.pravatar.cc",
+			"name": "Анна",
+			"email": "anna.volkova@gmail.com",
+			"about": "Дизайнер интерьеров. Ищу вдохновение в мелочах.",
+			"cityId": 12,
+			"dateOfBirth": "1994-07-07",
+			"gender": "female",
+			"registrationDate": "2026-01-19"
+		},
+		{
+			"id": 7,
+			"avatarUrl": "https://i.pravatar.cc",
+			"name": "Сергей",
+			"email": "sergey.kovalev@gmail.com",
+			"about": "Инженер-механик, увлекаюсь рыбалкой и походами на природу. Ценю честность.",
+			"cityId": 4,
+			"dateOfBirth": "1981-10-25",
+			"gender": "male",
+			"registrationDate": "2026-01-19"
+		},
+		{
+			"id": 8,
+			"avatarUrl": "https://i.pravatar.cc",
+			"name": "Ольга",
+			"email": "olga.morozova@gmail.com",
+			"about": "Преподаватель английского. Обожаю театр, классическую музыку и долгие прогулки.",
+			"cityId": 10,
+			"dateOfBirth": "1975-04-12",
+			"gender": "female",
+			"registrationDate": "2026-01-19"
+		},
+		{
+			"id": 9,
+			"avatarUrl": "https://i.pravatar.cc",
+			"name": "Николай",
+			"email": "nikolay.fedorov@gmail.com",
+			"about": "Студент, будущий айтишник. Живу кодом и пиццей.",
+			"cityId": 28,
+			"dateOfBirth": "2002-06-03",
+			"gender": "male",
+			"registrationDate": "2026-01-19"
+		},
+		{
+			"id": 10,
+			"avatarUrl": "https://i.pravatar.cc",
+			"name": "Татьяна",
+			"email": "tanya.vasilyeva@gmail.com",
+			"about": "Копирайтер. Люблю животных, особенно своего кота Марсика.",
+			"cityId": 11,
+			"dateOfBirth": "1990-12-01",
+			"gender": "female",
+			"registrationDate": "2026-01-19"
+		}
+	]
+}
