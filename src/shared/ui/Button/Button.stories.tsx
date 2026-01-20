@@ -29,6 +29,7 @@ export const Secondary: Story = {
 	},
 };
 
+// 3. Основной неактивный вариант (Primary)
 export const DisabledPrimary: Story = {
 	args: {
 		variant: 'primary',
@@ -37,6 +38,7 @@ export const DisabledPrimary: Story = {
 	},
 };
 
+// 4. Второстепенный неактивный вариант (Secondary)
 export const DisabledSecondary: Story = {
 	args: {
 		variant: 'secondary',
