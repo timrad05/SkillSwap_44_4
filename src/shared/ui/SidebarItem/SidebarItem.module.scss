@@ -1,0 +1,37 @@
+@import url('../../styles/_variables');
+
+.item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 20px;
+	width: 244px;
+	border-radius: 12px;
+	text-decoration: none;
+	color: $color-text;
+	border: none;
+	background-color: transparent;
+
+	&:hover {
+		background-color: $color-disabled;
+		cursor: pointer;
+	}
+
+	&.active {
+		background-color: $color-button-hover;
+	}
+}
+
+.icon {
+	flex-shrink: 0;
+	width: 24px;
+	height: 24px;
+}
+
+.label {
+	font-family: Roboto, sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+	letter-spacing: 2%;
+	font-weight: 400;
+}
