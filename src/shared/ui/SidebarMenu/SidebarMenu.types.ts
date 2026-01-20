@@ -1,12 +1,20 @@
-import type { ReactNode } from 'react';
+import type { TSidebarItemProps } from '../SidebarItem/SidebarItem.types';
 
-export interface ISidebarMenuProps {
-	/** Дополнительный className для корневого элемента */
+export type TSidebarMenuItem = Pick<
+	TSidebarItemProps,
+	'label' | 'icon' | 'to'
+> & {
+	/** Уникальный ID элемента для активации (используется если нет to) */
+	id: string;
+};
+
+export type TSidebarMenuProps = {
+	/** Массив элементов меню */
+	items: TSidebarMenuItem[];
+	/** ID активного элемента (только если items без to) */
+	activeId?: string;
+	/** Callback при выборе элемента (только если items без to) */
+	onSelect?: (id: string) => void;
+	/** Дополнительный className для контейнера */
 	className?: string;
-	/** Дети — массив SidebarItem */
-	children: ReactNode;
-	/** Опционально — активный id для управления состоянием (если нужно управлять извне) */
-	activeId?: string | null;
-	/** Callback при клике на любой пункт (можно использовать для управления activeId извне) */
-	onItemClick?: (id: string) => void;
-}
+};
