@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { SidebarItem } from '../SidebarItem';
-import styles from './SidebarMenu.module.css';
+import styles from './SidebarMenu.module.scss';
 import type { TSidebarMenuProps } from './SidebarMenu.types';
 
 export const SidebarMenu = ({
