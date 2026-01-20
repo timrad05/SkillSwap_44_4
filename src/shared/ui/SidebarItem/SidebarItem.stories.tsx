@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { SidebarItem } from './SidebarItem';
 
 import likeIcon from '/src/shared/assets/icons/blankLike.svg';
@@ -17,22 +18,59 @@ const meta: Meta<typeof SidebarItem> = {
 	},
 	argTypes: {
 		active: { control: 'boolean' },
+		to: { control: 'text' },
+		label: { control: 'text' },
+		icon: { control: false },
 	},
 };
 
 export default meta;
 type Story = StoryObj<typeof SidebarItem>;
 
-const InteractiveMenu = () => {
-	const [activeId, setActiveId] = useState<string | null>('requests');
+export const Default: Story = {
+	args: {
+		label: 'Заявки',
+		icon: requestIcon,
+		active: false,
+	},
+};
 
-	const items = [
-		{ id: 'requests', label: 'Заявки', icon: requestIcon },
-		{ id: 'exchanges', label: 'Мои обмены', icon: messageIcon },
-		{ id: 'favorites', label: 'Избранное', icon: likeIcon },
-		{ id: 'skills', label: 'Мои навыки', icon: lampIcon },
-		{ id: 'profile', label: 'Личные данные', icon: userIcon },
-	];
+export const Active: Story = {
+	args: {
+		label: 'Заявки',
+		icon: requestIcon,
+		active: true,
+	},
+};
+
+export const AsLink: Story = {
+	render: (args) => (
+		<MemoryRouter initialEntries={['/requests']}>
+			<SidebarItem {...args} />
+		</MemoryRouter>
+	),
+	args: {
+		label: 'Заявки',
+		icon: requestIcon,
+		to: '/requests',
+	},
+};
+
+const items = [
+	{ id: 'requests', label: 'Заявки', icon: requestIcon },
+	{ id: 'exchanges', label: 'Мои обмены', icon: messageIcon },
+	{ id: 'favorites', label: 'Избранное', icon: likeIcon },
+	{ id: 'skills', label: 'Мои навыки', icon: lampIcon },
+	{ id: 'profile', label: 'Личные данные', icon: userIcon },
+];
+
+const itemsWithTo = items.map((item) => ({
+	...item,
+	to: `/${item.id}`,
+}));
+
+const InteractiveButtons = () => {
+	const [activeId, setActiveId] = useState<string | null>('requests');
 
 	return (
 		<div
@@ -59,22 +97,57 @@ const InteractiveMenu = () => {
 	);
 };
 
-export const MenuWithActiveItem: Story = {
-	render: () => <InteractiveMenu />,
-};
-
-export const Default: Story = {
-	args: {
-		label: 'Заявки',
-		icon: requestIcon,
-		active: false,
+export const MenuWithButtons: Story = {
+	render: () => <InteractiveButtons />,
+	parameters: {
+		docs: {
+			description: {
+				story:
+					'Интерактивное меню в режиме кнопок (локальное состояние active)',
+			},
+		},
 	},
 };
 
-export const Active: Story = {
-	args: {
-		label: 'Заявки',
-		icon: requestIcon,
-		active: true,
+const InteractiveLinks = () => (
+	<MemoryRouter initialEntries={['/requests']}>
+		<div
+			style={{
+				width: 280,
+				padding: '20px 16px',
+				backgroundColor: '#f9faf7',
+				borderRadius: '12px',
+				display: 'flex',
+				flexDirection: 'column',
+				gap: '8px',
+			}}
+		>
+			{itemsWithTo.map((item) => (
+				<SidebarItem
+					key={item.id}
+					label={item.label}
+					icon={item.icon}
+					to={item.to}
+				/>
+			))}
+		</div>
+		<Routes>
+			<Route path="/requests" element={<div>Страница заявок</div>} />
+			<Route path="/exchanges" element={<div>Страница обменов</div>} />
+			<Route path="/favorites" element={<div>Страница избранного</div>} />
+			<Route path="/skills" element={<div>Страница навыков</div>} />
+			<Route path="/profile" element={<div>Страница профиля</div>} />
+		</Routes>
+	</MemoryRouter>
+);
+
+export const MenuWithLinks: Story = {
+	render: () => <InteractiveLinks />,
+	parameters: {
+		docs: {
+			description: {
+				story: 'Интерактивное меню в режиме ссылок (react-router + NavLink)',
+			},
+		},
 	},
 };
