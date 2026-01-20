@@ -1,7 +1,12 @@
 export type TSidebarItemProps = {
-	label: string; /** Текст элемента меню */
-	icon: string; /** Путь к иконке */
-	active?: boolean; /** Активное состояние (выделенный пункт) */
-	onClick?: () => void; /** Клик по элементу */
-	className?: string; /** Дополнительный className */
+	/** Текст элемента меню */
+	label: string;
+	/** Путь к иконке */
+	icon: string;
+	/** Активное состояние (выделенный пункт) */
+	active?: boolean;
+	/** Клик по элементу */
+	onClick?: () => void;
+	/** Дополнительный className */
+	className?: string;
 };
