@@ -1,0 +1,52 @@
+@use '../../styles/variables' as *;
+
+.radio-group {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.radio-option {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	padding: 8px 12px;
+	border-radius: 8px;
+	user-select: none;
+}
+
+.radio-input {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.radio-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 12px;
+	width: 20px;
+	height: 20px;
+}
+
+.icon {
+	width: 20px;
+	height: 20px;
+}
+
+/* Выбранное состояние: radio-button-active.svg с цветом $color-button-pressed */
+.selected .icon {
+	/* Преобразуем черный в $color-button-pressed (#508826) */
+	filter: invert(30%) sepia(99%) saturate(1045%) hue-rotate(73deg)
+		brightness(97%) contrast(91%);
+}
+
+.radio-label {
+	font-family: Roboto, sans-serif;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+	color: $color-text;
+}
