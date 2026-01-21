@@ -15,6 +15,20 @@ type Story = StoryObj<typeof Input>;
 
 export const Default: Story = {};
 
+export const Password: Story = {
+	args: {
+		variant: 'password',
+		placeholder: 'Введите ваш пароль',
+	},
+};
+
+export const Change: Story = {
+	args: {
+		variant: 'change',
+		value: 'Мария',
+	},
+};
+
 export const Focus: Story = {
 	args: {
 		autoFocus: true,
