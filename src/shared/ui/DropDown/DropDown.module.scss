@@ -1,3 +1,5 @@
+@import url('../../styles/variables');
+
 .dropdown {
 	position: relative;
 	width: 200px;
@@ -5,30 +7,31 @@
 	.trigger {
 		width: 100%;
 		padding: 10px;
-		border: 1px solid gray;
+		border: 1px solid;
+		border-color: $color-toggle;
 		border-radius: 4px;
-		background: white;
+		background: $color-input;
 		cursor: pointer;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 
 		&:hover {
-			border-color: #deebc5;
+			border-color: $color-button-hover;
 		}
 
 		&:disabled {
-			background: #eee;
+			background: $color-disabled;
 			cursor: not-allowed;
 		}
 	}
 
 	.placeholder {
-		color: gray;
+		color: $color-caption;
 	}
 
 	.selected {
-		color: green;
+		color: $color-text-link;
 		font-weight: 500;
 	}
 
@@ -47,8 +50,9 @@
 		top: 100%;
 		left: 0;
 		right: 0;
-		background: white;
-		border: 1px solid gray;
+		background: $color-card;
+		border: 1px solid;
+		border-color: $color-toggle;
 		border-radius: 0 0 4px 4px;
 		border-top: none;
 		z-index: 10;
@@ -59,21 +63,21 @@
 			cursor: pointer;
 
 			&:hover {
-				background: #deebc5;
+				background: $color-button-hover;
 			}
 
 			&.selected {
-				background: #e8f5e9;
-				color: green;
+				background: $color-button-hover;
+				color: $color-text-link;
 			}
 
 			&.disabled {
-				color: #999;
+				color: $color-disabled-text;
 				cursor: not-allowed;
-				background: #fafafa;
+				background: $color-background;
 
 				&:hover {
-					background: #fafafa;
+					background: $color-background;
 				}
 			}
 		}

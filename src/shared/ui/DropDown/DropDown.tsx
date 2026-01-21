@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import styles from './DropDown.module.css';
+import styles from './DropDown.module.scss';
 import type { DropDownProps } from './DropDown.types';
 
 export const DropDown: React.FC<DropDownProps> = ({
