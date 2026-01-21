@@ -1,5 +1,5 @@
 import type { TMenuItemProps } from './MenuItem.types';
-import styles from './MenuItem.module.css';
+import styles from './MenuItem.module.scss';
 import { NavLink } from 'react-router-dom';
 
 export const MenuItem = ({ label, to, onClick, className }: TMenuItemProps) => {
