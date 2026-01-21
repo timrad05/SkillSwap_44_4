@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import './DropDown.scss';
+import styles from './DropDown.module.scss';
 import type { DropDownProps } from './DropDown.types';
 
 export const DropDown: React.FC<DropDownProps> = ({
 	options,
 	value,
 	onChange,
-	placeholder = '',
+	placeholder = 'Выберите вариант',
 	disabled = false,
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -26,40 +26,37 @@ export const DropDown: React.FC<DropDownProps> = ({
 	};
 
 	return (
-		<div className={clsx('dropdown', { open: isOpen })}>
-			{' '}
+		<div className={clsx(styles.dropdown, { [styles.open]: isOpen })}>
 			<button
 				type="button"
-				className={clsx('trigger', { disabled: disabled })}
+				className={clsx(styles.trigger, { [styles.disabled]: disabled })}
 				onClick={handleTriggerClick}
 				disabled={disabled}
 			>
-				<span className={selectedOption ? 'selected' : 'placeholder'}>
+				<span className={selectedOption ? styles.selected : styles.placeholder}>
 					{selectedOption ? selectedOption.label : placeholder}
 				</span>
-				<span className={clsx('icon', { open: isOpen })}>
+				<span className={clsx(styles.icon, { [styles.open]: isOpen })}>
 					<svg
-						width="16"
-						height="8"
-						viewBox="0 0 16 8"
-						fill="none"
+						width="12"
+						height="12"
+						viewBox="0 0 24 24"
+						fill="currentColor"
 						xmlns="http://www.w3.org/2000/svg"
 					>
-						<path
-							d="M15.3101 7.93308C15.1347 7.93308 14.9593 7.86847 14.8209 7.73003L8.803 1.71214C8.35997 1.26911 7.64003 1.26911 7.197 1.71214L1.17912 7.73003C0.911451 7.99769 0.468416 7.99769 0.20075 7.73003C-0.0669166 7.46236 -0.0669166 7.01933 0.20075 6.75166L6.21863 0.733775C7.197 -0.244592 8.79377 -0.244592 9.78137 0.733775L15.7992 6.75166C16.0669 7.01933 16.0669 7.46236 15.7992 7.73003C15.6608 7.85924 15.4854 7.93308 15.3101 7.93308Z"
-							fill="#253017"
-						/>
+						<path d="M7 10l5 5 5-5z" />
 					</svg>
 				</span>
 			</button>
+
 			{isOpen && (
-				<div className="menu">
+				<div className={styles.menu}>
 					{options.map((option) => (
 						<div
 							key={option.value}
-							className={clsx('option', {
-								selected: option.value === value,
-								disabled: option.disabled,
+							className={clsx(styles.option, {
+								[styles.selected]: option.value === value,
+								[styles.disabled]: option.disabled,
 							})}
 							onClick={() => handleOptionClick(option.value)}
 						>
