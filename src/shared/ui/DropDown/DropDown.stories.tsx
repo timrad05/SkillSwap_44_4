@@ -18,7 +18,7 @@ const options = [
 export const Basic: Story = {
 	args: {
 		options,
-		placeholder: 'Выберите вариант',
+		placeholder: 'Дропдаун',
 	},
 };
 
@@ -26,6 +26,6 @@ export const WithValue: Story = {
 	args: {
 		options,
 		value: '2',
-		placeholder: 'Выберите вариант',
+		placeholder: 'Дропдаун',
 	},
 };

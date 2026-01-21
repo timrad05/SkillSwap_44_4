@@ -1,4 +1,4 @@
-@import url('../../styles/variables');
+@use '../../styles/variables';
 
 .dropdown {
 	position: relative;
@@ -9,7 +9,7 @@
 		padding: 10px;
 		border: 1px solid;
 		border-color: $color-toggle;
-		border-radius: 4px;
+		border-radius: 12px;
 		background: $color-input;
 		cursor: pointer;
 		display: flex;
@@ -53,13 +53,16 @@
 		background: $color-card;
 		border: 1px solid;
 		border-color: $color-toggle;
-		border-radius: 0 0 4px 4px;
+		border-radius: 0 0 12px 12px;
 		border-top: none;
 		z-index: 10;
 		margin-top: -1px;
 
 		.option {
-			padding: 10px;
+			padding: 4px 20px;
+			gap: 10px;
+			border-radius: 4px;
+			height: 32px;
 			cursor: pointer;
 
 			&:hover {

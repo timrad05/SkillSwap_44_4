@@ -7,7 +7,7 @@ export const DropDown: React.FC<DropDownProps> = ({
 	options,
 	value,
 	onChange,
-	placeholder = 'Выберите вариант',
+	placeholder = 'Дропдаун',
 	disabled = false,
 	className,
 }) => {
@@ -40,7 +40,7 @@ export const DropDown: React.FC<DropDownProps> = ({
 				<span
 					className={clsx({
 						[styles.placeholder]: !selectedOption,
-						[styles.selected]: selectedOption,
+						[styles.selected]: !!selectedOption,
 					})}
 				>
 					{selectedOption ? selectedOption.label : placeholder}
