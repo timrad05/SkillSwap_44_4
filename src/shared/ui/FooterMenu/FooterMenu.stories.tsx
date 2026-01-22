@@ -9,7 +9,7 @@ const meta: Meta<typeof FooterMenu> = {
 	component: FooterMenu,
 	tags: ['autodocs'],
 	parameters: {
-		layout: 'centered',
+		layout: 'padded',
 	},
 };
 
@@ -18,10 +18,10 @@ type Story = StoryObj<typeof FooterMenu>;
 
 const items = [
 	{ id: 'about', label: 'О проекте' },
-	{ id: 'skills', label: 'Все навыки' },
 	{ id: 'contacts', label: 'Контакты' },
-	{ id: 'blog', label: 'Блог' },
 	{ id: 'privacy', label: 'Политика конфиденциальности' },
+	{ id: 'skills', label: 'Все навыки' },
+	{ id: 'blog', label: 'Блог' },
 	{ id: 'agreement', label: 'Пользовательское соглашение' },
 ];
 
@@ -30,34 +30,53 @@ const itemsWithTo = items.map((item) => ({
 	to: `/${item.id}`,
 }));
 
+const DesktopWrapper = ({ children }: { children: React.ReactNode }) => (
+	<div
+		style={{
+			width: '1200px',
+			margin: '0 auto',
+			padding: '40px 20px',
+		}}
+	>
+		{children}
+	</div>
+);
+
 const InteractiveButtons = () => {
 	const [selectedId, setSelectedId] = useState<string | null>(null);
 	return (
-		<FooterMenu
-			items={items.map((item) => ({
-				...item,
-				className: clsx({ 'active-class': selectedId === item.id }),
-			}))}
-			onSelect={setSelectedId}
-		/>
+		<DesktopWrapper>
+			<FooterMenu
+				items={items.map((item) => ({
+					...item,
+					className: clsx({ 'active-class': selectedId === item.id }),
+				}))}
+				onSelect={setSelectedId}
+			/>
+		</DesktopWrapper>
 	);
 };
 
 const InteractiveLinks = () => (
-	<MemoryRouter initialEntries={['/about']}>
-		<FooterMenu items={itemsWithTo} />
-		<Routes>
-			<Route path="/about" element={<div>О проекте</div>} />
-			<Route path="/skills" element={<div>Все навыки</div>} />
-			<Route path="/contacts" element={<div>Контакты</div>} />
-			<Route path="/blog" element={<div>Блог</div>} />
-			<Route path="/privacy" element={<div>Политика конфиденциальности</div>} />
-			<Route
-				path="/agreement"
-				element={<div>Пользовательское соглашение</div>}
-			/>
-		</Routes>
-	</MemoryRouter>
+	<DesktopWrapper>
+		<MemoryRouter initialEntries={['/about']}>
+			<FooterMenu items={itemsWithTo} />
+			<Routes>
+				<Route path="/about" element={<div>О проекте</div>} />
+				<Route path="/contacts" element={<div>Контакты</div>} />
+				<Route
+					path="/privacy"
+					element={<div>Политика конфиденциальности</div>}
+				/>
+				<Route path="/skills" element={<div>Все навыки</div>} />
+				<Route path="/blog" element={<div>Блог</div>} />
+				<Route
+					path="/agreement"
+					element={<div>Пользовательское соглашение</div>}
+				/>
+			</Routes>
+		</MemoryRouter>
+	</DesktopWrapper>
 );
 
 export const DefaultButtons: Story = {
