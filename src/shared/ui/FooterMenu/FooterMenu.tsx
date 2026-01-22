@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { MenuItem } from '../MenuItem';
-import styles from './FooterMenu.module.css';
+import styles from './FooterMenu.module.scss';
 import type { TFooterMenuProps } from './FooterMenu.types';
 
 export const FooterMenu = ({
