@@ -7,7 +7,7 @@
 	text-align: center;
 	width: 556px;
 	height: 692px;
-	background: #fff;
+	background: var(--info-bg, #fff);
 	padding: 132px 60px;
 	gap: 40px;
 	box-sizing: border-box;
@@ -34,4 +34,9 @@
 
 .children {
 	margin-top: 32px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 16px;
+	width: 100%;
 }
