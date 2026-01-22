@@ -1,0 +1,44 @@
+@use '../../styles/variables' as *;
+
+.card {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 16px;
+	background-color: $color-card;
+	border-radius: 12px;
+}
+
+.avatar {
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+	object-fit: cover;
+	flex-shrink: 0;
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.name {
+	font-size: 18px;
+	font-weight: 600;
+	line-height: 22px;
+	color: $color-text;
+}
+
+.meta {
+	font-size: 14px;
+	line-height: 18px;
+	color: $color-caption;
+}
+
+.like {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+}
