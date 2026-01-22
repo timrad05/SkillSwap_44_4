@@ -1,0 +1,59 @@
+@use '../../styles/variables' as *;
+
+.button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+	width: 210px;
+	height: 50px;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 12px;
+	border: none;
+}
+
+.primary {
+	background-color: $color-accent;
+	color: $color-text;
+}
+
+.primary:hover {
+	background-color: $color-button-hover;
+	color: $color-text;
+}
+
+.primary:active {
+	background-color: $color-button-pressed;
+	color: $color-input;
+}
+
+.primary:disabled {
+	background-color: $color-disabled;
+	color: $color-caption;
+}
+
+.secondary {
+	background-color: $color-card;
+	color: $color-text;
+	border: 1px solid;
+	border-color: $color-accent;
+}
+
+.secondary:hover {
+	background-color: $color-card;
+	color: $color-caption;
+	border-color: $color-button-hover;
+}
+
+.secondary:active {
+	background-color: $color-card;
+	color: $color-text;
+	border-color: $color-button-pressed;
+}
+
+.secondary:disabled {
+	background-color: $color-card;
+	color: $color-disabled-text;
+	border-color: $color-disabled;
+}

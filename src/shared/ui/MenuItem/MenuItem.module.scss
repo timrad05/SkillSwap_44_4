@@ -1,0 +1,21 @@
+@use '../../styles/variables' as *;
+
+.item {
+	background-color: transparent;
+	transition: color 0.2s ease;
+	border: none;
+	color: $color-text;
+
+	&:hover {
+		color: $color-text-link;
+		cursor: pointer;
+	}
+}
+
+.label {
+	font-family: Roboto, sans-serif;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+	vertical-align: middle;
+}

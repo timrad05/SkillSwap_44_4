@@ -1,0 +1,67 @@
+@use '../../styles/variables' as *;
+
+.root {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.control {
+	display: flex;
+	align-items: center;
+	padding: 16px 20px;
+	border: 1px solid;
+	border-color: $color-toggle;
+	border-radius: 16px;
+	background: $color-input;
+	transition:
+		border-color 120ms ease,
+		box-shadow 120ms ease,
+		background-color 120ms ease;
+}
+
+.control:focus-within {
+	border-color: $color-text;
+}
+
+.input {
+	width: 100%;
+	border: none;
+	outline: none;
+	background: transparent;
+	color: $color-text;
+	font: inherit;
+}
+
+.input::placeholder {
+	color: $color-caption;
+}
+
+.disabled .control {
+	background: $color-disabled;
+	border-color: $color-toggle;
+	cursor: not-allowed;
+}
+
+.disabled .input {
+	color: $color-disabled-text;
+	cursor: not-allowed;
+}
+
+.disabled .input::placeholder {
+	color: $color-disabled-text;
+}
+
+.error .control {
+	border-color: $color-error;
+}
+
+.error .control:focus-within {
+	border-color: $color-error;
+}
+
+.error-text {
+	color: $color-error;
+	font-size: 12px;
+	line-height: 16px;
+}
