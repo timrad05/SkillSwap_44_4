@@ -1,0 +1,42 @@
+@use '../../styles/variables' as *;
+
+.modal {
+	display: flex;
+	width: 556px;
+	height: 420px;
+	border-radius: 12px;
+	margin-top: 220px;
+	margin-left: 442px;
+	padding: 80px 60px;
+	gap: 52px;
+	background-color: $color-background;
+	text-align: center;
+
+	.icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100px;
+		height: 100px;
+
+		svg {
+			width: 75px;
+			height: 75px;
+		}
+	}
+
+	.title {
+		color: $color-text;
+		gap: 12px;
+		width: 100%;
+	}
+
+	.text {
+		color: $color-text;
+	}
+
+	.button-wrapper {
+		width: 100%;
+		max-width: 436px;
+	}
+}
