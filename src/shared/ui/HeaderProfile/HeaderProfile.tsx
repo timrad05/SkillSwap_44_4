@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import type { FC } from 'react';
-import style from './HeaderProfile.module.css';
+import style from './HeaderProfile.module.scss';
 import type { HeaderProfileProps } from './HeaderProfile.types';
 
 export const HeaderProfile: FC<HeaderProfileProps> = ({ name, avatar }) => {
@@ -10,13 +10,7 @@ export const HeaderProfile: FC<HeaderProfileProps> = ({ name, avatar }) => {
 	return (
 		<div className={style.profile}>
 			{avatar ? (
-				<img
-					src={avatar}
-					alt={name}
-					className={style.avatar}
-					width={40}
-					height={40}
-				/>
+				<img src={avatar} alt={name} className={style.avatar} />
 			) : (
 				<div className={clsx(style.avatar, style.placeholder)}>{initials}</div>
 			)}
