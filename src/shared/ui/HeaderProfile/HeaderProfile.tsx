@@ -9,13 +9,13 @@ export const HeaderProfile: FC<HeaderProfileProps> = ({ name, avatar }) => {
 
 	return (
 		<div className={style.profile}>
+			<span className={style.name}>{name}</span>
+
 			{avatar ? (
 				<img src={avatar} alt={name} className={style.avatar} />
 			) : (
 				<div className={clsx(style.avatar, style.placeholder)}>{initials}</div>
 			)}
-
-			<span className={style.name}>{name}</span>
 		</div>
 	);
 };
