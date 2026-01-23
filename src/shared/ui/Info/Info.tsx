@@ -1,13 +1,20 @@
 import type { InfoProps } from './Info.types';
-import styles from './Info.module.scss';
+import cls from './Info.module.scss';
 
-export const Info = ({ image, title, text, className = '' }: InfoProps) => {
+export const Info = ({
+	image,
+	title,
+	text,
+	className = '',
+	children,
+}: InfoProps) => {
 	return (
-		<div className={`${styles.root} ${className}`}>
-			<img src={image} alt={title} className={styles.image} />
-			<div>
-				<h2 className={styles.title}>{title}</h2>
-				<p className={styles.text}>{text}</p>
+		<div className={`${cls.root} ${className}`}>
+			<img src={image} alt={title} className={cls.image} />
+			<div className={cls.contentBlock}>
+				<h2 className={cls.title}>{title}</h2>
+				<p className={cls.text}>{text}</p>
+				{children && <div className={cls.children}>{children}</div>}
 			</div>
 		</div>
 	);

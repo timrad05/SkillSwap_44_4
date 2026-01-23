@@ -1,0 +1,21 @@
+@use '../../styles/variables' as *;
+
+.page {
+	width: 100%;
+	min-height: 100vh;
+	background-color: $color-background;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.info-card {
+	--info-bg: #{$color-background};
+}
