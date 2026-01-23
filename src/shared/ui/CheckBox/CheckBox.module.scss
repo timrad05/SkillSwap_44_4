@@ -1,18 +1,9 @@
 @use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
-$font-heading: 'Jost', sans-serif;
-$font-base: 'Roboto', sans-serif;
-
-@mixin text-body {
-	font-family: $font-base;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 24px;
-}
-
-.checkbox-wrapper {
-	display: flex;
-	align-items: flex-start;
+.checkbox-container {
+	width: 100%;
+	position: relative;
 }
 
 .checkbox-input {
@@ -20,6 +11,8 @@ $font-base: 'Roboto', sans-serif;
 	opacity: 0;
 	width: 0;
 	height: 0;
+	left: 0;
+	top: 0;
 }
 
 .checkbox-label {
@@ -30,6 +23,11 @@ $font-base: 'Roboto', sans-serif;
 	border-radius: 8px;
 	user-select: none;
 	width: 100%;
+	box-sizing: border-box;
+
+	&.parent:hover {
+		background-color: rgb(0 0 0 / 2%);
+	}
 }
 
 .checkbox-icon {
@@ -72,4 +70,36 @@ $font-base: 'Roboto', sans-serif;
 	@include text-body;
 
 	color: $color-text;
+	flex-grow: 1;
+}
+
+/* Стили для шеврона */
+.chevron-container {
+	margin-left: auto;
+	padding-left: 8px;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+
+	.parent:hover & {
+		opacity: 1;
+	}
+
+	/* Шеврон всегда виден, если категория развернута */
+	.checkbox-container:has(.checkbox-input:checked) & {
+		opacity: 1;
+	}
+}
+
+.chevron {
+	width: 16px;
+	height: 16px;
+
+	path {
+		fill: $color-text;
+	}
+}
+
+.disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
 }

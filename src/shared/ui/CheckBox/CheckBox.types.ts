@@ -11,4 +11,6 @@ export type TCheckBoxProps = {
 	isParent?: boolean;
 	onToggle?: (value: string) => void;
 	className?: string;
+	showChevron?: boolean;
+	isExpanded?: boolean;
 };
