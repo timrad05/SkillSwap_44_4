@@ -3,7 +3,7 @@ import userCircleIcon from '../../shared/assets/icons/user-circle.svg';
 import { ModalSuccess } from './ModalSuccess';
 
 const meta = {
-	title: 'Widgets/UIModalSuccess',
+	title: 'Widgets/UI/ModalSuccess',
 	component: ModalSuccess,
 } satisfies Meta<typeof ModalSuccess>;
 
