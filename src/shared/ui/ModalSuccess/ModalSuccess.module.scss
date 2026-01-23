@@ -1,0 +1,60 @@
+@use '../../styles/variables' as *;
+
+.modal {
+	display: flex;
+	flex-direction: column;
+	width: 556px;
+	height: 420px;
+	border-radius: 12px;
+	margin-top: 220px;
+	margin-left: 442px;
+	padding: 80px 60px;
+	gap: 52px;
+	background-color: $color-background;
+	text-align: center;
+	align-items: center;
+
+	.icon {
+		display: flex;
+		align-items: center;
+		width: 100px;
+		height: 100px;
+
+		svg {
+			position: absolute;
+			width: 75px;
+			height: 75px;
+			left: 12.5px;
+			top: 12.5px;
+		}
+	}
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		gap: 30px;
+	}
+
+	.title {
+		color: $color-text;
+		gap: 12px;
+		white-space: nowrap;
+		align-items: center;
+	}
+
+	.text {
+		white-space: nowrap;
+		color: $color-text;
+		align-items: center;
+	}
+
+	.button-wrapper {
+		width: 100%;
+
+		button {
+			width: 100%;
+		}
+	}
+}
