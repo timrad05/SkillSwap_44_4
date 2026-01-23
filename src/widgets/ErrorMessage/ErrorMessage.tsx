@@ -1,9 +1,9 @@
-import error404Img from '../../assets/images/error-404.png';
-import error500Img from '../../assets/images/error-500.png';
-import cls from './ErrorPage.module.scss';
-import type { ErrorPageProps } from './ErrorPage.types';
-import { Info } from '../Info';
-import { Button } from '../Button';
+import error404Img from '../../shared/assets/images/error-404.png';
+import error500Img from '../../shared/assets/images/error-500.png';
+import { Button } from '../../shared/ui/Button';
+import { Info } from '../../shared/ui/Info';
+import cls from './ErrorMessage.module.scss';
+import type { ErrorMessageProps } from './ErrorMessage.types';
 
 const ERROR_DATA = {
 	'404': {
@@ -18,17 +18,14 @@ const ERROR_DATA = {
 	},
 };
 
-export const ErrorPage = ({ type = '404' }: ErrorPageProps) => {
+export const ErrorMessage = ({ type = '404' }: ErrorMessageProps) => {
 	const data = ERROR_DATA[type];
-
 	const handleGoHome = () => {
 		alert('Функция перехода на домашнюю страницу еще не реализована');
 	};
-
 	const handleReport = () => {
 		alert('Функция отправки отчета об ошибке еще не реализована');
 	};
-
 	return (
 		<div className={cls.page}>
 			<div className={cls.container}>
