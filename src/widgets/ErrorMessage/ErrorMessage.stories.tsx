@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ErrorPage } from './ErrorPage';
+import { ErrorMessage } from './ErrorMessage';
 
-const meta: Meta<typeof ErrorPage> = {
-	title: 'Shared/UI/ErrorPage',
-	component: ErrorPage,
+const meta: Meta<typeof ErrorMessage> = {
+	title: 'Widgets/UI/ErrorMessage',
+	component: ErrorMessage,
 	tags: ['autodocs'],
 	parameters: {
 		layout: 'centered',
@@ -11,7 +11,8 @@ const meta: Meta<typeof ErrorPage> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof ErrorPage>;
+
+type Story = StoryObj<typeof ErrorMessage>;
 
 export const Error404: Story = {
 	args: {
