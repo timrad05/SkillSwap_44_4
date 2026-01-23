@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ModalSuccess } from './ModalSuccess';
-import userCircleIcon from '../../assets/icons/user-circle.svg';
+import userCircleIcon from '../../shared/assets/icons/user-circle.svg';
 
 const meta = {
 	title: 'UI/ModalSuccess',

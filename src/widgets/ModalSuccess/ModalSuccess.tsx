@@ -1,8 +1,8 @@
 import type { TModalSuccessProps } from './ModalSuccess.types';
 import styles from './ModalSuccess.module.scss';
 import clsx from 'clsx';
-import { Button } from '../Button';
-import userCircleIcon from '../../assets/icons/user-circle.svg';
+import { Button } from '../../shared/ui/Button';
+import userCircleIcon from '../../shared/assets/icons/user-circle.svg';
 export const ModalSuccess = ({
 	icon,
 	title,
