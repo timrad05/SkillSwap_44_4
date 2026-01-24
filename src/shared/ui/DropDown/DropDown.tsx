@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
+import chevronDownIcon from '../../assets/icons/chevron-down.svg';
 import styles from './DropDown.module.scss';
 import type { DropDownProps } from './DropDown.types';
 
@@ -7,8 +8,9 @@ export const DropDown: React.FC<DropDownProps> = ({
 	options,
 	value,
 	onChange,
-	placeholder = 'Выберите вариант',
+	placeholder = 'Не указан',
 	disabled = false,
+	label = 'Город',
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const selectedOption = options.find((opt) => opt.value === value);
@@ -27,6 +29,7 @@ export const DropDown: React.FC<DropDownProps> = ({
 
 	return (
 		<div className={clsx(styles.dropdown, { [styles.open]: isOpen })}>
+			{label && <h3 className={styles.text}>{label}</h3>}
 			<button
 				type="button"
 				className={clsx(styles.trigger, { [styles.disabled]: disabled })}
@@ -37,15 +40,7 @@ export const DropDown: React.FC<DropDownProps> = ({
 					{selectedOption ? selectedOption.label : placeholder}
 				</span>
 				<span className={clsx(styles.icon, { [styles.open]: isOpen })}>
-					<svg
-						width="12"
-						height="12"
-						viewBox="0 0 24 24"
-						fill="currentColor"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path d="M7 10l5 5 5-5z" />
-					</svg>
+					<img src={chevronDownIcon} alt="▼" className={styles.icon} />
 				</span>
 			</button>
 

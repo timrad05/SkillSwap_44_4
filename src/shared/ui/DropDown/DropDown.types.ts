@@ -10,4 +10,5 @@ export interface DropDownProps {
 	onChange?: (value: string) => void;
 	placeholder?: string;
 	disabled?: boolean;
+	label?: string;
 }
