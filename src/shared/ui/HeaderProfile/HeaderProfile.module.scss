@@ -1,0 +1,50 @@
+@use '../../styles/variables' as *;
+
+.profile {
+	display: inline-flex;
+	flex-direction: row;
+	gap: 8px;
+	align-items: center;
+	user-select: none;
+	width: fit-content;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.avatar {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	object-fit: cover;
+	flex-shrink: 0;
+}
+
+.name {
+	color: $color-text;
+	font-family: Roboto, sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+	letter-spacing: 2%;
+	transition: color 0.2s ease;
+
+	&:hover {
+		color: $color-disabled-text;
+	}
+}
+
+.placeholder {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: $color-accent;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 1.5;
+	font-family: Roboto, sans-serif;
+}
