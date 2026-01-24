@@ -1,5 +1,7 @@
+// RecommendedCards.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { RecommendedCards } from './RecommendedCards';
+import type { CardProps } from '../../shared/ui/Card/Card.types';
 
 const meta: Meta<typeof RecommendedCards> = {
 	title: 'Widgets/RecommendedCards',
@@ -9,35 +11,110 @@ const meta: Meta<typeof RecommendedCards> = {
 export default meta;
 type Story = StoryObj<typeof RecommendedCards>;
 
-const testCards = [
+const testCards: CardProps[] = [
 	{
 		avatar: 'https://i.pravatar.cc/150?img=1',
-		name: 'Алексей',
+		name: 'Иван',
 		city: 'Москва',
 		age: 28,
-		canTeach: [{ text: 'React' }],
-		wantToLearn: [{ text: 'Дизайн' }],
+		canTeach: [{ text: 'Рисование' }, { text: 'Фотография' }],
+		wantToLearn: [{ text: 'Английский' }],
+		onMoreClick: () => console.log('Иван'),
 	},
 	{
 		avatar: 'https://i.pravatar.cc/150?img=2',
-		name: 'Мария',
-		city: 'СПб',
+		name: 'Елена',
+		city: 'Санкт-Петербург',
 		age: 25,
-		canTeach: [{ text: 'Дизайн' }],
-		wantToLearn: [{ text: 'React' }],
+		canTeach: [{ text: 'Английский' }],
+		wantToLearn: [{ text: 'Рисование' }],
+		onMoreClick: () => console.log('Елена'),
 	},
 	{
 		avatar: 'https://i.pravatar.cc/150?img=3',
-		name: 'Иван',
-		city: 'Казань',
+		name: 'Алексей',
+		city: 'Калининград',
 		age: 32,
-		canTeach: [{ text: 'TypeScript' }],
-		wantToLearn: [{ text: 'UI/UX' }],
+		canTeach: [{ text: 'Фотография' }],
+		wantToLearn: [{ text: 'Тайм-менеджмент' }],
+		onMoreClick: () => console.log('Алексей'),
+	},
+	{
+		avatar: 'https://i.pravatar.cc/150?img=4',
+		name: 'Мария',
+		city: 'Краснодар',
+		age: 24,
+		canTeach: [{ text: 'Фитнес' }],
+		wantToLearn: [{ text: 'Кулинария' }],
+		onMoreClick: () => console.log('Мария'),
+	},
+	{
+		avatar: 'https://i.pravatar.cc/150?img=5',
+		name: 'Дмитрий',
+		city: 'Казань',
+		age: 35,
+		canTeach: [{ text: 'Бизнес' }],
+		wantToLearn: [{ text: 'Фотография' }],
+		onMoreClick: () => console.log('Дмитрий'),
+	},
+	{
+		avatar: 'https://i.pravatar.cc/150?img=6',
+		name: 'Анна',
+		city: 'Красноярск',
+		age: 27,
+		canTeach: [{ text: 'Дизайн' }],
+		wantToLearn: [{ text: 'Финансы' }],
+		onMoreClick: () => console.log('Анна'),
+	},
+	{
+		avatar: 'https://i.pravatar.cc/150?img=7',
+		name: 'Сергей',
+		city: 'Екатеринбург',
+		age: 40,
+		canTeach: [{ text: 'Рыбалка' }],
+		wantToLearn: [{ text: 'Английский' }],
+		onMoreClick: () => console.log('Сергей'),
+	},
+	{
+		avatar: 'https://i.pravatar.cc/150?img=8',
+		name: 'Ольга',
+		city: 'Ростов-на-Дону',
+		age: 45,
+		canTeach: [{ text: 'Английский' }],
+		wantToLearn: [{ text: 'Медитация' }],
+		onMoreClick: () => console.log('Ольга'),
+	},
+	{
+		avatar: 'https://i.pravatar.cc/150?img=9',
+		name: 'Николай',
+		city: 'Томск',
+		age: 21,
+		canTeach: [{ text: 'Программирование' }],
+		wantToLearn: [{ text: 'Дизайн' }],
+		onMoreClick: () => console.log('Николай'),
 	},
 ];
 
-export const Basic: Story = {
+export const NineCards: Story = {
 	args: {
 		cards: testCards,
+	},
+};
+
+export const ThreeCards: Story = {
+	args: {
+		cards: testCards.slice(0, 3),
+	},
+};
+
+export const OneCard: Story = {
+	args: {
+		cards: testCards.slice(0, 1),
+	},
+};
+
+export const Empty: Story = {
+	args: {
+		cards: [],
 	},
 };
