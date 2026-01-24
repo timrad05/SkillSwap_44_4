@@ -1,12 +1,9 @@
 import sunIcon from '../../assets/icons/sun.svg';
 import moonIcon from '../../assets/icons/moon.svg';
-import styles from './ThemeSwitchButton.module.css';
-import type { TThemeSwitchButtonProps } from './ThemeSwitchButtonType';
+import styles from './ThemeToggle.module.scss';
+import type { TThemeToggleProps } from './ThemeToggle.types';
 
-export const ThemeSwitchButton = ({
-	theme,
-	onClick,
-}: TThemeSwitchButtonProps) => {
+export const ThemeToggle = ({ theme, onClick }: TThemeToggleProps) => {
 	const classes = [
 		styles.button,
 		theme === 'dark' ? styles.dark : styles.light,
