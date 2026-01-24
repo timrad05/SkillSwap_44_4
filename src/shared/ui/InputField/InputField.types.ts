@@ -8,7 +8,7 @@ export interface InputFieldProps extends Omit<BaseInputProps, 'className'> {
 	className?: string;
 	variant?: InputVariant;
 	required?: boolean;
-	error: boolean;
-	errorText: string;
+	error?: boolean;
+	errorText?: string;
 	hint?: string;
 }

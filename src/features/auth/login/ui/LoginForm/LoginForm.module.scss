@@ -1,0 +1,37 @@
+@use '../../../../../shared/styles/variables' as *;
+
+.form {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	font-family: $font-base;
+}
+
+.fields {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-bottom: 32px;
+}
+
+.buttons {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	align-self: center;
+	width: 100%;
+}
+
+.register-button {
+	all: unset;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: 500;
+	color: $color-text-link;
+	cursor: pointer;
+	padding: 0;
+}
