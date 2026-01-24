@@ -25,49 +25,53 @@ export const Header: FC<HeaderProps> = ({
 		</svg>
 	);
 
+	const logoIcon = (
+		<svg viewBox="0 0 24 24" fill="none">
+			<path
+				d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"
+				fill="white"
+			/>
+		</svg>
+	);
+
 	if (isAuthPage) {
 		return (
-			<Header className={clsx(style.header, className)}>
-				<Logo name="SkillSwap" size="medium" />
+			<header className={clsx(style.header, className)}>
+				<Logo name="SkillSwap" icon={logoIcon} size="medium" />
 				<Button variant="secondary" onClick={() => alert('Закрыть')}>
 					Закрыть
-				</Button>{' '}
-				// пока заглушка
-			</Header>
+				</Button>
+			</header>
 		);
 	}
 
 	return (
-		<Header className={clsx(style.header, className)}>
-			<Logo name="SkillSwap" size="medium" />
-
+		<header className={clsx(style.header, className)}>
+			<Logo name="SkillSwap" icon={logoIcon} size="medium" />
 			<HeaderMenu
 				items={[
 					{ id: 'about', label: 'О проекте' },
 					{ id: 'skills', label: 'Все навыки', icon: chevronDownIcon },
 				]}
 			/>
-
 			<Search placeholder="Поиск..." />
-
 			<ThemeToggle theme="light" />
-
 			{isAuthorized ? (
 				<>
 					<Button onClick={() => alert('Уведомления')}>
-						<img src={notificationIcon} alt="Уведомления" /> // пока заглушка
+						<img src={notificationIcon} alt="Уведомления" />
 					</Button>
 					<Button onClick={() => alert('Избранное')}>
-						<img src={blankLikeIcon} alt="Избранное" /> // пока заглушка
+						<img src={blankLikeIcon} alt="Избранное" />
 					</Button>
-					<HeaderProfile name="User" /> // пока заглушка, потом данные из стора
+					<HeaderProfile name="User" />
 				</>
 			) : (
 				<>
-					<Button variant="secondary">Войти</Button> // пока заглушка
-					<Button variant="primary">Зарегистрироваться</Button> // пока заглушка
+					<Button variant="secondary">Войти</Button>
+					<Button variant="primary">Зарегистрироваться</Button>
 				</>
 			)}
-		</Header>
+		</header>
 	);
 };
