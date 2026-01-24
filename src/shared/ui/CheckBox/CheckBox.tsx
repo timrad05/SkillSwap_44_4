@@ -1,5 +1,7 @@
 import styles from './CheckBox.module.scss';
 import type { TCheckBoxProps } from './CheckBox.types';
+import chevronDownIcon from '../../assets/icons/chevron-down.svg';
+import chevronUpIcon from '../../assets/icons/chevron-up.svg';
 
 export const CheckBox = ({
 	option,
@@ -9,7 +11,9 @@ export const CheckBox = ({
 	isParent = false,
 	onToggle,
 	className = '',
-}: TCheckBoxProps) => {
+	showChevron = false,
+	isExpanded = false,
+}: TCheckBoxProps & { showChevron?: boolean; isExpanded?: boolean }) => {
 	const handleClick = () => {
 		if (!isDisabled && onToggle) {
 			onToggle(option.value);
@@ -28,7 +32,7 @@ export const CheckBox = ({
 	}
 
 	return (
-		<div className={`${styles['checkbox-wrapper']} ${className}`}>
+		<div className={`${styles['checkbox-container']} ${className}`}>
 			<input
 				type="checkbox"
 				id={checkboxId}
@@ -43,12 +47,25 @@ export const CheckBox = ({
 				htmlFor={checkboxId}
 				className={`${styles['checkbox-label']} ${
 					isDisabled ? styles.disabled : ''
-				}`}
+				} ${isParent ? styles.parent : ''}`}
 			>
 				<span className={styles['checkbox-icon']}>
 					<div className={`${styles['icon-mask']} ${iconClass}`} />
 				</span>
 				<span className={styles['checkbox-text']}>{option.label}</span>
+
+				{/* Шеврон для родительских категорий */}
+				{isParent && hasSubcategories && showChevron && (
+					<span className={styles['chevron-container']}>
+						<img
+							src={isExpanded ? chevronUpIcon : chevronDownIcon}
+							alt={isExpanded ? 'Свернуть' : 'Развернуть'}
+							className={styles.chevron}
+							width={16}
+							height={16}
+						/>
+					</span>
+				)}
 			</label>
 		</div>
 	);
