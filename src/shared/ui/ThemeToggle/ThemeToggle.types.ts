@@ -1,4 +1,4 @@
-export type TThemeSwitchButtonProps = {
+export type TThemeToggleProps = {
 	theme: 'light' | 'dark';
 	onClick?: () => void;
 };

@@ -1,21 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useEffect, useState } from 'react';
-import { ThemeSwitchButton } from './ThemeSwitchButton';
+import { ThemeToggle } from './ThemeToggle';
 
-const meta: Meta<typeof ThemeSwitchButton> = {
-	title: 'shared/ui/ThemeSwitchButton',
-	component: ThemeSwitchButton,
+const meta: Meta<typeof ThemeToggle> = {
+	title: 'shared/ui/ThemeToggle',
+	component: ThemeToggle,
 	tags: ['autodocs'],
 	parameters: { layout: 'centered' },
 };
 
 export default meta;
 
-type Story = StoryObj<typeof ThemeSwitchButton>;
+type Story = StoryObj<typeof ThemeToggle>;
 
 type TTheme = 'light' | 'dark';
 
-const ThemeSwitchComponent = () => {
+const ThemeToggleComponent = () => {
 	const [theme, setTheme] = useState<TTheme>(() => {
 		if (typeof window !== 'undefined') {
 			return (localStorage.getItem('theme') as TTheme) || 'dark';
@@ -31,9 +31,9 @@ const ThemeSwitchComponent = () => {
 	const switchTheme = () =>
 		setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
 
-	return <ThemeSwitchButton theme={theme} onClick={switchTheme} />;
+	return <ThemeToggle theme={theme} onClick={switchTheme} />;
 };
 
 export const SwitchTheme: Story = {
-	render: () => <ThemeSwitchComponent />,
+	render: () => <ThemeToggleComponent />,
 };
