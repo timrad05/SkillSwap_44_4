@@ -1,0 +1,20 @@
+@use '../../shared//styles/variables' as *;
+
+.widget {
+	max-width: min-content;
+	background-color: $color-background;
+}
+
+.title {
+	font-size: 24px;
+	font-weight: 600;
+	margin-bottom: 24px;
+	color: $color-text;
+	text-align: start;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+}
