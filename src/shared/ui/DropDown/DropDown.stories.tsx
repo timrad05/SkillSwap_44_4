@@ -1,31 +1,58 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DropDown } from './DropDown';
+import type { DropDownOption } from './DropDown.types';
 
-const meta = {
+const meta: Meta<typeof DropDown> = {
 	title: 'UI/DropDown',
 	component: DropDown,
+	parameters: {
+		layout: 'centered',
+	},
+	tags: ['autodocs'],
 } satisfies Meta<typeof DropDown>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const options = [
-	{ value: '1', label: 'Вариант 1' },
-	{ value: '2', label: 'Вариант 2' },
-	{ value: '3', label: 'Вариант 3' },
+const defaultOptions: DropDownOption[] = [
+	{ value: '1', label: 'Москва' },
+	{ value: '2', label: 'Санкт-Петербург' },
+	{ value: '3', label: 'Казань' },
+	{ value: '4', label: 'Новосибирск' },
+	{ value: '5', label: 'Екатеринбург' },
 ];
 
-export const Basic: Story = {
+export const Default: Story = {
 	args: {
-		options,
-		placeholder: 'Дропдаун',
+		options: defaultOptions,
+		placeholder: 'Не указан',
 	},
 };
 
-export const WithValue: Story = {
+export const WithSelectedValue: Story = {
 	args: {
-		options,
+		options: defaultOptions,
 		value: '2',
-		placeholder: 'Дропдаун',
+		placeholder: 'Не указан',
+	},
+};
+
+export const Disabled: Story = {
+	args: {
+		options: defaultOptions,
+		disabled: true,
+		placeholder: 'Не указан',
+	},
+};
+
+export const WithDisabledOptions: Story = {
+	args: {
+		options: [
+			{ value: '1', label: 'Москва' },
+			{ value: '2', label: 'Санкт-Петербург' },
+			{ value: '3', label: 'Казань (недоступно)', disabled: true },
+			{ value: '4', label: 'Новосибирск' },
+		],
+		placeholder: 'Не указан',
 	},
 };

@@ -1,9 +1,18 @@
 @use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
 .dropdown {
 	position: relative;
 	width: 436px;
 	height: 38px;
+	padding: 20px;
+
+	.text {
+		margin-bottom: 4px;
+		height: 24px;
+
+		@include text-h3;
+	}
 
 	.trigger {
 		width: 100%;
@@ -47,7 +56,7 @@
 	}
 
 	.menu {
-		position: absolute;
+		position: relative;
 		top: 100%;
 		left: 0;
 		right: 0;
