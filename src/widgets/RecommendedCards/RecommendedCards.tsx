@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card } from '../../shared/ui/Card/Card';
 import type { CardProps } from '../../shared/ui/Card/Card.types';
-import styles from './RecommendedCards.module.css';
+import styles from './RecommendedCards.module.scss';
 
 interface RecommendedCardsProps {
 	cards: CardProps[];
