@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import type { FC } from 'react';
 import blankLikeIcon from '../../shared/assets/icons/blankLike.svg';
+import crossIcon from '../../shared/assets/icons/cross.svg';
 import notificationIcon from '../../shared/assets/icons/notification.svg';
 import { Button } from '../../shared/ui/Button';
 import { HeaderMenu } from '../../shared/ui/HeaderMenu';
@@ -38,8 +39,13 @@ export const Header: FC<HeaderProps> = ({
 		return (
 			<header className={clsx(style.header, className)}>
 				<Logo name="SkillSwap" icon={logoIcon} size="medium" />
-				<Button variant="secondary" onClick={() => alert('Закрыть')}>
-					Закрыть
+				<Button
+					variant="secondary"
+					onClick={() => alert('Закрыть')}
+					className={clsx(style['close-button'])}
+				>
+					<p>Закрыть</p>
+					<img src={crossIcon} alt="Закрыть" className={clsx(style.cross)} />
 				</Button>
 			</header>
 		);
@@ -48,28 +54,47 @@ export const Header: FC<HeaderProps> = ({
 	return (
 		<header className={clsx(style.header, className)}>
 			<Logo name="SkillSwap" icon={logoIcon} size="medium" />
+
 			<HeaderMenu
 				items={[
 					{ id: 'about', label: 'О проекте' },
 					{ id: 'skills', label: 'Все навыки', icon: chevronDownIcon },
 				]}
 			/>
+
 			<Search placeholder="Поиск..." />
-			<ThemeToggle theme="light" />
+
 			{isAuthorized ? (
-				<>
-					<Button onClick={() => alert('Уведомления')}>
+				<div className={clsx(style['auth-buttons'])}>
+					<ThemeToggle theme="dark" />
+					<button
+						className={clsx(style.icon)}
+						onClick={() => alert('Уведомления')}
+					>
 						<img src={notificationIcon} alt="Уведомления" />
-					</Button>
-					<Button onClick={() => alert('Избранное')}>
+					</button>
+					<button
+						className={clsx(style.icon)}
+						onClick={() => alert('Избранное')}
+					>
 						<img src={blankLikeIcon} alt="Избранное" />
-					</Button>
+					</button>
 					<HeaderProfile name="User" />
-				</>
+				</div>
 			) : (
 				<>
-					<Button variant="secondary">Войти</Button>
-					<Button variant="primary">Зарегистрироваться</Button>
+					<ThemeToggle theme="dark" />
+					<div className={clsx(style['un-auth-buttons'])}>
+						<Button
+							variant="secondary"
+							className={clsx(style['header-button'])}
+						>
+							Войти
+						</Button>
+						<Button variant="primary" className={clsx(style['header-button'])}>
+							Зарегистрироваться
+						</Button>
+					</div>
 				</>
 			)}
 		</header>
