@@ -67,18 +67,21 @@ export const Header: FC<HeaderProps> = ({
 			{isAuthorized ? (
 				<div className={clsx(style['auth-buttons'])}>
 					<ThemeToggle theme="dark" />
+					{/* заглушка */}
 					<button
 						className={clsx(style.icon)}
 						onClick={() => alert('Уведомления')}
 					>
 						<img src={notificationIcon} alt="Уведомления" />
 					</button>
+					{/* заглушка */}
 					<button
 						className={clsx(style.icon)}
 						onClick={() => alert('Избранное')}
 					>
 						<img src={blankLikeIcon} alt="Избранное" />
 					</button>
+					{/* потом брать данные из стора или добавить в пропсы и передавать сюда */}
 					<HeaderProfile name="User" />
 				</div>
 			) : (
