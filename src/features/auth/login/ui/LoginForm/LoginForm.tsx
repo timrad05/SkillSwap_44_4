@@ -1,9 +1,11 @@
-// LoginForm.tsx
 import { useState } from 'react';
 import type { LoginFormProps } from './LoginForm.types';
 import { InputField } from '../../../../../shared/ui/InputField';
 import { Button } from '../../../../../shared/ui/Button';
 import cls from './LoginForm.module.scss';
+
+import AppleIcon from '../../../../../shared/assets/icons/Apple.svg';
+import GoogleIcon from '../../../../../shared/assets/icons/Google.svg';
 
 export const LoginForm = ({ className = '' }: LoginFormProps) => {
 	const [formData, setFormData] = useState({
@@ -36,7 +38,10 @@ export const LoginForm = ({ className = '' }: LoginFormProps) => {
 		if (!formData[field]) {
 			setErrors((prev) => ({
 				...prev,
-				[field]: `${field === 'email' ? 'Email' : 'Пароль'} обязателен для заполнения`,
+				[field]:
+					field === 'email'
+						? 'Email обязателен для заполнения'
+						: 'Пароль обязателен для заполнения',
 			}));
 		}
 	};
@@ -56,29 +61,40 @@ export const LoginForm = ({ className = '' }: LoginFormProps) => {
 		}
 
 		setErrors(newErrors);
-		return newErrors.email === '' && newErrors.password === '';
+		return !newErrors.email && !newErrors.password;
 	};
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 
-		const isValid = validateForm();
-
-		if (!isValid) {
+		if (!validateForm()) {
 			return;
 		}
 
-		// Тут будет логика отправки формы
 		console.log('Form submitted:', formData);
-	};
-
-	const handleRegisterClick = () => {
-		console.log('Register button clicked');
-		// Тут будет переход к регистрации
 	};
 
 	return (
 		<form className={`${cls.form} ${className}`} onSubmit={handleSubmit}>
+			{/* Социальные кнопки */}
+			<div className={cls.socials}>
+				<button type="button" className={cls['social-button']}>
+					<img src={GoogleIcon} alt="Google" />
+					Продолжить с Google
+				</button>
+
+				<button type="button" className={cls['social-button']}>
+					<img src={AppleIcon} alt="Apple" />
+					Продолжить с Apple
+				</button>
+			</div>
+
+			{/* Разделитель */}
+			<div className={cls.divider}>
+				<span>или</span>
+			</div>
+
+			{/* Поля */}
 			<div className={cls.fields}>
 				<InputField
 					label="Email"
@@ -86,7 +102,7 @@ export const LoginForm = ({ className = '' }: LoginFormProps) => {
 					value={formData.email}
 					onChange={handleInputChange('email')}
 					onBlur={handleBlur('email')}
-					required={true}
+					required
 					error={!!errors.email}
 					errorText={errors.email}
 					id="email-input"
@@ -100,23 +116,20 @@ export const LoginForm = ({ className = '' }: LoginFormProps) => {
 					value={formData.password}
 					onChange={handleInputChange('password')}
 					onBlur={handleBlur('password')}
-					required={true}
+					required
 					error={!!errors.password}
 					errorText={errors.password}
 					id="password-input"
 				/>
 			</div>
 
+			{/* Кнопки */}
 			<div className={cls.buttons}>
 				<Button type="submit" variant="primary">
 					Войти
 				</Button>
 
-				<button
-					type="button"
-					className={cls['register-button']}
-					onClick={handleRegisterClick}
-				>
+				<button type="button" className={cls['register-button']}>
 					Зарегистрироваться
 				</button>
 			</div>
