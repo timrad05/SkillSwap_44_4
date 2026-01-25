@@ -21,7 +21,7 @@ export const Default: Story = {
 				name: 'Иван',
 				city: 'Санкт-Петербург',
 				age: 34,
-				canTeach: [{ text: 'Игра на барабанах', color: 'education' }],
+				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
 					{ text: 'Медитация', color: 'health' },
@@ -33,7 +33,7 @@ export const Default: Story = {
 				name: 'Виктория',
 				city: 'Кемерово',
 				age: 30,
-				canTeach: [{ text: 'Игра на барабанах', color: 'education' }],
+				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
 					{ text: 'Медитация', color: 'health' },
@@ -44,7 +44,7 @@ export const Default: Story = {
 				name: 'Виктория',
 				city: 'Сочи',
 				age: 31,
-				canTeach: [{ text: 'Игра на барабанах', color: 'education' }],
+				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
 					{ text: 'Медитация', color: 'health' },
@@ -55,7 +55,7 @@ export const Default: Story = {
 				name: 'Елена',
 				city: 'Красноярск',
 				age: 28,
-				canTeach: [{ text: 'Игра на барабанах', color: 'education' }],
+				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
 					{ text: 'Медитация', color: 'health' },
@@ -66,7 +66,7 @@ export const Default: Story = {
 				name: 'Константин',
 				city: 'Иркутск',
 				age: 36,
-				canTeach: [{ text: 'Игра на барабанах', color: 'education' }],
+				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
 					{ text: 'Медитация', color: 'health' },
@@ -77,7 +77,7 @@ export const Default: Story = {
 				name: 'София',
 				city: 'Абакан',
 				age: 24,
-				canTeach: [{ text: 'Игра на барабанах', color: 'education' }],
+				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
 					{ text: 'Медитация', color: 'health' },
@@ -88,7 +88,7 @@ export const Default: Story = {
 				name: 'Екатерина',
 				city: 'Пермь',
 				age: 33,
-				canTeach: [{ text: 'Игра на барабанах', color: 'education' }],
+				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
 					{ text: 'Медитация', color: 'health' },
@@ -99,7 +99,7 @@ export const Default: Story = {
 				name: 'Дарья',
 				city: 'Ярославль',
 				age: 26,
-				canTeach: [{ text: 'Игра на барабанах', color: 'education' }],
+				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
 					{ text: 'Медитация', color: 'health' },
@@ -110,7 +110,7 @@ export const Default: Story = {
 				name: 'Алла',
 				city: 'Архангельск',
 				age: 22,
-				canTeach: [{ text: 'Игра на барабанах', color: 'education' }],
+				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
 					{ text: 'Медитация', color: 'health' },
