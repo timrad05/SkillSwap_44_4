@@ -12,6 +12,7 @@
 	cursor: pointer;
 	border-radius: 12px;
 	border: none;
+	gap: 8px;
 }
 
 .primary {
@@ -59,4 +60,19 @@
 	background-color: $color-card;
 	color: $color-disabled-text;
 	border-color: $color-disabled;
+}
+
+.tertiary {
+	background-color: $color-card;
+	color: $color-text;
+}
+
+.tertiary:hover {
+	border: 1px solid;
+	border-color: $color-button-hover;
+}
+
+.tertiary:active {
+	border: 1px solid;
+	border-color: $color-button-pressed;
 }

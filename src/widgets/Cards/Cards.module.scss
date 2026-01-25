@@ -1,0 +1,28 @@
+@use '../../shared//styles/variables' as *;
+
+.container {
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	background-color: $color-background;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 32px;
+}
+
+.title {
+	font-size: 32px;
+	font-weight: 500;
+	color: $color-text;
+	text-align: start;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+}
