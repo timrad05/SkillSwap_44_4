@@ -1,0 +1,41 @@
+.page {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.main {
+	flex: 1 0 auto;
+	padding: 24px 0;
+}
+
+.layout {
+	display: flex;
+	gap: 24px;
+	max-width: 1200px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+.sidebar {
+	flex: 0 0 280px;
+	position: sticky;
+	top: 24px;
+	height: fit-content;
+}
+
+.content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+.cards-section {
+	width: 100%;
+}
+
+.recommended-section {
+	width: 100%;
+}
