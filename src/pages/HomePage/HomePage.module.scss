@@ -2,24 +2,23 @@
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+	width: 100%;
 }
 
 .main {
-	flex: 1 0 auto;
-	padding: 24px 0;
+	flex: auto;
+	width: 100%;
 }
 
 .layout {
 	display: flex;
 	gap: 24px;
-	max-width: 1200px;
+	max-width: 1440px;
 	width: 100%;
-	margin: 0 auto;
-	padding: 0 20px;
 }
 
 .sidebar {
-	flex: 0 0 280px;
+	flex: 0 0 324px;
 	position: sticky;
 	top: 24px;
 	height: fit-content;
@@ -29,7 +28,8 @@
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	gap: 32px;
+	gap: 40px;
+	min-width: 0;
 }
 
 .cards-section {
@@ -38,4 +38,13 @@
 
 .recommended-section {
 	width: 100%;
+}
+
+.header-wrapper {
+	width: 100%;
+}
+
+.footer-wrapper {
+	width: 100%;
+	margin-top: auto;
 }

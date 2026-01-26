@@ -7,47 +7,38 @@ import type { HomePageProps } from './HomePage.types';
 import styles from './HomePage.module.scss';
 
 export const HomePage = ({
-	headerProps,
-	filterProps,
-	cardsProps,
-	recommendedProps,
-	footerProps,
+	headerProps = {},
+	filterProps = {},
+	cardsProps = {},
+	recommendedProps = {},
+	footerProps = {},
 }: HomePageProps) => {
 	return (
 		<div className={styles.page}>
-			{headerProps && <Header {...headerProps} />}
+			<Header {...headerProps} />
 
 			<main className={styles.main}>
 				<div className={styles.layout}>
-					{filterProps && (
-						<aside className={styles.sidebar}>
-							<Filter {...filterProps} />
-						</aside>
-					)}
+					<aside className={styles.sidebar}>
+						<Filter {...filterProps} />
+					</aside>
 
 					<div className={styles.content}>
-						{cardsProps && (
-							<>
-								<section className={styles['cards-section']}>
-									<Cards {...cardsProps} />
-								</section>
+						<section className={styles['cards-section']}>
+							<Cards {...cardsProps} />
+						</section>
 
-								<section className={styles['cards-section']}>
-									<Cards {...cardsProps} />
-								</section>
-							</>
-						)}
-
-						{recommendedProps && (
-							<section className={styles['recommended-section']}>
-								<RecommendedCards {...recommendedProps} />
-							</section>
-						)}
+						<section className={styles['cards-section']}>
+							<Cards {...cardsProps} />
+						</section>
+						<section className={styles['recommended-section']}>
+							<RecommendedCards {...recommendedProps} />
+						</section>
 					</div>
 				</div>
 			</main>
 
-			{footerProps && <Footer {...footerProps} />}
+			<Footer {...footerProps} />
 		</div>
 	);
 };
