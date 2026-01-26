@@ -11,4 +11,6 @@ export interface DropDownProps {
 	placeholder?: string;
 	disabled?: boolean;
 	label?: string;
+	isOpen?: boolean;
+	onToggle?: () => void;
 }
