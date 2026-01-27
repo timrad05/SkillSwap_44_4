@@ -1,5 +1,5 @@
 import blankLikeIcon from '../../assets/icons/blankLike.svg';
-import filledLikeIcon from '../../assets/icons/like.svg';
+import filledLikeIcon from '../../assets/icons/Like.svg';
 import styles from './Like.module.scss';
 import type { TLikeProps } from './Like.types';
 
