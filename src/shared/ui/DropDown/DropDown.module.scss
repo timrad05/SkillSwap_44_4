@@ -3,15 +3,25 @@
 
 .dropdown {
 	position: relative;
-	width: 436px;
-	height: 38px;
-	padding: 20px;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 
 	.text {
-		margin-bottom: 4px;
-		height: 24px;
+		font-size: 16px;
+		line-height: 24px;
+		color: $color-text;
+		font-weight: 400;
+	}
 
-		@include text-h3;
+	.label {
+		padding-block-end: 4px;
+
+		&.required::after {
+			content: ' *';
+			color: $color-error;
+		}
 	}
 
 	.trigger {
@@ -25,10 +35,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-
-		&:hover {
-			border-color: $color-button-hover;
-		}
+		box-sizing: border-box;
 
 		&:disabled {
 			background: $color-disabled;
@@ -48,15 +55,11 @@
 	.icon {
 		margin-left: 10px;
 		font-size: 12px;
-		transition: transform 0.2s;
-
-		&.open {
-			transform: rotate(180deg);
-		}
 	}
 
 	.menu {
-		position: relative;
+		position: absolute;
+		box-sizing: border-box;
 		top: 100%;
 		left: 0;
 		right: 0;
@@ -65,18 +68,23 @@
 		border-color: $color-toggle;
 		border-top: none;
 		border-radius: 0 0 12px 12px;
-		z-index: 10;
+		z-index: 100;
 		margin-top: -1px;
+		overflow: hidden;
 
 		.option {
-			padding-left: 10px;
+			padding-inline: 20px;
+			padding-block: 4px;
 			gap: 10px;
 			border-radius: 4px;
-			height: 32px;
 			cursor: pointer;
+			display: flex;
+			justify-content: start;
+			align-items: center;
 
 			&:hover {
 				background: $color-button-hover;
+				background-clip: padding-box;
 			}
 
 			&.selected {
@@ -93,6 +101,12 @@
 					background: $color-background;
 				}
 			}
+		}
+	}
+
+	&:not(.open) {
+		.trigger:hover {
+			border-color: $color-button-hover;
 		}
 	}
 

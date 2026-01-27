@@ -3,7 +3,7 @@
 .root {
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
+	gap: 4px;
 }
 
 .control {
@@ -23,6 +23,18 @@
 
 .control:focus-within {
 	border-color: $color-text;
+}
+
+.label {
+	font-size: 16px;
+	line-height: 24px;
+	color: $color-text;
+	font-weight: 400;
+
+	&.required::after {
+		content: ' *';
+		color: $color-error;
+	}
 }
 
 .textarea {

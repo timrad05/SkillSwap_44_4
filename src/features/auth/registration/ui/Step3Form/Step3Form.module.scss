@@ -1,0 +1,26 @@
+@use '../../../../../shared/styles/variables' as *;
+
+.form {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	font-family: $font-base;
+	gap: 16px;
+}
+
+.fields {
+	display: flex;
+	flex-direction: column;
+}
+
+.dropdown-field {
+	display: flex;
+	flex-direction: column;
+}
+
+.buttons {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	padding-top: 16px;
+}
