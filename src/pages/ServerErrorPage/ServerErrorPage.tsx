@@ -7,11 +7,20 @@ import style from './ServerErrorPage.module.scss';
 import type { ServerErrorPageProps } from './ServerErrorPage.types';
 
 export const ServerErrorPage: FC<ServerErrorPageProps> = ({ className }) => {
+	const footerMenuItems = [
+		{ id: 'about', label: 'О проекте' },
+		{ id: 'contact', label: 'Контакты' },
+		{ id: 'privacy', label: 'Политика конфиденциальности' },
+		{ id: 'skills', label: 'Все навыки' },
+		{ id: 'blog', label: 'Блог' },
+		{ id: 'terms', label: 'Пользовательское соглашение' },
+	];
+
 	return (
 		<div className={clsx(style.page, className)}>
 			<Header />
 			<ErrorMessage type="500" />
-			<Footer />
+			<Footer menuItems={footerMenuItems} />
 		</div>
 	);
 };
