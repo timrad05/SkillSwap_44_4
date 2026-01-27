@@ -8,12 +8,22 @@ export const Textarea = ({
 	errorText,
 	disabled = false,
 	showIcon = false,
+	required = false,
+	label = 'Описание',
 	...props
 }: TextareaProps) => {
 	return (
 		<div
 			className={`${cls.root} ${error ? cls.error : ''} ${disabled ? cls.disabled : ''} ${className}`}
 		>
+			{label && (
+				<label
+					className={`${cls.label} ${required ? cls.required : ''}`}
+					htmlFor={props.id}
+				>
+					{label}
+				</label>
+			)}
 			<div className={cls.control}>
 				<textarea
 					{...props}

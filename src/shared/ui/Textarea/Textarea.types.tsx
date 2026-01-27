@@ -7,4 +7,7 @@ export interface TextareaProps extends Omit<
 	error?: boolean;
 	errorText?: string;
 	showIcon?: boolean;
+	required?: boolean;
+	label?: string;
+	placeholder?: string;
 }

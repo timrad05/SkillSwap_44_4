@@ -14,6 +14,7 @@ export const DropDown: React.FC<DropDownProps> = ({
 	label = 'Город',
 	isOpen: externalIsOpen,
 	onToggle,
+	required,
 }) => {
 	const [internalIsOpen, setInternalIsOpen] = useState(false);
 
@@ -61,14 +62,29 @@ export const DropDown: React.FC<DropDownProps> = ({
 
 	return (
 		<div className={clsx(styles.dropdown, { [styles.open]: isOpen })}>
-			{label && <h3 className={styles.text}>{label}</h3>}
+			{label && (
+				<span
+					className={clsx(
+						styles.text,
+						styles.label,
+						required ? styles.required : '',
+					)}
+				>
+					{label}
+				</span>
+			)}
 			<button
 				type="button"
 				className={clsx(styles.trigger, { [styles.disabled]: disabled })}
 				onClick={handleTriggerClick}
 				disabled={disabled}
 			>
-				<span className={selectedOption ? styles.selected : styles.placeholder}>
+				<span
+					className={clsx(
+						styles.text,
+						selectedOption ? styles.selected : styles.placeholder,
+					)}
+				>
 					{selectedOption ? selectedOption.label : placeholder}
 				</span>
 				<span className={styles.icon}>
@@ -91,7 +107,7 @@ export const DropDown: React.FC<DropDownProps> = ({
 							})}
 							onClick={() => handleOptionClick(option.value)}
 						>
-							{option.label}
+							<span className={styles.text}>{option.label}</span>
 						</div>
 					))}
 				</div>

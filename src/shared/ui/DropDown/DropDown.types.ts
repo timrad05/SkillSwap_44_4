@@ -13,4 +13,5 @@ export interface DropDownProps {
 	label?: string;
 	isOpen?: boolean;
 	onToggle?: () => void;
+	required?: boolean;
 }
