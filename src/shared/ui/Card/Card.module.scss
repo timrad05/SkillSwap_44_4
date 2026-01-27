@@ -4,10 +4,9 @@
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
-	width: 360px;
-	padding: 16px;
+	min-width: 324px;
+	padding: 20px;
 	background-color: $color-card;
-	border-radius: 16px;
 	box-sizing: border-box;
 }
 
@@ -18,9 +17,9 @@
 }
 
 .section-title {
-	font-size: 14px;
-	line-height: 18px;
-	color: $color-caption;
+	font-size: 16px;
+	font-weight: 500;
+	color: $color-text;
 }
 
 .tags {

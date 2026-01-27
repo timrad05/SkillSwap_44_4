@@ -15,4 +15,6 @@ export interface CardProps {
 	wantToLearn: CardTag[];
 
 	onMoreClick?: () => void;
+	onLikeClick?: () => void;
+	isLiked?: boolean;
 }
