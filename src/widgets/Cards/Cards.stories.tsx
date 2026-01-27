@@ -11,7 +11,7 @@ const meta: Meta<typeof Cards> = {
 export default meta;
 type Story = StoryObj<typeof Cards>;
 
-const testCards: CardProps[] = [
+export const TestCards: CardProps[] = [
 	{
 		avatar: 'https://i.pravatar.cc/150?img=1',
 		name: 'Иван',
@@ -98,7 +98,7 @@ const testCards: CardProps[] = [
 export const NewWithThreeCards: Story = {
 	args: {
 		title: 'Популярное',
-		cards: testCards.slice(0, 3),
+		cards: TestCards.slice(0, 6),
 		viewAllText: 'Смотреть все',
 		onViewAllClick: () => console.log('Показать все новые'),
 	},

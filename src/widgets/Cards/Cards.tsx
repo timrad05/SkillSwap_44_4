@@ -11,8 +11,7 @@ export const Cards = ({
 	onViewAllClick,
 	className = '',
 }: CardsProps) => {
-	// Ограничиваем количество карточек до 3-х, как указано в ТЗ
-	const displayedCards = cards.slice(0, 3);
+	const displayedCards = cards.slice(0, 6);
 
 	return (
 		<div className={`${styles.container} ${className}`}>

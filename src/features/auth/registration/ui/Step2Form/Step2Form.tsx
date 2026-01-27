@@ -1,9 +1,9 @@
 // Step2Form.tsx
 import { useState, useRef, useEffect } from 'react';
 import type { Step2FormProps } from './Step2Form.types';
-import { InputField } from '../../../../shared/ui/InputField';
-import { DropDown } from '../../../../shared/ui/DropDown';
-import { Button } from '../../../../shared/ui/Button';
+import { InputField } from '../../../../../shared/ui/InputField';
+import { DropDown } from '../../../../../shared/ui/DropDown';
+import { Button } from '../../../../../shared/ui/Button';
 import cls from './Step2Form.module.scss';
 
 export const Step2Form = ({ className = '' }: Step2FormProps) => {

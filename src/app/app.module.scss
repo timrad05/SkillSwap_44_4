@@ -1,20 +1,10 @@
-@use '../shared/styles/fonts';
-
-.title {
-	text-align: center;
-}
-
-body {
-	font-family: Roboto, sans-serif;
-	font-weight: 400;
-}
-
-.jost-text {
-	font-family: Jost, sans-serif;
-	font-weight: 500;
-}
-
-.roboto-medium {
-	font-family: Roboto, sans-serif;
-	font-weight: 500;
+.app {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	min-height: 100vh;
+	width: 100%;
+	margin: 0;
+	padding: 0;
 }

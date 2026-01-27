@@ -3,4 +3,6 @@ export interface CardInfoProps {
 	name: string;
 	city: string;
 	age: number;
+	onLikeClick?: () => void;
+	isLiked?: boolean;
 }
