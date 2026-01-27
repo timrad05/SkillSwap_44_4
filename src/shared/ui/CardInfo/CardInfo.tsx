@@ -3,7 +3,14 @@ import styles from './CardInfo.module.scss';
 import type { CardInfoProps } from './CardInfo.types.ts';
 import { Like } from '../Like';
 
-export const CardInfo: FC<CardInfoProps> = ({ avatar, name, city, age }) => {
+export const CardInfo: FC<CardInfoProps> = ({
+	avatar,
+	name,
+	city,
+	age,
+	onLikeClick,
+	isLiked = false,
+}) => {
 	return (
 		<div className={styles.card}>
 			<img src={avatar} alt={name} className={styles.avatar} />
@@ -16,7 +23,10 @@ export const CardInfo: FC<CardInfoProps> = ({ avatar, name, city, age }) => {
 			</div>
 
 			<div className={styles.like}>
-				<Like />
+				<Like
+					isActive={isLiked} // передаём состояние
+					onClick={onLikeClick} // передаём обработчик
+				/>
 			</div>
 		</div>
 	);

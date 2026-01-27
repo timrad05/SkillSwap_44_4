@@ -15,10 +15,19 @@ export const Card: FC<CardProps> = ({
 	canTeach,
 	wantToLearn,
 	onMoreClick,
+	onLikeClick,
+	isLiked = false,
 }) => {
 	return (
 		<div className={styles.card}>
-			<CardInfo avatar={avatar} name={name} city={city} age={age} />
+			<CardInfo
+				avatar={avatar}
+				name={name}
+				city={city}
+				age={age}
+				onLikeClick={onLikeClick}
+				isLiked={isLiked}
+			/>
 
 			<div className={styles.section}>
 				<div className={styles['section-title']}>Может научить:</div>
