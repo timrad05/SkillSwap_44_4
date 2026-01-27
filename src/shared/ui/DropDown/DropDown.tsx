@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import chevronDownIcon from '../../assets/icons/chevron-down.svg';
+import chevronUpIcon from '../../assets/icons/chevron-up.svg';
 import styles from './DropDown.module.scss';
 import type { DropDownProps } from './DropDown.types';
 import chevronUpIcon from '../../assets/icons/chevron-up.svg';
