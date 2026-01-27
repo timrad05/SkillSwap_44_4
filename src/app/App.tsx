@@ -5,6 +5,9 @@ function App() {
 		<div className={styles.title}>
 			<h1>SkillSwap</h1>
 		</div>
+		// <>
+		// 	<ServerErrorPage />
+		// </>
 	);
 }
 
