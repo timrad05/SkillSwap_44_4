@@ -1,7 +1,7 @@
-//PR
 import styles from './app.module.scss';
 import { HomePage } from '../pages/HomePage';
 import { TestCards } from '../widgets/Cards/Cards.stories';
+// import { NotFoundPage } from '../pages/NotFoundPage';
 
 function App() {
 	return (
@@ -15,7 +15,7 @@ function App() {
 					viewAllText: 'Показать всех',
 				}}
 				recommendedProps={{
-					cards: TestCards.slice(0, 6),
+					cards: TestCards.slice(0, 9),
 				}}
 				footerProps={{
 					logoConfig: {
@@ -35,6 +35,9 @@ function App() {
 		</div>
 		// <>
 		// 	<ServerErrorPage />
+		// </>
+		// <>
+		// 	<NotFoundPage />
 		// </>
 	);
 }
