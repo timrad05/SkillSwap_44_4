@@ -1,3 +1,5 @@
+@use '../../shared/styles/variables' as *;
+
 .header {
 	display: flex;
 	flex-direction: row;
@@ -7,6 +9,7 @@
 	max-width: 1440px;
 	gap: 32px;
 	padding: 36px 36px 20px;
+	background-color: $color-background;
 }
 
 .logo {
