@@ -9,8 +9,8 @@ import styles from './HomePage.module.scss';
 export const HomePage = ({
 	headerProps = {},
 	filterProps = {},
-	cardsProps = {},
-	recommendedProps = {},
+	cardsProps = { cards: [] },
+	recommendedProps = { cards: [] },
 	footerProps = {},
 }: HomePageProps) => {
 	return (

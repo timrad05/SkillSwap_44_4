@@ -1,6 +1,6 @@
 import styles from './app.module.scss';
 import { HomePage } from '../pages/HomePage';
-import { testCards } from '../widgets/Cards/Cards.stories';
+import { TestCards } from '../widgets/Cards/Cards.stories';
 
 function App() {
 	return (
@@ -10,11 +10,11 @@ function App() {
 				filterProps={{}}
 				cardsProps={{
 					title: 'Найдите своего ментора',
-					cards: testCards,
+					cards: TestCards,
 					viewAllText: 'Показать всех',
 				}}
 				recommendedProps={{
-					cards: testCards.slice(0, 6),
+					cards: TestCards.slice(0, 6),
 				}}
 				footerProps={{
 					logoConfig: {
