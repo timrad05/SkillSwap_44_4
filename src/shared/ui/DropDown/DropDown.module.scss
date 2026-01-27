@@ -37,6 +37,10 @@
 		align-items: center;
 		box-sizing: border-box;
 
+		&:hover {
+			border-color: $color-button-hover;
+		}
+
 		&:disabled {
 			background: $color-disabled;
 			cursor: not-allowed;
