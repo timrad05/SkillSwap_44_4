@@ -10,12 +10,13 @@ export const Cards = ({
 	viewAllText = 'Смотреть все',
 	onViewAllClick,
 	className = '',
+	hideHeader = false,
 }: CardsProps) => {
 	const displayedCards = cards.slice(0, 3);
 
 	return (
 		<div className={`${styles.container} ${className}`}>
-			<div className={styles.header}>
+			{/* <div className={styles.header}>
 				<h2 className={styles.title}>{title}</h2>
 
 				<Button
@@ -30,8 +31,25 @@ export const Cards = ({
 						className={styles['chevron-right-icon']}
 					/>
 				</Button>
-			</div>
+			</div> */}
+			{!hideHeader && (
+				<div className={styles.header}>
+					<h2 className={styles.title}>{title}</h2>
 
+					<Button
+						variant="tertiary"
+						onClick={onViewAllClick}
+						className={styles['view-all-button']}
+					>
+						{viewAllText}
+						<img
+							src={chevronRightIcon}
+							alt=""
+							className={styles['chevron-right-icon']}
+						/>
+					</Button>
+				</div>
+			)}
 			<div className={styles.grid}>
 				{displayedCards.map((card, index) => (
 					<Card key={index} {...card} />
