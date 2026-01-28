@@ -10,6 +10,7 @@ export const CardInfo: FC<CardInfoProps> = ({
 	age,
 	onLikeClick,
 	isLiked = false,
+	showLikeButton = true,
 }) => {
 	return (
 		<div className={styles.card}>
@@ -22,12 +23,11 @@ export const CardInfo: FC<CardInfoProps> = ({
 				</div>
 			</div>
 
-			<div className={styles.like}>
-				<Like
-					isActive={isLiked} // передаём состояние
-					onClick={onLikeClick} // передаём обработчик
-				/>
-			</div>
+			{showLikeButton && (
+				<div className={styles.like}>
+					<Like isActive={isLiked} onClick={onLikeClick} />
+				</div>
+			)}
 		</div>
 	);
 };
