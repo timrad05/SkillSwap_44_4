@@ -12,7 +12,7 @@ function App() {
 				cardsProps={{
 					title: 'Найдите своего ментора',
 					cards: TestCards,
-					viewAllText: 'Показать всех',
+					viewAllText: 'Смотреть все',
 				}}
 				recommendedProps={{
 					cards: TestCards.slice(0, 9),

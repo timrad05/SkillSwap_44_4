@@ -18,12 +18,16 @@ export const Cards = ({
 			<div className={styles.header}>
 				<h2 className={styles.title}>{title}</h2>
 
-				<Button variant="tertiary" onClick={onViewAllClick}>
+				<Button
+					variant="tertiary"
+					onClick={onViewAllClick}
+					className={styles['view-all-button']}
+				>
 					{viewAllText}
 					<img
 						src={chevronRightIcon}
 						alt=""
-						className={styles.chevronRightIcon}
+						className={styles['chevron-right-icon']}
 					/>
 				</Button>
 			</div>
