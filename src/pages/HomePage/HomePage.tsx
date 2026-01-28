@@ -27,10 +27,6 @@ export const HomePage = ({
 						<section className={styles['cards-section']}>
 							<Cards {...cardsProps} />
 						</section>
-
-						<section className={styles['cards-section']}>
-							<Cards {...cardsProps} />
-						</section>
 						<section className={styles['recommended-section']}>
 							<RecommendedCards {...recommendedProps} />
 						</section>

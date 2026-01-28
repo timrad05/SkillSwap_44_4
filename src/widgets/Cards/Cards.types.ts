@@ -6,5 +6,4 @@ export interface CardsProps {
 	viewAllText?: string;
 	onViewAllClick?: () => void;
 	className?: string;
-	hideHeader?: boolean;
 }

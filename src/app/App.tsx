@@ -1,6 +1,5 @@
 import styles from './app.module.scss';
 import { HomePage } from '../pages/HomePage';
-// import { TestCards } from '../widgets/Cards/Cards.stories';
 import { testCards } from '../widgets/Cards/Cards.data';
 // import { NotFoundPage } from '../pages/NotFoundPage';
 
