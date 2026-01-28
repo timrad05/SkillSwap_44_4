@@ -11,7 +11,7 @@ export const Cards = ({
 	onViewAllClick,
 	className = '',
 }: CardsProps) => {
-	const displayedCards = cards.slice(0, 6);
+	const displayedCards = cards.slice(0, 3);
 
 	return (
 		<div className={`${styles.container} ${className}`}>
