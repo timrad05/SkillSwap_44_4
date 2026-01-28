@@ -1,13 +1,6 @@
 @use '../../shared/styles/variables' as *;
 @use '../../shared/styles/mixins' as *;
 
-.container {
-	width: 100%;
-	max-width: 1200px;
-	margin: 0 auto;
-	background-color: $color-background;
-}
-
 .header {
 	display: flex;
 	justify-content: space-between;
@@ -16,8 +9,9 @@
 }
 
 .title {
-	@include text-h1;
+	@include text-h2;
 
+	font-weight: 600;
 	color: $color-text;
 	text-align: start;
 }

@@ -17,7 +17,6 @@ export const Cards = ({
 		<div className={`${styles.container} ${className}`}>
 			<div className={styles.header}>
 				<h2 className={styles.title}>{title}</h2>
-
 				<Button
 					variant="tertiary"
 					onClick={onViewAllClick}
@@ -31,7 +30,6 @@ export const Cards = ({
 					/>
 				</Button>
 			</div>
-
 			<div className={styles.grid}>
 				{displayedCards.map((card, index) => (
 					<Card key={index} {...card} />
