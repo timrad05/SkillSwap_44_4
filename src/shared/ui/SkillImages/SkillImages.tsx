@@ -44,7 +44,7 @@ export const SkillImages: FC<SkillImagesProps> = ({ images, className }) => {
 					loop
 					spaceBetween={0}
 					slidesPerView={1}
-					className={style.mainSwiper}
+					className={style['main-swiper']}
 					onSwiper={(swiper) => {
 						swiperRef.current = swiper;
 					}}
@@ -53,8 +53,8 @@ export const SkillImages: FC<SkillImagesProps> = ({ images, className }) => {
 						<SwiperSlide key={index}>
 							<img
 								src={img}
-								alt={`Skill image ${index + 1}`}
-								className={style.mainImage}
+								alt={`Изображение ${index + 1}`}
+								className={style['main-image']}
 							/>
 						</SwiperSlide>
 					))}
@@ -65,11 +65,15 @@ export const SkillImages: FC<SkillImagesProps> = ({ images, className }) => {
 					<img
 						src={chevronIcon}
 						alt="Предыдущее"
-						className={clsx(style.arrowIcon, style.reverse)}
+						className={clsx(style['arrow-icon'], style.reverse)}
 					/>
 				</div>
 				<div ref={nextRef} className={clsx(style.arrow, style.next)}>
-					<img src={chevronIcon} alt="Следующее" className={style.arrowIcon} />
+					<img
+						src={chevronIcon}
+						alt="Следующее"
+						className={style['arrow-icon']}
+					/>
 				</div>
 			</div>
 
@@ -78,8 +82,8 @@ export const SkillImages: FC<SkillImagesProps> = ({ images, className }) => {
 					<div key={index} className={style.thumbnail}>
 						<img
 							src={img}
-							alt={`Thumbnail ${index + 1}`}
-							className={style.thumbnailImage}
+							alt={`Превью ${index + 1}`}
+							className={style['thumbnail-image']}
 						/>
 						{index === 2 && remaining > 0 && (
 							<div className={style.overlay}>+{remaining}</div>
