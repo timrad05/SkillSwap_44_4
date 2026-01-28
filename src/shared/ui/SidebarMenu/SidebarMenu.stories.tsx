@@ -20,7 +20,7 @@ const meta: Meta<typeof SidebarMenu> = {
 export default meta;
 type Story = StoryObj<typeof SidebarMenu>;
 
-const items = [
+export const SidebarItems = [
 	{ id: 'requests', label: 'Заявки', icon: requestIcon },
 	{ id: 'exchanges', label: 'Мои обмены', icon: messageIcon },
 	{ id: 'favorites', label: 'Избранное', icon: likeIcon },
@@ -28,7 +28,7 @@ const items = [
 	{ id: 'profile', label: 'Личные данные', icon: userIcon },
 ];
 
-const itemsWithTo = items.map((item) => ({
+const itemsWithTo = SidebarItems.map((item) => ({
 	...item,
 	to: `/${item.id}`,
 }));
@@ -37,7 +37,7 @@ const InteractiveMenuButtons = () => {
 	const [activeId, setActiveId] = useState<string | null>('requests');
 	return (
 		<SidebarMenu
-			items={items}
+			items={SidebarItems}
 			activeId={activeId ?? undefined}
 			onSelect={setActiveId}
 		/>
@@ -83,7 +83,7 @@ export const DefaultLinks: Story = {
 
 export const WithActiveItem: Story = {
 	args: {
-		items,
+		items: SidebarItems,
 		activeId: 'exchanges',
 	},
 	parameters: {
