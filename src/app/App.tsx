@@ -11,7 +11,7 @@ function App() {
 				headerProps={{}}
 				filterProps={{}}
 				cardsProps={{
-					title: 'Найдите своего ментора',
+					title: 'Популярное',
 					cards: testCards,
 					viewAllText: 'Смотреть все',
 				}}
