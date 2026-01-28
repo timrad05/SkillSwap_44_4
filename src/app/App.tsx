@@ -1,3 +1,5 @@
+{
+	/*
 import styles from './app.module.scss';
 import { HomePage } from '../pages/HomePage';
 import { TestCards } from '../widgets/Cards/Cards.stories';
@@ -39,6 +41,20 @@ function App() {
 		// <>
 		// 	<NotFoundPage />
 		// </>
+	);
+}
+
+export default App;
+
+*/
+}
+
+import { LoginPage } from '../pages/LoginPage';
+
+function App() {
+	return (
+		// Для проверки LoginPage:
+		<LoginPage />
 	);
 }
 
