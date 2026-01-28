@@ -16,7 +16,7 @@
 }
 
 .title {
-	@include text-h1;
+	@include text-h2;
 
 	font-weight: 600;
 	color: $color-text;
