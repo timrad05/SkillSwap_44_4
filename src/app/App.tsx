@@ -1,6 +1,7 @@
 import styles from './app.module.scss';
 import { HomePage } from '../pages/HomePage';
 import { testCards } from '../widgets/Cards/Cards.data';
+/* import { RegisterPage } from '../pages/RegisterPage'; */
 // import { NotFoundPage } from '../pages/NotFoundPage';
 // import { ProfilePage } from '../pages/ProfilePage';
 
@@ -63,6 +64,8 @@ function App() {
 				],
 			}}
 		/> */
+		//
+		/* <RegisterPage /> */
 	);
 }
 
