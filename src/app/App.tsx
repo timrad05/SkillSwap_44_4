@@ -1,39 +1,41 @@
-{
-	/*
 import styles from './app.module.scss';
-import { HomePage } from '../pages/HomePage';
-import { TestCards } from '../widgets/Cards/Cards.stories';
+// import { HomePage } from '../pages/HomePage';
+// import { TestCards } from '../widgets/Cards/Cards.stories';
+import { LoginPage } from '../pages/LoginPage';
 // import { NotFoundPage } from '../pages/NotFoundPage';
 
 function App() {
 	return (
+		// <div className={styles.app}>
+		// 	<HomePage
+		// 		headerProps={{}}
+		// 		filterProps={{}}
+		// 		cardsProps={{
+		// 			title: 'Найдите своего ментора',
+		// 			cards: TestCards,
+		// 			viewAllText: 'Показать всех',
+		// 		}}
+		// 		recommendedProps={{
+		// 			cards: TestCards.slice(0, 9),
+		// 		}}
+		// 		footerProps={{
+		// 			logoConfig: {
+		// 				name: 'SkillSwap',
+		// 				size: 'medium',
+		// 			},
+		// 			menuItems: [
+		// 				{ id: 'about', label: 'О проекте' },
+		// 				{ id: 'contact', label: 'Контакты' },
+		// 				{ id: 'privacy', label: 'Политика конфиденциальности' },
+		// 				{ id: 'skills', label: 'Все навыки' },
+		// 				{ id: 'blog', label: 'Блог' },
+		// 				{ id: 'terms', label: 'Пользовательское соглашение' },
+		// 			],
+		// 		}}
+		// 	/>
+		// </div>
 		<div className={styles.app}>
-			<HomePage
-				headerProps={{}}
-				filterProps={{}}
-				cardsProps={{
-					title: 'Найдите своего ментора',
-					cards: TestCards,
-					viewAllText: 'Показать всех',
-				}}
-				recommendedProps={{
-					cards: TestCards.slice(0, 9),
-				}}
-				footerProps={{
-					logoConfig: {
-						name: 'SkillSwap',
-						size: 'medium',
-					},
-					menuItems: [
-						{ id: 'about', label: 'О проекте' },
-						{ id: 'contact', label: 'Контакты' },
-						{ id: 'privacy', label: 'Политика конфиденциальности' },
-						{ id: 'skills', label: 'Все навыки' },
-						{ id: 'blog', label: 'Блог' },
-						{ id: 'terms', label: 'Пользовательское соглашение' },
-					],
-				}}
-			/>
+			<LoginPage />
 		</div>
 		// <>
 		// 	<ServerErrorPage />
@@ -43,19 +45,4 @@ function App() {
 		// </>
 	);
 }
-
-export default App;
-
-*/
-}
-
-import { LoginPage } from '../pages/LoginPage';
-
-function App() {
-	return (
-		// Для проверки LoginPage:
-		<LoginPage />
-	);
-}
-
 export default App;
