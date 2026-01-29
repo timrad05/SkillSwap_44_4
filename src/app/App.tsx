@@ -7,8 +7,8 @@ import { testCards } from '../widgets/Cards/Cards.data';
 /* RegisterPage */
 // import { RegisterPage } from '../pages/RegisterPage';
 /* ProfilePage */
-// import { ProfilePage } from '../pages/ProfilePage';
-// import { SidebarItems } from '../shared/ui/SidebarMenu/SidebarMenu.stories';
+import { ProfilePage } from '../pages/ProfilePage';
+import { SidebarItems } from '../shared/ui/SidebarMenu/SidebarMenu.stories';
 /* NotFoundPage */
 // import { NotFoundPage } from '../pages/NotFoundPage';
 /* ServerErrorPage */
@@ -18,6 +18,29 @@ function App() {
 	return (
 		/* Homepage */
 		<div className={styles.app}>
+			<ProfilePage
+				headerProps={{}}
+				sidebarProps={{
+					items: SidebarItems,
+					activeId: 'profile',
+					onSelect: (id) => console.log(`Selected: ${id}`),
+				}}
+				profileinfoProps={{}}
+				footerProps={{
+					logoConfig: {
+						name: 'SkillSwap',
+						size: 'medium',
+					},
+					menuItems: [
+						{ id: 'about', label: 'О проекте' },
+						{ id: 'contact', label: 'Контакты' },
+						{ id: 'privacy', label: 'Политика конфиденциальности' },
+						{ id: 'skills', label: 'Все навыки' },
+						{ id: 'blog', label: 'Блог' },
+						{ id: 'terms', label: 'Пользовательское соглашение' },
+					],
+				}}
+			/>
 			<HomePage
 				headerProps={{}}
 				filterProps={{}}
@@ -79,6 +102,7 @@ function App() {
 		// 		}}
 		// 	/>
 		// </div>
+
 		/* NotFoundPage */
 		// <div className={styles.app}>
 		//   <NotFoundPage />
