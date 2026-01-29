@@ -1,12 +1,12 @@
 import styles from './app.module.scss';
+import { Route, Routes } from 'react-router-dom';
 /* Homepage */
 import { HomePage } from '../pages/HomePage';
 import { testCards } from '../widgets/Cards/Cards.data';
-
 /* LoginPage */
-//import { LoginPage } from '../pages/LoginPage';
+import { LoginPage } from '../pages/LoginPage';
 /* RegisterPage */
-// import { RegisterPage } from '../pages/RegisterPage';
+import { RegisterPage } from '../pages/RegisterPage';
 /* ProfilePage */
 // import { ProfilePage } from '../pages/ProfilePage';
 // import { SidebarItems } from '../shared/ui/SidebarMenu/SidebarMenu.stories';
@@ -19,32 +19,41 @@ function App() {
 	return (
 		/* Homepage */
 		<div className={styles.app}>
-			<HomePage
-				headerProps={{}}
-				filterProps={{}}
-				cardsProps={{
-					title: 'Популярное',
-					cards: testCards,
-					viewAllText: 'Смотреть все',
-				}}
-				recommendedProps={{
-					cards: testCards.slice(0, 9),
-				}}
-				footerProps={{
-					logoConfig: {
-						name: 'SkillSwap',
-						size: 'medium',
-					},
-					menuItems: [
-						{ id: 'about', label: 'О проекте' },
-						{ id: 'contact', label: 'Контакты' },
-						{ id: 'privacy', label: 'Политика конфиденциальности' },
-						{ id: 'skills', label: 'Все навыки' },
-						{ id: 'blog', label: 'Блог' },
-						{ id: 'terms', label: 'Пользовательское соглашение' },
-					],
-				}}
-			/>
+			<Routes>
+				<Route
+					path="/"
+					element={
+						<HomePage
+							headerProps={{}}
+							filterProps={{}}
+							cardsProps={{
+								title: 'Популярное',
+								cards: testCards,
+								viewAllText: 'Смотреть все',
+							}}
+							recommendedProps={{
+								cards: testCards.slice(0, 9),
+							}}
+							footerProps={{
+								logoConfig: {
+									name: 'SkillSwap',
+									size: 'medium',
+								},
+								menuItems: [
+									{ id: 'about', label: 'О проекте' },
+									{ id: 'contact', label: 'Контакты' },
+									{ id: 'privacy', label: 'Политика конфиденциальности' },
+									{ id: 'skills', label: 'Все навыки' },
+									{ id: 'blog', label: 'Блог' },
+									{ id: 'terms', label: 'Пользовательское соглашение' },
+								],
+							}}
+						/>
+					}
+				/>
+				<Route path="login" element={<LoginPage />} />
+				<Route path="registration" element={<RegisterPage />} />
+			</Routes>
 		</div>
 		/* LoginPage */
 		//	<div className={styles.app}>
