@@ -19,7 +19,7 @@ export const DropDown: React.FC<DropDownProps> = ({
 	const [internalIsOpen, setInternalIsOpen] = useState(false);
 
 	const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
-	const selectedOption = options.find((opt) => opt.value === value);
+	const selectedOption = options?.find((opt) => opt.value === value) || null;
 
 	const handleTriggerClick = () => {
 		if (disabled) return;
@@ -98,7 +98,8 @@ export const DropDown: React.FC<DropDownProps> = ({
 
 			{isOpen && (
 				<div className={styles.menu}>
-					{options.length > 0 &&
+					{options &&
+						options.length > 0 &&
 						options.map((option) => (
 							<div
 								key={option.value}
@@ -111,7 +112,7 @@ export const DropDown: React.FC<DropDownProps> = ({
 								<span className={styles.text}>{option.label}</span>
 							</div>
 						))}
-					{options.length == 0 && (
+					{(!options || options.length == 0) && (
 						<div className={clsx(styles['empty-box'])}>
 							<span className={styles.text}>Ничего не найдено</span>
 						</div>
