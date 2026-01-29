@@ -1,4 +1,3 @@
-// src/shared/ui/Skill/Skill.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Skill } from './Skill';
 import { useState } from 'react';

@@ -1,4 +1,3 @@
-// src/shared/ui/Skill/Skill.tsx
 import React from 'react';
 import { SkillInfo } from '../SkillInfo';
 import { SkillImages } from '../SkillImages';
