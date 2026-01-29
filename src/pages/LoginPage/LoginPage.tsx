@@ -9,24 +9,19 @@ export const LoginPage = ({ className }: LoginPageProps) => {
 	return (
 		<div className={clsx(styles.page, className)}>
 			<Header isAuthPage={true} />
-
-			<div className={styles.container}>
-				{/* Левая панель - форма входа */}
-				<div className={styles.loginPanel}>
+			<div className={clsx(styles.main, className)}>
+				<h1 className={styles.title}>Вход</h1>
+				<div className={styles.container}>
 					<div className={styles.content}>
-						<h1 className={styles.title}>Вход</h1>
-						<p className={styles.subtitle}>С возвращением в SkillSwap!</p>
 						<LoginForm />
 					</div>
-				</div>
-
-				{/* Правая панель - Info компонент */}
-				<div className={styles.infoPanel}>
-					<Info
-						image="src/shared/assets/images/light-bulb.png"
-						title="С возвращением в SkillSwap!"
-						text="Обменивайтесь знаниями и навыками с другими людьми"
-					/>
+					<div className={styles.panel}>
+						<Info
+							image="src/shared/assets/images/light-bulb.png"
+							title="С возвращением в SkillSwap!"
+							text="Обменивайтесь знаниями и навыками с другими людьми"
+						/>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -1,51 +1,46 @@
+@use '../../shared/styles/variables' as *;
+@use '../../shared/styles/mixins' as *;
+
 .page {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+	background-color: $color-background;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.title {
+	@include text-h2;
+
+	align-items: center;
 }
 
 .container {
 	display: flex;
-	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	flex: 1;
-	gap: 60px;
-	padding: 40px;
-	max-width: 1440px;
-	margin: 0 auto;
-}
-
-.login-panel {
-	flex: 1;
-	max-width: 400px;
-}
-
-.info-panel {
-	flex: 1;
-	max-width: 556px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	gap: 24px;
+	padding-inline: 152px;
+	margin-top: 32px;
+	max-width: min-content;
+	margin-bottom: 188px;
 }
 
 .content {
-	background: #fff;
-	padding: 40px;
-	border-radius: 16px;
-	box-shadow: 0 4px 20px rgb(0 0 0 / 10%);
-	width: 100%;
+	width: 556px;
+	height: 692px;
+	padding: 60px 112px;
+	background-color: $color-card;
 }
 
-.title {
-	font-size: 28px;
-	font-weight: 500;
-	margin-bottom: 8px;
-	color: #000;
-}
-
-.subtitle {
-	font-size: 16px;
-	color: #666;
-	margin-bottom: 32px;
+.panel {
+	width: 556px;
+	height: 692px;
+	padding-inline: 60px;
+	background-color: $color-card;
 }
