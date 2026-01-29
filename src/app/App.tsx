@@ -3,7 +3,7 @@ import styles from './app.module.scss';
 import { HomePage } from '../pages/HomePage';
 import { testCards } from '../widgets/Cards/Cards.data';
 /* LoginPage */
-// import { LoginPage } from '../pages/LoginPage';
+//import { LoginPage } from '../pages/LoginPage';
 /* RegisterPage */
 // import { RegisterPage } from '../pages/RegisterPage';
 /* ProfilePage */
@@ -46,9 +46,9 @@ function App() {
 			/>
 		</div>
 		/* LoginPage */
-		// <div className={styles.app}>
-		// 	<LoginPage />
-		// </div>
+		//	<div className={styles.app}>
+		//	<LoginPage />
+		//</div>
 		/* RegisterPage */
 		// <div className={styles.app}>
 		// 	<RegisterPage />
