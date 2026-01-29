@@ -20,17 +20,17 @@ interface CustomInputProps {
 
 const CustomDateInput = forwardRef<HTMLInputElement, CustomInputProps>(
 	({ value, onChange, onClick, placeholder }, ref) => (
-		<div className={cls.dateInputWrapper} onClick={onClick}>
+		<div className={cls['date-input-wrapper']} onClick={onClick}>
 			<input
 				ref={ref}
 				type="text"
 				placeholder={placeholder || 'дд.мм.гггг'}
 				value={value || ''}
 				onChange={onChange || (() => {})}
-				className={cls.dateInput}
+				className={cls['date-input']}
 				readOnly
 			/>
-			<img src={CalendarIcon} alt="calendar" className={cls.calendarIcon} />
+			<img src={CalendarIcon} alt="calendar" className={cls['calendar-icon']} />
 		</div>
 	),
 );
@@ -47,13 +47,13 @@ export const Step2Form = ({ className = '' }: Step2FormProps) => {
 	});
 
 	const [tempBirthDate, setTempBirthDate] = useState<Date | null>(null);
-	const [prevBirthDate, setPrevBirthDate] = useState<Date | null>(null); // сохраняем предыдущую дату
+	const [prevBirthDate, setPrevBirthDate] = useState<Date | null>(null);
 	const [errors, setErrors] = useState({ name: '' });
 	const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 	const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
 	const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});
-	const datePickerRef = useRef<HTMLDivElement>(null); // ← Добавлен ref для обработки кликов вне календаря
+	const datePickerRef = useRef<HTMLDivElement>(null);
 
 	const handleInputChange =
 		(field: keyof typeof formData) =>
@@ -155,8 +155,6 @@ export const Step2Form = ({ className = '' }: Step2FormProps) => {
 					<div className={cls['inline-field']}>
 						<span className={cls['dropdown-label']}>Дата рождения</span>
 						<div ref={datePickerRef}>
-							{' '}
-							{/* ← Обернули в div с ref для click outside */}
 							<DatePicker
 								selected={tempBirthDate}
 								onChange={handleDateChange}
@@ -167,22 +165,22 @@ export const Step2Form = ({ className = '' }: Step2FormProps) => {
 								showPopperArrow={false}
 								open={isDatePickerOpen}
 								onInputClick={handleDatePickerOpen}
-								onCalendarClose={() => {}} // отключаем авто-закрытие
-								onClickOutside={() => {}} // ← Изменено: закрываем по клику вне (работает вместе с useEffect)
-								wrapperClassName={cls.datePickerWrapper}
-								calendarClassName={cls.datePickerCalendar}
+								onCalendarClose={() => {}}
+								onClickOutside={() => {}}
+								wrapperClassName={cls['date-picker-wrapper']}
+								calendarClassName={cls['date-picker-calendar']}
 								renderCustomHeader={({ date, changeYear, changeMonth }) => (
-									<div className={cls.customHeader}>
+									<div className={cls['custom-header']}>
 										{/* Месяц */}
-										<div className={cls.monthSelectWrapper}>
-											<button type="button" className={cls.selectTrigger}>
+										<div className={cls['month-select-wrapper']}>
+											<button type="button" className={cls['select-trigger']}>
 												<span>
 													{ru.localize.month(date.getMonth() as Month)}
 												</span>
 												<img src={ChevronDown} alt="" className={cls.chevron} />
 											</button>
 											<select
-												className={cls.hiddenSelect}
+												className={cls['hidden-select']}
 												value={date.getMonth()}
 												onChange={(e) => changeMonth(Number(e.target.value))}
 												aria-label="Месяц"
@@ -196,13 +194,13 @@ export const Step2Form = ({ className = '' }: Step2FormProps) => {
 										</div>
 
 										{/* Год */}
-										<div className={cls.yearSelectWrapper}>
-											<button type="button" className={cls.selectTrigger}>
+										<div className={cls['year-select-wrapper']}>
+											<button type="button" className={cls['select-trigger']}>
 												<span>{date.getFullYear()}</span>
 												<img src={ChevronDown} alt="" className={cls.chevron} />
 											</button>
 											<select
-												className={cls.hiddenSelect}
+												className={cls['hidden-select']}
 												value={date.getFullYear()}
 												onChange={(e) => changeYear(Number(e.target.value))}
 												aria-label="Год"
@@ -225,12 +223,12 @@ export const Step2Form = ({ className = '' }: Step2FormProps) => {
 								showYearDropdown={false}
 								shouldCloseOnSelect={false}
 							>
-								<div className={cls.footerButtons}>
+								<div className={cls['footer-buttons']}>
 									<Button
 										type="button"
 										variant="secondary"
 										onClick={handleCancelDate}
-										className={cls.cancelButton}
+										className={cls['cancel-button']}
 									>
 										Отменить
 									</Button>
@@ -238,7 +236,7 @@ export const Step2Form = ({ className = '' }: Step2FormProps) => {
 										type="button"
 										variant="primary"
 										onClick={handleConfirmDate}
-										className={cls.confirmButton}
+										className={cls['confirm-button']}
 									>
 										Выбрать
 									</Button>
