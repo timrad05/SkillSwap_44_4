@@ -41,7 +41,7 @@ export const testCards: CardProps[] = [
 		onMoreClick: () => console.log('Мария'),
 	},
 	{
-		avatar: 'https://i.pravatar.cc/150?img=5',
+		avatar: 'https://i.pravatar.cc/150?img=6',
 		name: 'Дмитрий',
 		city: 'Казань',
 		age: 35,
@@ -50,7 +50,7 @@ export const testCards: CardProps[] = [
 		onMoreClick: () => console.log('Дмитрий'),
 	},
 	{
-		avatar: 'https://i.pravatar.cc/150?img=6',
+		avatar: 'https://i.pravatar.cc/150?img=5',
 		name: 'Анна',
 		city: 'Красноярск',
 		age: 27,
