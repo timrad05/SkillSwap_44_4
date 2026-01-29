@@ -4,6 +4,8 @@ import { HomePage } from '../pages/HomePage';
 import { testCards } from '../widgets/Cards/Cards.data';
 /* LoginPage */
 // import { LoginPage } from '../pages/LoginPage';
+/* RegisterPage */
+// import { RegisterPage } from '../pages/RegisterPage';
 /* ProfilePage */
 // import { ProfilePage } from '../pages/ProfilePage';
 // import { SidebarItems } from '../shared/ui/SidebarMenu/SidebarMenu.stories';
@@ -46,6 +48,10 @@ function App() {
 		/* LoginPage */
 		// <div className={styles.app}>
 		// 	<LoginPage />
+		// </div>
+		/* RegisterPage */
+		// <div className={styles.app}>
+		// 	<RegisterPage />
 		// </div>
 		/* ProfilePage */
 		// <div className={styles.app}>

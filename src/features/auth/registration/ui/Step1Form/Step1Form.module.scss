@@ -3,8 +3,12 @@
 .form {
 	display: flex;
 	flex-direction: column;
-	width: 100%;
+	width: 556px;
 	font-family: $font-base;
+	background: var(--info-bg, #fff);
+	height: 692px;
+	padding-inline: 60px;
+	padding-top: 121.5px;
 }
 
 .fields {
