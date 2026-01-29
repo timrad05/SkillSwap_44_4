@@ -2,6 +2,7 @@ import styles from './app.module.scss';
 /* Homepage */
 import { HomePage } from '../pages/HomePage';
 import { testCards } from '../widgets/Cards/Cards.data';
+
 /* LoginPage */
 //import { LoginPage } from '../pages/LoginPage';
 /* RegisterPage */
