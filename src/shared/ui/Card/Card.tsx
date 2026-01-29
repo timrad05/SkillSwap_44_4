@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { useState } from 'react';
 import styles from './Card.module.scss';
 
 import { CardInfo } from '../CardInfo';
@@ -7,7 +7,7 @@ import { Button } from '../Button';
 
 import type { CardProps } from './Card.types';
 
-export const Card: FC<CardProps> = ({
+export const Card = ({
 	avatar,
 	name,
 	city,
@@ -16,8 +16,28 @@ export const Card: FC<CardProps> = ({
 	wantToLearn,
 	onMoreClick,
 	onLikeClick,
-	isLiked = false,
-}) => {
+	isLiked: externalIsLiked,
+}: CardProps) => {
+	// Локальное состояние лайка
+	const [internalIsLiked, setInternalIsLiked] = useState(false);
+
+	// Если isLiked передан извне - используем его, иначе внутреннее состояние
+	const isLiked =
+		externalIsLiked !== undefined ? externalIsLiked : internalIsLiked;
+
+	const handleLikeClick = () => {
+		if (onLikeClick) {
+			// Если есть внешний обработчик - вызываем его
+			onLikeClick();
+		} else {
+			// Иначе управляем внутренним состоянием
+			setInternalIsLiked(!isLiked);
+			console.log(
+				`Лайк карточки "${name}": ${!isLiked ? 'поставлен' : 'убран'}`,
+			);
+		}
+	};
+
 	return (
 		<div className={styles.card}>
 			<CardInfo
@@ -25,7 +45,7 @@ export const Card: FC<CardProps> = ({
 				name={name}
 				city={city}
 				age={age}
-				onLikeClick={onLikeClick}
+				onLikeClick={handleLikeClick}
 				isLiked={isLiked}
 			/>
 

@@ -2,8 +2,7 @@ import styles from './app.module.scss';
 /* Homepage */
 import { HomePage } from '../pages/HomePage';
 import { testCards } from '../widgets/Cards/Cards.data';
-import { useState } from 'react';
-import type { CardProps } from '../shared/ui/Card';
+
 /* LoginPage */
 // import { LoginPage } from '../pages/LoginPage';
 /* RegisterPage */
@@ -17,28 +16,6 @@ import type { CardProps } from '../shared/ui/Card';
 // import { ServerErrorPage } from '../pages/ServerErrorPage';
 
 function App() {
-	const [cards, setCards] = useState<CardProps[]>(testCards);
-
-	const handleLikeClick = (index: number) => {
-		setCards((prevCards) => {
-			const newCards = [...prevCards];
-			newCards[index] = {
-				...newCards[index],
-				isLiked: !newCards[index].isLiked,
-				onLikeClick: () => handleLikeClick(index),
-			};
-			return newCards;
-		});
-		console.log(
-			`Лайк карточки ${index}: ${!cards[index].isLiked ? 'поставлен' : 'убран'}`,
-		);
-	};
-
-	const cardsWithHandlers = cards.map((card, index) => ({
-		...card,
-		onLikeClick: () => handleLikeClick(index),
-	}));
-
 	return (
 		/* Homepage */
 		<div className={styles.app}>
@@ -47,11 +24,11 @@ function App() {
 				filterProps={{}}
 				cardsProps={{
 					title: 'Популярное',
-					cards: cardsWithHandlers,
+					cards: testCards,
 					viewAllText: 'Смотреть все',
 				}}
 				recommendedProps={{
-					cards: cardsWithHandlers.slice(0, 9),
+					cards: testCards.slice(0, 9),
 				}}
 				footerProps={{
 					logoConfig: {
