@@ -36,10 +36,13 @@
 	"dependencies": {
 		"@reduxjs/toolkit": "^2.11.2",
 		"clsx": "^2.1.1",
+		"date-fns": "^4.1.0",
 		"react": "^19.2.0",
+		"react-datepicker": "^9.1.0",
 		"react-dom": "^19.2.0",
 		"react-redux": "^9.2.0",
-		"react-router-dom": "^7.12.0"
+		"react-router-dom": "^7.12.0",
+		"swiper": "^12.0.3"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^5.0.0",
@@ -55,6 +58,7 @@
 		"@types/jest": "^30.0.0",
 		"@types/node": "^24.10.1",
 		"@types/react": "^19.2.5",
+		"@types/react-datepicker": "^6.2.0",
 		"@types/react-dom": "^19.2.3",
 		"@typescript-eslint/eslint-plugin": "^7.18.0",
 		"@typescript-eslint/parser": "^7.18.0",
@@ -80,7 +84,7 @@
 		"playwright": "^1.57.0",
 		"postcss-scss": "^4.0.9",
 		"prettier": "^3.7.4",
-		"sass": "^1.97.2",
+		"sass": "^1.97.3",
 		"storybook": "^10.1.11",
 		"stylelint": "^17.0.0",
 		"stylelint-config-standard-scss": "^17.0.0",
