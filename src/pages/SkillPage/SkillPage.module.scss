@@ -1,0 +1,46 @@
+@use '../../shared/styles/variables' as *;
+
+.page {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	background-color: $color-background;
+	align-items: center;
+	width: 100%;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: 1440px;
+	padding: 32px 36px 0;
+	box-sizing: border-box;
+	flex: 1;
+}
+
+.content-row {
+	display: flex;
+	gap: 24px;
+	margin-bottom: 60px;
+	align-items: flex-start;
+}
+
+.skill-container {
+	flex: 1;
+}
+
+.sidebar {
+	width: 324px;
+	flex-shrink: 0;
+}
+
+.similar-cards-section {
+	margin-bottom: 60px;
+	width: 100%;
+}
+
+.footer-section {
+	width: 100%;
+	margin-top: auto;
+}
