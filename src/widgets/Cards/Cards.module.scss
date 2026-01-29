@@ -1,24 +1,52 @@
-@use '../../shared//styles/variables' as *;
-
-.container {
-	width: 100%;
-	max-width: 1200px;
-	margin: 0 auto;
-	background-color: $color-background;
-}
+@use '../../shared/styles/variables' as *;
+@use '../../shared/styles/mixins' as *;
 
 .header {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	align-items: baseline;
 	margin-bottom: 32px;
 }
 
 .title {
+	@include text-h2;
+
 	font-size: 32px;
-	font-weight: 500;
+	font-weight: 600;
 	color: $color-text;
 	text-align: start;
+}
+
+.view-all-button {
+	@include text-body;
+
+	width: fit-content;
+	height: 40px;
+	padding: 8px 12px;
+	border-radius: 12px;
+	background-color: $color-card;
+	border: 1px solid $color-button-hover;
+	color: $color-text;
+	transition:
+		border-color 0.2s ease,
+		background-color 0.2s ease,
+		color 0.2s ease;
+
+	&:hover {
+		background-color: $color-card;
+		border-color: $color-button-hover;
+	}
+
+	&:active {
+		background-color: $color-card;
+		border-color: $color-button-pressed;
+	}
+}
+
+.chevron-right-icon {
+	width: 24px;
+	height: 24px;
+	flex-shrink: 0;
 }
 
 .grid {

@@ -6,6 +6,9 @@ $font-base: 'Roboto', sans-serif;
 	position: relative;
 	width: 527px;
 	height: 48px;
+	background: #f7f8f5;
+	border-radius: 16px;
+	padding: 2px;
 }
 
 .input {
@@ -13,9 +16,10 @@ $font-base: 'Roboto', sans-serif;
 	block-size: 100%;
 	padding: 12px 40px;
 	box-sizing: border-box;
-	border: 1px solid #ccc;
-	border-radius: 4px;
+	border: none;
+	border-radius: 14px;
 	outline: none;
+	background: #fff;
 	font-family: $font-base;
 	font-weight: 400;
 	font-size: 16px;
@@ -51,11 +55,19 @@ $font-base: 'Roboto', sans-serif;
 }
 
 .input:not(:placeholder-shown) {
-	color: $color-text;
+	color: $color-caption;
 }
 
 .input.filled {
 	color: $color-text;
+}
+
+.input:focus {
+	box-shadow: 0 0 0 2px $color-accent;
+}
+
+.input::placeholder {
+	color: #9aa38f;
 }
 
 .icon,
