@@ -6,5 +6,6 @@ export interface SkillInfoProps {
 		text: string;
 		onClick: () => void;
 		variant?: 'primary' | 'secondary' | 'tertiary';
+		isExchangeProposed?: boolean;
 	};
 }

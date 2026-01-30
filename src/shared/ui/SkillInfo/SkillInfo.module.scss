@@ -39,5 +39,15 @@
 
 .button {
 	min-width: 399px;
+	height: 48px;
 	margin-top: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+
+	&.exchange-proposed:disabled {
+		color: $color-text !important;
+		border-color: $color-accent !important;
+	}
 }

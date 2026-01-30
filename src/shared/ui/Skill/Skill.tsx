@@ -11,7 +11,7 @@ export const Skill: React.FC<SkillProps> = ({
 	title,
 	subtitle,
 	description,
-	buttonProps,
+	buttonProps: initialButtonProps,
 	images,
 	isLiked: externalIsLiked,
 	onLikeClick: externalOnLikeClick,
@@ -38,6 +38,23 @@ export const Skill: React.FC<SkillProps> = ({
 		}
 	};
 
+	const [isExchangeProposed, setIsExchangeProposed] = useState(
+		initialButtonProps.isExchangeProposed || false,
+	);
+
+	const handleExchangeClick = () => {
+		if (!isExchangeProposed) {
+			setIsExchangeProposed(true);
+			initialButtonProps.onClick();
+		}
+	};
+
+	const buttonProps = {
+		...initialButtonProps,
+		onClick: handleExchangeClick,
+		isExchangeProposed,
+	};
+
 	return (
 		<div className={styles.container}>
 			{/* Группа с иконками */}
@@ -48,7 +65,6 @@ export const Skill: React.FC<SkillProps> = ({
 						onClick={handleLikeClick}
 						className={styles.icon}
 					/>
-
 					<button
 						type="button"
 						className={styles.icon}
@@ -57,7 +73,6 @@ export const Skill: React.FC<SkillProps> = ({
 					>
 						<img src={shareIcon} alt="" width={24} height={24} />
 					</button>
-
 					<button
 						type="button"
 						className={styles.icon}
