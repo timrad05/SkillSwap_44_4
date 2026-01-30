@@ -1,4 +1,5 @@
 import { Card } from '../../shared/ui/Card/Card';
+import { Link } from 'react-router-dom';
 import type { CardsProps } from './Cards.types';
 import styles from './Cards.module.scss';
 import { Button } from '../../shared/ui/Button';
@@ -17,18 +18,20 @@ export const Cards = ({
 		<div className={`${styles.container} ${className}`}>
 			<div className={styles.header}>
 				<h2 className={styles.title}>{title}</h2>
-				<Button
-					variant="tertiary"
-					onClick={onViewAllClick}
-					className={styles['view-all-button']}
-				>
-					{viewAllText}
-					<img
-						src={chevronRightIcon}
-						alt=""
-						className={styles['chevron-right-icon']}
-					/>
-				</Button>
+				<Link to="/skill">
+					<Button
+						variant="tertiary"
+						onClick={onViewAllClick}
+						className={styles['view-all-button']}
+					>
+						{viewAllText}
+						<img
+							src={chevronRightIcon}
+							alt=""
+							className={styles['chevron-right-icon']}
+						/>
+					</Button>
+				</Link>
 			</div>
 			<div className={styles.grid}>
 				{displayedCards.map((card, index) => (
