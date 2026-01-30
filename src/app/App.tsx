@@ -11,7 +11,11 @@ import { Step2Page } from '../pages/RegisterPage/Step2Page';
 import { Step3Page } from '../pages/RegisterPage/Step3Page';
 /* ProfilePage */
 import { ProfilePage } from '../pages/ProfilePage';
-import { SidebarItems } from '../shared/ui/SidebarMenu/SidebarMenu.stories';
+import likeIcon from '/src/shared/assets/icons/blankLike.svg';
+import lampIcon from '/src/shared/assets/icons/idea.svg';
+import messageIcon from '/src/shared/assets/icons/message-text.svg';
+import requestIcon from '/src/shared/assets/icons/request.svg';
+import userIcon from '/src/shared/assets/icons/user.svg';
 /* ServerErrorPage */
 import { ServerErrorPage } from '../pages/ServerErrorPage';
 /* NotFoundPage */
@@ -65,7 +69,13 @@ function App() {
 						<ProfilePage
 							headerProps={{}}
 							sidebarProps={{
-								items: SidebarItems,
+								items: [
+									{ id: 'requests', label: 'Заявки', icon: requestIcon },
+									{ id: 'exchanges', label: 'Мои обмены', icon: messageIcon },
+									{ id: 'favorites', label: 'Избранное', icon: likeIcon },
+									{ id: 'skills', label: 'Мои навыки', icon: lampIcon },
+									{ id: 'profile', label: 'Личные данные', icon: userIcon },
+								],
 								activeId: 'profile',
 								onSelect: (id) => console.log(`Selected: ${id}`),
 							}}
