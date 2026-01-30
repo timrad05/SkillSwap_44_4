@@ -20,13 +20,27 @@ const meta: Meta<typeof BirthDatePicker> = {
 	},
 	parameters: {
 		layout: 'centered',
+		viewport: {
+			defaultViewport: 'responsive',
+		},
 	},
 	decorators: [
 		(Story) => {
 			const [value, setValue] = useState('');
 			return (
-				<div style={{ width: '360px', padding: '20px' }}>
-					<Story args={{ value, onChange: setValue }} />
+				<div
+					style={{
+						width: '360px',
+						minHeight: '500px',
+						padding: '40px 20px',
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'flex-start',
+					}}
+				>
+					<div style={{ maxWidth: '208px', width: '100%' }}>
+						<Story args={{ value, onChange: setValue }} />
+					</div>
 				</div>
 			);
 		},
