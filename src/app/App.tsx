@@ -7,6 +7,7 @@ import { testCards } from '../widgets/Cards/Cards.data';
 import { LoginPage } from '../pages/LoginPage';
 /* RegisterPage */
 import { Step1Page } from '../pages/RegisterPage/Step1Page';
+import { Step2Page } from '../pages/RegisterPage/Step2Page';
 /* ProfilePage */
 import { ProfilePage } from '../pages/ProfilePage';
 import { SidebarItems } from '../shared/ui/SidebarMenu/SidebarMenu.stories';
@@ -55,6 +56,7 @@ function App() {
 				/>
 				<Route path="login" element={<LoginPage />} />
 				<Route path="registration/step1" element={<Step1Page />} />
+				<Route path="registration/step2" element={<Step2Page />} />
 				<Route
 					path="profile"
 					element={
