@@ -13,8 +13,8 @@ export const Skill: React.FC<SkillProps> = ({
 	description,
 	buttonProps: initialButtonProps,
 	images,
-	isLiked = false,
-	onLikeClick,
+	isLiked: externalIsLiked,
+	onLikeClick: externalOnLikeClick,
 	onShareClick,
 	onMoreClick,
 }) => {
@@ -33,6 +33,24 @@ export const Skill: React.FC<SkillProps> = ({
 		...initialButtonProps,
 		onClick: handleExchangeClick,
 		isExchangeProposed,
+	// Локальное состояние лайка
+	const [internalIsLiked, setInternalIsLiked] = useState(false);
+
+	// Если isLiked передан извне - используем его, иначе внутреннее состояние
+	const isLiked =
+		externalIsLiked !== undefined ? externalIsLiked : internalIsLiked;
+
+	const handleLikeClick = () => {
+		if (externalOnLikeClick) {
+			// Если есть внешний обработчик - вызываем его
+			externalOnLikeClick();
+		} else {
+			// Иначе управляем внутренним состоянием
+			setInternalIsLiked(!isLiked);
+			console.log(
+				`Лайк навыка "${title}": ${!isLiked ? 'поставлен' : 'убран'}`,
+			);
+		}
 	};
 
 	return (
@@ -42,7 +60,7 @@ export const Skill: React.FC<SkillProps> = ({
 				<div className={styles['icons-row']}>
 					<Like
 						isActive={isLiked}
-						onClick={onLikeClick}
+						onClick={handleLikeClick}
 						className={styles.icon}
 					/>
 					<button

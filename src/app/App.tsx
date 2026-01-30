@@ -110,8 +110,6 @@ function App() {
 									'https://images.ctfassets.net/pvkenuwtinkd/5avWBzXrPaIzAVLnKfQPhG/62c75fce546a463dc9882b6f4977c15a/K20_GettyImages-1150996895_CMYK.jpg?q=80&w=1600',
 									'https://jurlique.com.au/cdn/shop/articles/7_WAYS_TO_MAKE_EVERY_DAY_EARTH_DAY_9c2990e0-c893-4d66-9e7a-29b89c8dcf60.jpg?v=1742172049',
 								],
-								isLiked: false,
-								onLikeClick: () => console.log('Лайк нажат'),
 								onShareClick: () => console.log('Поделиться'),
 								onMoreClick: () => console.log('Еще действия'),
 							}}
@@ -148,7 +146,6 @@ function App() {
 											{ text: 'Медитация', color: 'health' as const },
 											{ text: '+2', color: 'plus' as const },
 										],
-										isLiked: false,
 									},
 									{
 										avatar: 'https://i.pravatar.cc/150?img=6',
@@ -163,7 +160,6 @@ function App() {
 											{ text: 'Медитация', color: 'health' as const },
 											{ text: '+2', color: 'plus' as const },
 										],
-										isLiked: false,
 									},
 									{
 										avatar: 'https://i.pravatar.cc/150?img=7',
@@ -178,7 +174,6 @@ function App() {
 											{ text: 'Медитация', color: 'health' as const },
 											{ text: '+2', color: 'plus' as const },
 										],
-										isLiked: false,
 									},
 									{
 										avatar: 'https://i.pravatar.cc/150?img=8',
@@ -193,7 +188,6 @@ function App() {
 											{ text: 'Медитация', color: 'health' as const },
 											{ text: '+2', color: 'plus' as const },
 										],
-										isLiked: false,
 									},
 								],
 							}}
