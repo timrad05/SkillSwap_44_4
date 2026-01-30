@@ -1,0 +1,97 @@
+@use '../../shared/styles/variables' as *;
+@use '../../shared/styles/mixins' as *;
+
+.modal {
+	background-color: $color-card;
+	border-radius: 16px;
+	max-width: 1024px;
+	width: 100%;
+	padding: 44px 60px 72px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: 44px;
+}
+
+.header {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	align-items: center;
+}
+
+.title {
+	@include text-h1;
+
+	color: $color-text;
+	margin: 0;
+}
+
+.description {
+	@include text-body;
+
+	color: $color-text;
+	margin: 0;
+	line-height: 1.6;
+}
+
+.content {
+	display: flex;
+	gap: 60px;
+	align-items: flex-start;
+}
+
+.info-section {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 26px;
+}
+
+.info-wrapper {
+	width: 100%;
+}
+
+.buttons-row {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	margin-top: auto;
+}
+
+.edit-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 12px 24px;
+	background-color: transparent;
+	border: 1px solid $color-accent;
+	border-radius: 12px;
+	color: $color-text;
+	font-family: $font-base;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	flex-shrink: 0;
+
+	&:hover {
+		background-color: rgba($color-accent, 0.1);
+	}
+
+	&:active {
+		background-color: rgba($color-accent, 0.2);
+	}
+}
+
+.done-button {
+	flex: 1;
+	min-width: 0;
+}
+
+.images-section {
+	width: 440px;
+	flex-shrink: 0;
+}

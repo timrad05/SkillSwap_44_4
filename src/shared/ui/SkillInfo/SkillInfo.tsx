@@ -1,4 +1,3 @@
-// src/shared/ui/SkillInfo/SkillInfo.tsx
 import { Button } from '../Button';
 import clockIcon from '../../assets/icons/clock.svg';
 import type { SkillInfoProps } from './SkillInfo.types';
@@ -10,21 +9,6 @@ export const SkillInfo = ({
 	description,
 	buttonProps,
 }: SkillInfoProps) => {
-	const {
-		text,
-		onClick,
-		variant = 'primary',
-		isExchangeProposed = false,
-	} = buttonProps;
-
-	const buttonText = isExchangeProposed ? 'Обмен предложен' : text;
-	const buttonVariant = isExchangeProposed ? 'secondary' : variant;
-	const buttonDisabled = isExchangeProposed;
-
-	const buttonClassName = `${styles.button} ${
-		isExchangeProposed ? styles['exchange-proposed'] : ''
-	}`.trim();
-
 	return (
 		<div className={styles.container}>
 			<div className={styles.section}>
@@ -34,17 +18,44 @@ export const SkillInfo = ({
 				</div>
 				<div className={styles.description}>{description}</div>
 			</div>
-			<Button
-				variant={buttonVariant}
-				onClick={onClick}
-				className={buttonClassName}
-				disabled={buttonDisabled}
-			>
-				{isExchangeProposed && (
-					<img src={clockIcon} alt="" width={16} height={16} />
-				)}
-				{buttonText}
-			</Button>
+
+			{buttonProps && <SkillInfoButton {...buttonProps} />}
 		</div>
+	);
+};
+
+interface SkillInfoButtonProps {
+	text: string;
+	onClick: () => void;
+	variant?: 'primary' | 'secondary' | 'tertiary';
+	isExchangeProposed?: boolean;
+}
+
+const SkillInfoButton: React.FC<SkillInfoButtonProps> = ({
+	text,
+	onClick,
+	variant = 'primary',
+	isExchangeProposed = false,
+}) => {
+	const buttonText = isExchangeProposed ? 'Обмен предложен' : text;
+	const buttonVariant = isExchangeProposed ? 'secondary' : variant;
+	const buttonDisabled = isExchangeProposed;
+
+	const buttonClassName = `${styles.button} ${
+		isExchangeProposed ? styles['exchange-proposed'] : ''
+	}`.trim();
+
+	return (
+		<Button
+			variant={buttonVariant}
+			onClick={onClick}
+			className={buttonClassName}
+			disabled={buttonDisabled}
+		>
+			{isExchangeProposed && (
+				<img src={clockIcon} alt="" width={16} height={16} />
+			)}
+			{buttonText}
+		</Button>
 	);
 };
