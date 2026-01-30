@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import type { FC } from 'react';
+import { Link } from 'react-router-dom';
 import blankLikeIcon from '../../shared/assets/icons/blankLike.svg';
 import crossIcon from '../../shared/assets/icons/cross.svg';
 import notificationIcon from '../../shared/assets/icons/notification.svg';
@@ -88,15 +89,22 @@ export const Header: FC<HeaderProps> = ({
 				<>
 					<ThemeToggle theme="dark" />
 					<div className={clsx(style['un-auth-buttons'])}>
-						<Button
-							variant="secondary"
-							className={clsx(style['header-button'])}
-						>
-							Войти
-						</Button>
-						<Button variant="primary" className={clsx(style['header-button'])}>
-							Зарегистрироваться
-						</Button>
+						<Link to="/login">
+							<Button
+								variant="secondary"
+								className={clsx(style['header-button'])}
+							>
+								Войти
+							</Button>
+						</Link>
+						<Link to="/registration/step1">
+							<Button
+								variant="primary"
+								className={clsx(style['header-button'])}
+							>
+								Зарегистрироваться
+							</Button>
+						</Link>
 					</div>
 				</>
 			)}

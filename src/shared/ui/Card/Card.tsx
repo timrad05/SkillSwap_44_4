@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './Card.module.scss';
-
+import { Link } from 'react-router-dom';
 import { CardInfo } from '../CardInfo';
 import { Tag } from '../Tag';
 import { Button } from '../Button';
@@ -66,10 +66,11 @@ export const Card = ({
 					))}
 				</div>
 			</div>
-
-			<Button variant="primary" onClick={onMoreClick}>
-				Подробнее
-			</Button>
+			<Link to="/skill">
+				<Button variant="primary" onClick={onMoreClick}>
+					Подробнее
+				</Button>
+			</Link>
 		</div>
 	);
 };
