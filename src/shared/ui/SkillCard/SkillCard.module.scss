@@ -1,0 +1,52 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	background-color: $color-card;
+	border-radius: 16px;
+	padding: 32px;
+	max-width: 324px;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.description {
+	@include text-body;
+
+	color: $color-text;
+	margin: 0;
+}
+
+.skills-section {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.skills-group {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.section-title {
+	font-family: $font-base;
+	font-size: 16px;
+	line-height: 24px;
+	color: $color-text;
+	letter-spacing: 0.02em;
+	margin: 0;
+}
+
+.tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}

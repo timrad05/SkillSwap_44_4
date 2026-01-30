@@ -5,4 +5,5 @@ export interface CardInfoProps {
 	age: number;
 	onLikeClick?: () => void;
 	isLiked?: boolean;
+	showLikeButton?: boolean;
 }

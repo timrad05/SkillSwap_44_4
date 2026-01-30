@@ -1,0 +1,48 @@
+@use '../../shared/styles/variables' as *;
+@use '../../shared/styles/mixins' as *;
+
+.page {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	background-color: $color-background;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.title {
+	@include text-h2;
+
+	align-items: center;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 24px;
+	padding-inline: 152px;
+	margin-top: 32px;
+	max-width: min-content;
+	margin-bottom: 188px;
+}
+
+.content {
+	width: 556px;
+	height: 692px;
+	padding: 60px 112px;
+	background-color: $color-card;
+	border-radius: 16px;
+}
+
+.panel {
+	width: 556px;
+	height: 692px;
+	padding-inline: 60px;
+	background-color: $color-card;
+	border-radius: 16px;
+}
