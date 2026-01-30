@@ -2,7 +2,7 @@
 	"users": [
 		{
 			"id": 1,
-			"avatarUrl": "https://i.pravatar.cc",
+			"avatar": "https://i.pravatar.cc",
 			"name": "Иван",
 			"email": "ivan.ivanov@gmail.com",
 			"about": "Люблю ритм, кофе по утрам и людей, которые не боятся пробовать новое.",
@@ -13,7 +13,7 @@
 		},
 		{
 			"id": 2,
-			"avatarUrl": "https://i.pravatar.cc",
+			"avatar": "https://i.pravatar.cc",
 			"name": "Елена",
 			"email": "elena.petrova@gmail.com",
 			"about": "Книголюб, путешественница и просто хороший человек.",
@@ -24,7 +24,7 @@
 		},
 		{
 			"id": 3,
-			"avatarUrl": "https://i.pravatar.cc",
+			"avatar": "https://i.pravatar.cc",
 			"name": "Алексей",
 			"email": "alexey.smirnov@gmail.com",
 			"about": "Разработчик программного обеспечения, увлекаюсь фотографией и горным туризмом.",
@@ -35,7 +35,7 @@
 		},
 		{
 			"id": 4,
-			"avatarUrl": "https://i.pravatar.cc",
+			"avatar": "https://i.pravatar.cc",
 			"name": "Мария",
 			"email": "maria.kuznetsova@gmail.com",
 			"about": "Фитнес-тренер, люблю активный образ жизни и здоровую пищу.",
@@ -46,7 +46,7 @@
 		},
 		{
 			"id": 5,
-			"avatarUrl": "https://i.pravatar.cc",
+			"avatar": "https://i.pravatar.cc",
 			"name": "Дмитрий",
 			"email": "dmitry.morozov@gmail.com",
 			"about": "Предприниматель, интересуюсь стартапами и инновациями. Всегда открыт для новых идей.",
@@ -57,7 +57,7 @@
 		},
 		{
 			"id": 6,
-			"avatarUrl": "https://i.pravatar.cc",
+			"avatar": "https://i.pravatar.cc",
 			"name": "Анна",
 			"email": "anna.volkova@gmail.com",
 			"about": "Дизайнер интерьеров. Ищу вдохновение в мелочах.",
@@ -68,7 +68,7 @@
 		},
 		{
 			"id": 7,
-			"avatarUrl": "https://i.pravatar.cc",
+			"avatar": "https://i.pravatar.cc",
 			"name": "Сергей",
 			"email": "sergey.kovalev@gmail.com",
 			"about": "Инженер-механик, увлекаюсь рыбалкой и походами на природу. Ценю честность.",
@@ -79,7 +79,7 @@
 		},
 		{
 			"id": 8,
-			"avatarUrl": "https://i.pravatar.cc",
+			"avatar": "https://i.pravatar.cc",
 			"name": "Ольга",
 			"email": "olga.morozova@gmail.com",
 			"about": "Преподаватель английского. Обожаю театр, классическую музыку и долгие прогулки.",
@@ -90,7 +90,7 @@
 		},
 		{
 			"id": 9,
-			"avatarUrl": "https://i.pravatar.cc",
+			"avatar": "https://i.pravatar.cc",
 			"name": "Николай",
 			"email": "nikolay.fedorov@gmail.com",
 			"about": "Студент, будущий айтишник. Живу кодом и пиццей.",
@@ -101,7 +101,7 @@
 		},
 		{
 			"id": 10,
-			"avatarUrl": "https://i.pravatar.cc",
+			"avatar": "https://i.pravatar.cc",
 			"name": "Татьяна",
 			"email": "tanya.vasilyeva@gmail.com",
 			"about": "Копирайтер. Люблю животных, особенно своего кота Марсика.",
