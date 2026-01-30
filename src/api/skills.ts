@@ -1,4 +1,4 @@
-import type { Skill } from '../entities/model/types';
+import type { Skill } from '../entities/skill/model/types';
 import { fetchJson } from './fetchJson';
 
 export const getSkills = (): Promise<Skill[]> => {
