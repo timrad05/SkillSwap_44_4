@@ -18,21 +18,6 @@ export const Skill: React.FC<SkillProps> = ({
 	onShareClick,
 	onMoreClick,
 }) => {
-	const [isExchangeProposed, setIsExchangeProposed] = useState(
-		initialButtonProps.isExchangeProposed || false,
-	);
-
-	const handleExchangeClick = () => {
-		if (!isExchangeProposed) {
-			setIsExchangeProposed(true);
-			initialButtonProps.onClick();
-		}
-	};
-
-	const buttonProps = {
-		...initialButtonProps,
-		onClick: handleExchangeClick,
-		isExchangeProposed,
 	// Локальное состояние лайка
 	const [internalIsLiked, setInternalIsLiked] = useState(false);
 
@@ -51,6 +36,23 @@ export const Skill: React.FC<SkillProps> = ({
 				`Лайк навыка "${title}": ${!isLiked ? 'поставлен' : 'убран'}`,
 			);
 		}
+	};
+
+	const [isExchangeProposed, setIsExchangeProposed] = useState(
+		initialButtonProps.isExchangeProposed || false,
+	);
+
+	const handleExchangeClick = () => {
+		if (!isExchangeProposed) {
+			setIsExchangeProposed(true);
+			initialButtonProps.onClick();
+		}
+	};
+
+	const buttonProps = {
+		...initialButtonProps,
+		onClick: handleExchangeClick,
+		isExchangeProposed,
 	};
 
 	return (
