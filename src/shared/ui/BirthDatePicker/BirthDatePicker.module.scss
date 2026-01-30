@@ -5,6 +5,8 @@
 	flex-direction: column;
 	gap: 8px;
 	width: 100%;
+	position: relative;
+	z-index: 10;
 }
 
 .label {
@@ -123,6 +125,7 @@
 	overflow: hidden;
 	background: white;
 	padding: 16px 0;
+	font-family: $font-base;
 	/* stylelint-disable selector-pseudo-class-no-unknown, selector-class-pattern */
 	:global {
 		.react-datepicker__header {
