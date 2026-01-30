@@ -29,10 +29,20 @@
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	gap: 16px;
+	align-items: flex-start;
 }
 
 .submit {
 	margin-top: 24px;
 	opacity: 0.6;
 	cursor: not-allowed;
+}
+
+.custom-date-picker {
+	gap: 4px;
+
+	& > span:first-child {
+		font-size: 16px;
+		line-height: 1.5;
+	}
 }
