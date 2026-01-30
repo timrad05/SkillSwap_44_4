@@ -1,6 +1,7 @@
+import { offset } from '@floating-ui/dom';
 import type { Month } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { forwardRef, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import CalendarIcon from '../../assets/icons/calendar.svg';
@@ -44,7 +45,23 @@ export const BirthDatePicker = ({
 	const [tempBirthDate, setTempBirthDate] = useState<Date | null>(null);
 	const [prevBirthDate, setPrevBirthDate] = useState<Date | null>(null);
 	const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+
 	const datePickerRef = useRef<HTMLDivElement>(null);
+
+	// парсим value при монтировании и при изменении пропса value - дата сразу видна
+	useEffect(() => {
+		if (value) {
+			const [day, month, year] = value.split('.').map(Number);
+			if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
+				const parsed = new Date(year, month - 1, day);
+				if (!isNaN(parsed.getTime())) {
+					setTempBirthDate(parsed);
+					return;
+				}
+			}
+		}
+		setTempBirthDate(null);
+	}, [value]);
 
 	const handleDatePickerOpen = () => {
 		if (value) {
@@ -75,7 +92,7 @@ export const BirthDatePicker = ({
 				month: '2-digit',
 				year: 'numeric',
 			});
-			onChange(formatted); // Передаём форматированную дату родителю
+			onChange(formatted);
 		}
 		setIsDatePickerOpen(false);
 	};
@@ -92,6 +109,7 @@ export const BirthDatePicker = ({
 	return (
 		<div className={`${cls.wrapper} ${className}`}>
 			<span className={cls.label}>{label}</span>
+
 			<div ref={datePickerRef}>
 				<DatePicker
 					selected={tempBirthDate}
@@ -107,6 +125,8 @@ export const BirthDatePicker = ({
 					onClickOutside={() => {}}
 					wrapperClassName={cls['date-picker-wrapper']}
 					calendarClassName={cls['date-picker-calendar']}
+					popperPlacement="bottom-start"
+					popperModifiers={[offset({ mainAxis: 4, crossAxis: 0 })]}
 					renderCustomHeader={({ date, changeYear, changeMonth }) => (
 						<div className={cls['custom-header']}>
 							{/* Месяц */}
