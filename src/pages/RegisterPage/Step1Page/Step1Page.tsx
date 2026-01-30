@@ -1,13 +1,13 @@
 import React from 'react';
-import { Header } from '../../widgets/Header';
-import { ProgressBar } from '../../widgets/ProgressBar/ProgressBar';
-import { Step1Form } from '../../features/auth/registration/ui/Step1Form';
-import { Info } from '../../shared/ui/Info';
-import type { RegisterPageProps } from './RegisterPage.types';
-import type { Step1FormData } from '../../features/auth/registration/ui/Step1Form/Step1Form.types';
-import styles from './RegisterPage.module.scss';
+import { Header } from '../../../widgets/Header';
+import { ProgressBar } from '../../../widgets/ProgressBar/ProgressBar';
+import { Step1Form } from '../../../features/auth/registration/ui/Step1Form';
+import { Info } from '../../../shared/ui/Info';
+import type { Step1PageProps } from './Step1Page.types';
+import type { Step1FormData } from '../../../features/auth/registration/ui/Step1Form/Step1Form.types';
+import styles from './Step1Page.module.scss';
 
-export const RegisterPage: React.FC<RegisterPageProps> = ({
+export const Step1Page: React.FC<Step1PageProps> = ({
 	headerProps = {},
 	progressBarProps = {
 		step: 1,
