@@ -5,7 +5,6 @@ export interface SkillPageProps {
 		isAuthorized?: boolean;
 		isAuthPage?: boolean;
 	};
-
 	skillProps: {
 		title: string;
 		subtitle: string;
@@ -14,6 +13,7 @@ export interface SkillPageProps {
 			text: string;
 			onClick: () => void;
 			variant?: 'primary' | 'secondary' | 'tertiary';
+			isExchangeProposed?: boolean;
 		};
 		images: string[];
 		isLiked?: boolean;
@@ -21,7 +21,6 @@ export interface SkillPageProps {
 		onShareClick?: () => void;
 		onMoreClick?: () => void;
 	};
-
 	userCardProps: {
 		cardInfo: {
 			avatar: string;
@@ -39,7 +38,6 @@ export interface SkillPageProps {
 			color?: TagColor;
 		}>;
 	};
-
 	similarCardsProps: {
 		title?: string;
 		cards: Array<{
@@ -52,7 +50,6 @@ export interface SkillPageProps {
 			isLiked?: boolean;
 		}>;
 	};
-
 	footerProps?: {
 		copyrightYear?: number;
 		logoConfig?: {

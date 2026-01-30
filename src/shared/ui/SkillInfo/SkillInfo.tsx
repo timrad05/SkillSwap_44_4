@@ -1,4 +1,6 @@
+// src/shared/ui/SkillInfo/SkillInfo.tsx
 import { Button } from '../Button';
+import clockIcon from '../../assets/icons/clock.svg';
 import type { SkillInfoProps } from './SkillInfo.types';
 import styles from './SkillInfo.module.scss';
 
@@ -8,21 +10,40 @@ export const SkillInfo = ({
 	description,
 	buttonProps,
 }: SkillInfoProps) => {
-	const { text, onClick, variant = 'primary' } = buttonProps;
+	const {
+		text,
+		onClick,
+		variant = 'primary',
+		isExchangeProposed = false,
+	} = buttonProps;
+
+	const buttonText = isExchangeProposed ? 'Обмен предложен' : text;
+	const buttonVariant = isExchangeProposed ? 'secondary' : variant;
+	const buttonDisabled = isExchangeProposed;
+
+	const buttonClassName = `${styles.button} ${
+		isExchangeProposed ? styles['exchange-proposed'] : ''
+	}`.trim();
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.section}>
 				<div className={styles.header}>
 					<h1 className={styles.title}>{title}</h1>
-
 					<div className={styles.subtitle}>{subtitle}</div>
 				</div>
-
 				<div className={styles.description}>{description}</div>
 			</div>
-
-			<Button variant={variant} onClick={onClick} className={styles.button}>
-				{text}
+			<Button
+				variant={buttonVariant}
+				onClick={onClick}
+				className={buttonClassName}
+				disabled={buttonDisabled}
+			>
+				{isExchangeProposed && (
+					<img src={clockIcon} alt="" width={16} height={16} />
+				)}
+				{buttonText}
 			</Button>
 		</div>
 	);

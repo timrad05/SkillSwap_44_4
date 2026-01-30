@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SkillInfo } from '../SkillInfo';
 import { SkillImages } from '../SkillImages';
 import { Like } from '../Like';
@@ -11,13 +11,30 @@ export const Skill: React.FC<SkillProps> = ({
 	title,
 	subtitle,
 	description,
-	buttonProps,
+	buttonProps: initialButtonProps,
 	images,
 	isLiked = false,
 	onLikeClick,
 	onShareClick,
 	onMoreClick,
 }) => {
+	const [isExchangeProposed, setIsExchangeProposed] = useState(
+		initialButtonProps.isExchangeProposed || false,
+	);
+
+	const handleExchangeClick = () => {
+		if (!isExchangeProposed) {
+			setIsExchangeProposed(true);
+			initialButtonProps.onClick();
+		}
+	};
+
+	const buttonProps = {
+		...initialButtonProps,
+		onClick: handleExchangeClick,
+		isExchangeProposed,
+	};
+
 	return (
 		<div className={styles.container}>
 			{/* Группа с иконками */}
@@ -28,7 +45,6 @@ export const Skill: React.FC<SkillProps> = ({
 						onClick={onLikeClick}
 						className={styles.icon}
 					/>
-
 					<button
 						type="button"
 						className={styles.icon}
@@ -37,7 +53,6 @@ export const Skill: React.FC<SkillProps> = ({
 					>
 						<img src={shareIcon} alt="" width={24} height={24} />
 					</button>
-
 					<button
 						type="button"
 						className={styles.icon}

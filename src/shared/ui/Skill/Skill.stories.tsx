@@ -36,6 +36,9 @@ const InteractiveSkillComponent = (
 	props: Omit<SkillProps, 'isLiked' | 'onLikeClick'>,
 ) => {
 	const [isLiked, setIsLiked] = useState(false);
+	const [isExchangeProposed, setIsExchangeProposed] = useState(
+		props.buttonProps.isExchangeProposed || false,
+	);
 
 	const handleLikeClick = () => {
 		setIsLiked(!isLiked);
@@ -49,9 +52,19 @@ const InteractiveSkillComponent = (
 		console.log('Еще действия');
 	};
 
+	const handleExchangeClick = () => {
+		console.log('Кнопка "Предложить обмен" нажата');
+		setIsExchangeProposed(true);
+	};
+
 	return (
 		<Skill
 			{...props}
+			buttonProps={{
+				...props.buttonProps,
+				onClick: handleExchangeClick,
+				isExchangeProposed,
+			}}
 			isLiked={isLiked}
 			onLikeClick={handleLikeClick}
 			onShareClick={handleShareClick}
@@ -104,6 +117,22 @@ export const PhotographySkill: Story = {
 			text: 'Предложить обмен',
 			onClick: () => console.log('Кнопка "Предложить обмен" нажата'),
 			variant: 'primary' as const,
+		},
+		images: defaultImages,
+	},
+};
+
+export const WithExchangeProposed: Story = {
+	args: {
+		title: 'Игра на барабанах',
+		subtitle: 'Творчество и искусство / Музыка и звук',
+		description:
+			'Привет! Я играю на барабанах уже больше 10 лет — от репетиций в гараже до выступлений на сцене с живыми группами. Научу основам техники (и как не отбить себе пальцы), играть любимые ритмы и разбирать песни, импровизировать и звучать уверенно даже без партитуры',
+		buttonProps: {
+			text: 'Предложить обмен',
+			onClick: () => console.log('Кнопка "Предложить обмен" нажата'),
+			variant: 'primary' as const,
+			isExchangeProposed: true,
 		},
 		images: defaultImages,
 	},
