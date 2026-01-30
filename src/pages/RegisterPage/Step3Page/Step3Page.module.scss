@@ -1,0 +1,21 @@
+@use '/src/shared/styles/variables' as *;
+
+.main {
+	margin-top: 32px;
+	padding-inline: 152px;
+	padding-bottom: 172px;
+	display: flex;
+	justify-content: center;
+	gap: 24px;
+	min-height: max-content;
+}
+
+.form {
+	min-width: 556px;
+	background: #fff;
+	padding: 40px 60px;
+}
+
+.info {
+	min-width: 556px;
+}
