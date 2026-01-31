@@ -66,7 +66,7 @@ export const HomePage = ({
 			avatar: item.avatar || '',
 			name: item.userName,
 			city: item.cityName,
-			age: 0,
+			age: item.age || 0,
 			canTeach: [],
 			wantToLearn: [],
 		}));

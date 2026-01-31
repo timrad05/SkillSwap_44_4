@@ -15,6 +15,7 @@ export type UserLike = {
 	name?: string;
 	avatar?: string;
 	cityId?: number;
+	dateOfBirth?: string;
 };
 
 export type CityLike = {
@@ -25,11 +26,37 @@ export type CityLike = {
 export type SkillCardVM = {
 	id: Id;
 	title: string;
+	age?: number;
 	category?: string;
 	userName: string;
 	cityName: string;
 	avatar?: string;
 };
+
+function getFullYears(birthDateStr: string): number | undefined {
+	const birthDate = new Date(birthDateStr);
+	if (isNaN(birthDate.getTime())) {
+		return undefined;
+	}
+	const today = new Date();
+	const currentYear = today.getFullYear();
+	const birthYear = birthDate.getFullYear();
+
+	// Предполагаемый возраст
+	let years = currentYear - birthYear;
+
+	// Проверяем, был ли день рождения в этом году
+	const hasHadBirthdayThisYear =
+		today.getMonth() > birthDate.getMonth() ||
+		(today.getMonth() === birthDate.getMonth() &&
+			today.getDate() >= birthDate.getDate());
+
+	if (!hasHadBirthdayThisYear) {
+		years--; // Ещё не было дня рождения — уменьшаем на 1
+	}
+
+	return years;
+}
 
 export const mapSkillToCardVM = (
 	skill: SkillLike,
@@ -39,6 +66,10 @@ export const mapSkillToCardVM = (
 	const authorId = skill.userId ?? skill.authorId;
 	const user = authorId !== undefined ? usersById[authorId] : undefined;
 	const city = user?.cityId !== undefined ? citiesById[user.cityId] : undefined;
+	const age =
+		user?.dateOfBirth !== undefined
+			? getFullYears(user?.dateOfBirth)
+			: undefined;
 
 	return {
 		id: skill.id,
@@ -47,5 +78,6 @@ export const mapSkillToCardVM = (
 		userName: user?.name ?? 'Неизвестный пользователь',
 		cityName: city?.name ?? '—',
 		avatar: user?.avatar,
+		age: age,
 	};
 };
