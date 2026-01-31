@@ -11,3 +11,11 @@ export interface HomePageProps {
 	recommendedProps?: RecommendedCardsProps;
 	footerProps?: FooterProps;
 }
+
+export interface Filters {
+	mode?: 'all' | 'learn' | 'teach';
+	skillIds?: string[];
+	gender?: 'any' | 'male' | 'female';
+	cityIds?: string[];
+	search?: string;
+}

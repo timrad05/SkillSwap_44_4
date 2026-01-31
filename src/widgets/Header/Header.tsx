@@ -17,6 +17,7 @@ export const Header: FC<HeaderProps> = ({
 	isAuthorized = false,
 	isAuthPage = false,
 	className,
+	searchProps,
 }) => {
 	const chevronDownIcon = (
 		<svg viewBox="0 0 24 24" fill="none">
@@ -63,7 +64,7 @@ export const Header: FC<HeaderProps> = ({
 				]}
 			/>
 
-			<Search placeholder="Поиск..." />
+			<Search placeholder="Поиск..." {...searchProps} />
 
 			{isAuthorized ? (
 				<div className={clsx(style['auth-buttons'])}>
