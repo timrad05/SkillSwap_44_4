@@ -2,5 +2,5 @@ export interface User {
 	id: number;
 	name: string;
 	avatar?: string;
-	cityId?: string;
+	cityId?: number;
 }
