@@ -8,6 +8,7 @@ import { LoginPage } from '../pages/LoginPage';
 /* RegisterPage */
 import { Step1Page } from '../pages/RegisterPage/Step1Page';
 import { Step2Page } from '../pages/RegisterPage/Step2Page';
+import { Step3Page } from '../pages/RegisterPage/Step3Page';
 /* ProfilePage */
 import { ProfilePage } from '../pages/ProfilePage';
 import likeIcon from '/src/shared/assets/icons/blankLike.svg';
@@ -61,6 +62,7 @@ function App() {
 				<Route path="login" element={<LoginPage />} />
 				<Route path="registration/step1" element={<Step1Page />} />
 				<Route path="registration/step2" element={<Step2Page />} />
+				<Route path="registration/step3" element={<Step3Page />} />
 				<Route
 					path="profile"
 					element={
