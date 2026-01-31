@@ -10,3 +10,15 @@ export interface Skill {
 	createdAt: string;
 	images: string[];
 }
+
+export interface ISkillCategory {
+	id: number;
+	name: string;
+	type: string;
+}
+
+export interface ISkillSubcategory {
+	id: number;
+	name: string;
+	categoryId: number;
+}

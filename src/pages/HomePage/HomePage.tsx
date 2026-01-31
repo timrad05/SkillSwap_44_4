@@ -12,15 +12,20 @@ import { getSkills } from '../../api/skills';
 import { getCities } from '../../api/cities';
 
 import type { User } from '../../entities/user/model/types';
-import type { Skill } from '../../entities/skill/model/types';
+import type {
+	ISkillCategory,
+	ISkillSubcategory,
+	Skill,
+} from '../../entities/skill/model/types';
 import type { City } from '../../entities/city/model/types';
 import {
-	buildCitiesById,
-	buildUsersById,
+	buildById,
 	mapSkillToCardVM,
 	type SkillCardVM,
 } from '../../shared/lib';
 import type { CardProps } from '../../shared/ui/Card';
+import { getSubcategories } from '../../api/subcategories';
+import { getCategories } from '../../api/categories';
 
 export const HomePage = ({
 	headerProps = {},
@@ -32,6 +37,8 @@ export const HomePage = ({
 	const [users, setUsers] = useState<User[]>([]);
 	const [skills, setSkills] = useState<Skill[]>([]);
 	const [cities, setCities] = useState<City[]>([]);
+	const [categories, setCategories] = useState<ISkillCategory[]>([]);
+	const [subcategories, setSubcategories] = useState<ISkillSubcategory[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [cards, setCards] = useState<CardProps[]>([]);
 	const [filters, setFilters] = useState<Filters>({
@@ -43,35 +50,53 @@ export const HomePage = ({
 	});
 
 	useEffect(() => {
-		Promise.all([getUsers(), getSkills(), getCities()])
-			.then(([usersData, skillsData, citiesData]) => {
-				setUsers(usersData);
-				setSkills(skillsData);
-				setCities(citiesData);
-				console.log(
-					`Loaded: ${usersData.length} users, ${skillsData.length} skills, ${citiesData.length} cities`,
-				);
-			})
+		Promise.all([
+			getUsers(),
+			getSkills(),
+			getCities(),
+			getSubcategories(),
+			getCategories(),
+		])
+			.then(
+				([
+					usersData,
+					skillsData,
+					citiesData,
+					subcategoriesData,
+					categoriesData,
+				]) => {
+					setUsers(usersData);
+					setSkills(skillsData);
+					setCities(citiesData);
+					setSubcategories(subcategoriesData);
+					setCategories(categoriesData);
+					console.log(
+						`Loaded: ${usersData.length} users, ${skillsData.length} skills, ${citiesData.length} cities, ${categoriesData.length} categories, ${subcategoriesData.length} subcategories`,
+					);
+				},
+			)
 			.catch((err) => console.error('Ошибка загрузки данных:', err))
 			.finally(() => setIsLoading(false));
 	}, []);
 
 	useEffect(() => {
-		const usersById = buildUsersById(users);
-		const citiesById = buildCitiesById(cities);
-		const cardsArrayVM: SkillCardVM[] = skills.map((skill) =>
-			mapSkillToCardVM(skill, usersById, citiesById),
+		const citiesById = buildById(cities);
+		const categoriesById = buildById(categories);
+		const subcategoriesById = buildById(subcategories);
+
+		const cardsArrayVM: SkillCardVM[] = users.map((user) =>
+			mapSkillToCardVM(user, citiesById, categoriesById, subcategoriesById),
 		);
 		const cardsData = cardsArrayVM.map((item) => ({
 			avatar: item.avatar || '',
 			name: item.userName,
 			city: item.cityName,
-			age: item.age || 0,
-			canTeach: [],
-			wantToLearn: [],
+			age: item.age,
+			canTeach: item.canTeach,
+			wantToLearn: item.wantToLearn,
 		}));
 		setCards(cardsData);
-	}, [users, skills, cities]);
+	}, [users, cities, categories, subcategories]);
 
 	const handleModeChange = useCallback((mode: string) => {
 		setFilters((prev) => ({

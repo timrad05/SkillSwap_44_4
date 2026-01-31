@@ -1,13 +1,15 @@
-export type Id = number;
+import type {
+	ISkillCategory,
+	ISkillSubcategory,
+} from '../../entities/skill/model/types';
+import type { City } from '../../entities/city/model/types';
+import type { TagColor } from '../ui/Tag/Tag.types';
 
-export type ById<T> = Record<number, T | undefined>;
+type ById<T> = Record<number, T | undefined>;
 
-export type SkillLike = {
-	id: number;
-	title: string;
-	category?: string;
-	userId?: number;
-	authorId?: number;
+type skillLike = {
+	text: string;
+	color: TagColor | undefined;
 };
 
 export type UserLike = {
@@ -16,22 +18,38 @@ export type UserLike = {
 	avatar?: string;
 	cityId?: number;
 	dateOfBirth?: string;
-};
-
-export type CityLike = {
-	id: number;
-	name?: string;
+	canTeach?: number[];
+	wantToLearn?: number[];
 };
 
 export type SkillCardVM = {
-	id: Id;
-	title: string;
-	age?: number;
-	category?: string;
+	id: number;
 	userName: string;
 	cityName: string;
+	age: number;
 	avatar?: string;
+	canTeach: skillLike[];
+	wantToLearn: skillLike[];
 };
+
+function categoryDataMap(
+	subcategoryIds: number[],
+	skillCategoryById: ById<ISkillCategory>,
+	skillSubcategoryById: ById<ISkillSubcategory>,
+): skillLike[] {
+	const result: skillLike[] = subcategoryIds.map((i) => {
+		const skillCategoryId: number | undefined =
+			skillSubcategoryById[i]?.categoryId;
+		if (skillCategoryId) {
+			return {
+				text: skillSubcategoryById[i]?.name || 'Без названия',
+				color:
+					(skillCategoryById[skillCategoryId]?.type as TagColor) || undefined,
+			};
+		} else return { text: 'Не определен', color: undefined };
+	});
+	return result;
+}
 
 function getFullYears(birthDateStr: string): number | undefined {
 	const birthDate = new Date(birthDateStr);
@@ -59,25 +77,38 @@ function getFullYears(birthDateStr: string): number | undefined {
 }
 
 export const mapSkillToCardVM = (
-	skill: SkillLike,
-	usersById: ById<UserLike>,
-	citiesById: ById<CityLike>,
+	user: UserLike,
+	citiesById: ById<City>,
+	skillCategoryById: ById<ISkillCategory>,
+	skillSubcategoryById: ById<ISkillSubcategory>,
 ): SkillCardVM => {
-	const authorId = skill.userId ?? skill.authorId;
-	const user = authorId !== undefined ? usersById[authorId] : undefined;
+	// const authorId = skill.userId ?? skill.authorId;
+	// const user = authorId !== undefined ? usersById[authorId] : undefined;
 	const city = user?.cityId !== undefined ? citiesById[user.cityId] : undefined;
+	const canTeach: skillLike[] =
+		user.canTeach !== undefined
+			? categoryDataMap(user.canTeach, skillCategoryById, skillSubcategoryById)
+			: [];
+	const wantToLearn: skillLike[] =
+		user.wantToLearn !== undefined
+			? categoryDataMap(
+					user.wantToLearn,
+					skillCategoryById,
+					skillSubcategoryById,
+				)
+			: [];
 	const age =
 		user?.dateOfBirth !== undefined
 			? getFullYears(user?.dateOfBirth)
 			: undefined;
 
 	return {
-		id: skill.id,
-		title: skill.title,
-		category: skill.category,
+		id: user.id,
 		userName: user?.name ?? 'Неизвестный пользователь',
 		cityName: city?.name ?? '—',
 		avatar: user?.avatar,
-		age: age,
+		age: age || 0,
+		canTeach: canTeach,
+		wantToLearn: wantToLearn,
 	};
 };
