@@ -1,4 +1,5 @@
 export { mapSkillToCardVM } from './mapSkillToCardVM';
+export { buildUsersById, buildCitiesById } from './buildById';
 export type {
 	SkillCardVM,
 	SkillLike,
