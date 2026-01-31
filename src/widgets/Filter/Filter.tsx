@@ -4,15 +4,22 @@ import chevronDownIcon from '../../shared/assets/icons/chevron-down.svg';
 import chevronUpIcon from '../../shared/assets/icons/chevron-up.svg';
 import styles from './Filter.module.scss';
 import type { TFilterProps } from './Filter.types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export const Filter = ({
 	onRadioGroupChange,
 	onCheckBoxToggle,
+	onGenderChange,
+	onCityToggle,
 	className = '',
+	selectedMode = 'all',
+	selectedGender = 'any',
+	selectedSkillIds = [],
+	selectedCityIds = [],
 }: TFilterProps) => {
-	const [selectedSkillType, setSelectedSkillType] = useState('all');
-	const [selectedGender, setSelectedGender] = useState('any');
+	const [selectedSkillType, setSelectedSkillType] = useState(selectedMode);
+	const [selectedGenderState, setSelectedGenderState] =
+		useState(selectedGender);
 
 	const [selectedSkills, setSelectedSkills] = useState<Record<string, boolean>>(
 		{},
@@ -35,6 +42,36 @@ export const Filter = ({
 	const [hoveredParentCategory, setHoveredParentCategory] = useState<
 		string | null
 	>(null);
+
+	useEffect(() => {
+		const skillsState: Record<string, boolean> = {};
+		selectedSkillIds?.forEach((id) => {
+			skillsState[id] = true;
+		});
+		setSelectedSkills(skillsState);
+
+		// Для категории творчества
+		setCreativityChecked(skillsState['creativity'] || false);
+	}, [selectedSkillIds]);
+
+	// Инициализация выбранных городов из пропсов
+	useEffect(() => {
+		const citiesState: Record<string, boolean> = {};
+		selectedCityIds?.forEach((id) => {
+			citiesState[id] = true;
+		});
+		setSelectedCities(citiesState);
+	}, [selectedCityIds]);
+
+	// Инициализация выбранного типа навыка
+	useEffect(() => {
+		setSelectedSkillType(selectedMode);
+	}, [selectedMode]);
+
+	// Инициализация выбранного пола
+	useEffect(() => {
+		setSelectedGenderState(selectedGender);
+	}, [selectedGender]);
 
 	const skillTypeOptions = [
 		{ value: 'all', label: 'Всё' },
@@ -88,12 +125,16 @@ export const Filter = ({
 
 	const handleSkillTypeChange = (value: string) => {
 		setSelectedSkillType(value);
-		onRadioGroupChange?.(value);
+		if (onRadioGroupChange) {
+			onRadioGroupChange(value);
+		}
 	};
 
 	const handleGenderChange = (value: string) => {
-		setSelectedGender(value);
-		onRadioGroupChange?.(value);
+		setSelectedGenderState(value);
+		if (onGenderChange) {
+			onGenderChange(value);
+		}
 	};
 
 	const handleSkillToggle = (value: string, e?: React.MouseEvent) => {
@@ -111,7 +152,9 @@ export const Filter = ({
 			setCreativityChecked(!selectedSkills[value]);
 		}
 
-		onCheckBoxToggle?.(value);
+		if (onCheckBoxToggle) {
+			onCheckBoxToggle(value);
+		}
 	};
 
 	const handleCreativitySubcategoryToggle = (
@@ -127,7 +170,9 @@ export const Filter = ({
 			[value]: !creativitySubcategories[value],
 		};
 		setCreativitySubcategories(newSubcategories);
-		onCheckBoxToggle?.(value);
+		if (onCheckBoxToggle) {
+			onCheckBoxToggle(value);
+		}
 	};
 
 	const handleCityToggle = (value: string, e?: React.MouseEvent) => {
@@ -140,7 +185,9 @@ export const Filter = ({
 			[value]: !selectedCities[value],
 		};
 		setSelectedCities(newCities);
-		onCheckBoxToggle?.(value);
+		if (onCityToggle) {
+			onCityToggle(value);
+		}
 	};
 
 	const handleAllCategoriesClick = (e: React.MouseEvent) => {
@@ -264,7 +311,7 @@ export const Filter = ({
 					options={authorGenderOptions}
 					onChange={handleGenderChange}
 					name="author-gender"
-					value={selectedGender}
+					value={selectedGenderState}
 					className={styles['radio-group']}
 				/>
 			</div>

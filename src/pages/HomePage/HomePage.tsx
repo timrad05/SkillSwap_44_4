@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Filter } from '../../widgets/Filter';
 import { Header } from '../../widgets/Header';
 import { Footer } from '../../widgets/Footer';
 import { RecommendedCards } from '../../widgets/RecommendedCards';
 import { Cards } from '../../widgets/Cards';
-import type { HomePageProps } from './HomePage.types';
+import type { HomePageProps, Filters } from './HomePage.types';
 import styles from './HomePage.module.scss';
 
 import { getUsers } from '../../api/users';
@@ -34,6 +34,13 @@ export const HomePage = ({
 	const [cities, setCities] = useState<City[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [cards, setCards] = useState<CardProps[]>([]);
+	const [filters, setFilters] = useState<Filters>({
+		mode: 'all',
+		skillIds: [],
+		gender: 'any',
+		cityIds: [],
+		search: '',
+	});
 
 	useEffect(() => {
 		Promise.all([getUsers(), getSkills(), getCities()])
@@ -66,6 +73,62 @@ export const HomePage = ({
 		setCards(cardsData);
 	}, [users, skills, cities]);
 
+	const handleModeChange = useCallback((mode: string) => {
+		setFilters((prev) => ({
+			...prev,
+			mode: mode as 'all' | 'learn' | 'teach',
+		}));
+		console.log('Mode changed to:', mode);
+	}, []);
+
+	const handleSkillToggle = useCallback((skillId: string) => {
+		setFilters((prev) => {
+			const currentSkillIds = prev.skillIds || [];
+			const newSkillIds = currentSkillIds.includes(skillId)
+				? currentSkillIds.filter((id) => id !== skillId)
+				: [...currentSkillIds, skillId];
+
+			console.log('Skill IDs:', newSkillIds);
+			return { ...prev, skillIds: newSkillIds };
+		});
+	}, []);
+
+	const handleGenderChange = useCallback((gender: string) => {
+		setFilters((prev) => ({
+			...prev,
+			gender: gender as 'any' | 'male' | 'female',
+		}));
+		console.log('Gender changed to:', gender);
+	}, []);
+
+	const handleCityToggle = useCallback((cityId: string) => {
+		setFilters((prev) => {
+			const currentCityIds = prev.cityIds || [];
+			const newCityIds = currentCityIds.includes(cityId)
+				? currentCityIds.filter((id) => id !== cityId)
+				: [...currentCityIds, cityId];
+
+			console.log('City IDs:', newCityIds);
+			return { ...prev, cityIds: newCityIds };
+		});
+	}, []);
+
+	const handleSearchChange = useCallback((search: string) => {
+		setFilters((prev) => ({
+			...prev,
+			search,
+		}));
+		console.log('Search changed to:', search);
+	}, []);
+
+	const handleSearchClear = useCallback(() => {
+		setFilters((prev) => ({
+			...prev,
+			search: '',
+		}));
+		console.log('Search cleared');
+	}, []);
+
 	if (isLoading) {
 		return <div className={styles.page}>Загрузка...</div>;
 	}
@@ -74,13 +137,33 @@ export const HomePage = ({
 		<div className={styles.page}>
 			<div style={{ display: 'none' }}>
 				{users.length} {skills.length} {cities.length}
+				<pre style={{ fontSize: '10px' }}>
+					Filters: {JSON.stringify(filters, null, 2)}
+				</pre>
 			</div>
-			<Header {...headerProps} />
+			<Header
+				{...headerProps}
+				searchProps={{
+					value: filters.search,
+					onChange: handleSearchChange,
+					onClear: handleSearchClear,
+				}}
+			/>
 
 			<main className={styles.main}>
 				<div className={styles.layout}>
 					<aside className={styles.sidebar}>
-						<Filter {...filterProps} />
+						<Filter
+							{...filterProps}
+							onRadioGroupChange={handleModeChange}
+							onCheckBoxToggle={handleSkillToggle}
+							onGenderChange={handleGenderChange}
+							onCityToggle={handleCityToggle}
+							selectedMode={filters.mode}
+							selectedGender={filters.gender}
+							selectedSkillIds={filters.skillIds}
+							selectedCityIds={filters.cityIds}
+						/>
 					</aside>
 
 					<div className={styles.content}>
