@@ -14,6 +14,13 @@ import { getCities } from '../../api/cities';
 import type { User } from '../../entities/user/model/types';
 import type { Skill } from '../../entities/skill/model/types';
 import type { City } from '../../entities/city/model/types';
+import {
+	buildCitiesById,
+	buildUsersById,
+	mapSkillToCardVM,
+	type SkillCardVM,
+} from '../../shared/lib';
+import type { CardProps } from '../../shared/ui/Card';
 
 export const HomePage = ({
 	headerProps = {},
@@ -26,6 +33,7 @@ export const HomePage = ({
 	const [skills, setSkills] = useState<Skill[]>([]);
 	const [cities, setCities] = useState<City[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [cards, setCards] = useState<CardProps[]>([]);
 
 	useEffect(() => {
 		Promise.all([getUsers(), getSkills(), getCities()])
@@ -40,6 +48,23 @@ export const HomePage = ({
 			.catch((err) => console.error('Ошибка загрузки данных:', err))
 			.finally(() => setIsLoading(false));
 	}, []);
+
+	useEffect(() => {
+		const usersById = buildUsersById(users);
+		const citiesById = buildCitiesById(cities);
+		const cardsArrayVM: SkillCardVM[] = skills.map((skill) =>
+			mapSkillToCardVM(skill, usersById, citiesById),
+		);
+		const cardsData = cardsArrayVM.map((item) => ({
+			avatar: item.avatar || '',
+			name: item.userName,
+			city: item.cityName,
+			age: 0,
+			canTeach: [],
+			wantToLearn: [],
+		}));
+		setCards(cardsData);
+	}, [users, skills, cities]);
 
 	if (isLoading) {
 		return <div className={styles.page}>Загрузка...</div>;
@@ -60,13 +85,13 @@ export const HomePage = ({
 
 					<div className={styles.content}>
 						<section className={styles['cards-section']}>
-							<Cards {...cardsProps} />
+							<Cards {...cardsProps} cards={cards} />
 						</section>
 						<section className={styles['cards-section']}>
-							<Cards {...cardsProps} title="Новое" />
+							<Cards {...cardsProps} title="Новое" cards={cards} />
 						</section>
 						<section className={styles['recommended-section']}>
-							<RecommendedCards {...recommendedProps} />
+							<RecommendedCards {...recommendedProps} cards={cards} />
 						</section>
 					</div>
 				</div>

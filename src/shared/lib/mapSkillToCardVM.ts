@@ -13,7 +13,7 @@ export type SkillLike = {
 export type UserLike = {
 	id: number;
 	name?: string;
-	avatarUrl?: string;
+	avatar?: string;
 	cityId?: number;
 };
 
@@ -46,6 +46,6 @@ export const mapSkillToCardVM = (
 		category: skill.category,
 		userName: user?.name ?? 'Неизвестный пользователь',
 		cityName: city?.name ?? '—',
-		avatar: user?.avatarUrl,
+		avatar: user?.avatar,
 	};
 };
