@@ -82,8 +82,6 @@ export const mapSkillToCardVM = (
 	skillCategoryById: ById<ISkillCategory>,
 	skillSubcategoryById: ById<ISkillSubcategory>,
 ): SkillCardVM => {
-	// const authorId = skill.userId ?? skill.authorId;
-	// const user = authorId !== undefined ? usersById[authorId] : undefined;
 	const city = user?.cityId !== undefined ? citiesById[user.cityId] : undefined;
 	const canTeach: skillLike[] =
 		user.canTeach !== undefined
