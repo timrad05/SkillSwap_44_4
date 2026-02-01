@@ -10,8 +10,8 @@
 			"dateOfBirth": "1992-01-01",
 			"gender": "male",
 			"registrationDate": "2026-01-19",
-			"canTeach": [1, 2, 3],
-			"wantToLearn": [11, 22, 33]
+			"canTeach": [1],
+			"wantToLearn": [42, 35]
 		},
 		{
 			"id": 2,
@@ -23,8 +23,8 @@
 			"dateOfBirth": "1995-05-15",
 			"gender": "female",
 			"registrationDate": "2026-01-19",
-			"canTeach": [1, 2, 3],
-			"wantToLearn": [11, 22, 33]
+			"canTeach": [9],
+			"wantToLearn": [40, 33]
 		},
 		{
 			"id": 3,
@@ -36,8 +36,8 @@
 			"dateOfBirth": "1988-11-30",
 			"gender": "male",
 			"registrationDate": "2026-01-19",
-			"canTeach": [1, 2, 3],
-			"wantToLearn": [11, 22, 33]
+			"canTeach": [17],
+			"wantToLearn": [39, 34]
 		},
 		{
 			"id": 4,
@@ -49,8 +49,8 @@
 			"dateOfBirth": "1998-08-22",
 			"gender": "female",
 			"registrationDate": "2026-01-19",
-			"canTeach": [1, 2, 3],
-			"wantToLearn": [11, 21, 33]
+			"canTeach": [22],
+			"wantToLearn": [37, 31]
 		},
 		{
 			"id": 5,
@@ -62,8 +62,8 @@
 			"dateOfBirth": "1985-03-10",
 			"gender": "male",
 			"registrationDate": "2026-01-19",
-			"canTeach": [1, 2, 3],
-			"wantToLearn": [11, 22, 33]
+			"canTeach": [2],
+			"wantToLearn": [26, 33]
 		},
 		{
 			"id": 6,
@@ -75,8 +75,8 @@
 			"dateOfBirth": "1994-07-07",
 			"gender": "female",
 			"registrationDate": "2026-01-19",
-			"canTeach": [1, 2, 3],
-			"wantToLearn": [11, 22, 33]
+			"canTeach": [10],
+			"wantToLearn": [41, 25]
 		},
 		{
 			"id": 7,
@@ -88,8 +88,8 @@
 			"dateOfBirth": "1981-10-25",
 			"gender": "male",
 			"registrationDate": "2026-01-19",
-			"canTeach": [1, 2, 3],
-			"wantToLearn": [11, 22, 33]
+			"canTeach": [18],
+			"wantToLearn": [24, 32]
 		},
 		{
 			"id": 8,
@@ -101,8 +101,8 @@
 			"dateOfBirth": "1975-04-12",
 			"gender": "female",
 			"registrationDate": "2026-01-19",
-			"canTeach": [1, 2, 3],
-			"wantToLearn": [12, 23, 34]
+			"canTeach": [23],
+			"wantToLearn": [27, 6]
 		},
 		{
 			"id": 9,
@@ -114,8 +114,8 @@
 			"dateOfBirth": "2002-06-03",
 			"gender": "male",
 			"registrationDate": "2026-01-19",
-			"canTeach": [1, 2, 3],
-			"wantToLearn": [12, 23, 31]
+			"canTeach": [3],
+			"wantToLearn": [5, 20]
 		},
 		{
 			"id": 10,
@@ -127,8 +127,8 @@
 			"dateOfBirth": "1990-12-01",
 			"gender": "female",
 			"registrationDate": "2026-01-19",
-			"canTeach": [1, 2, 3],
-			"wantToLearn": [12, 13, 14]
+			"canTeach": [11],
+			"wantToLearn": [4, 19]
 		}
 	]
 }
