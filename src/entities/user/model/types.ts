@@ -3,4 +3,8 @@ export interface User {
 	name: string;
 	avatar?: string;
 	cityId?: number;
+	dateOfBirth?: string;
+	canTeach?: number[];
+	wantToLearn?: number[];
+	gender?: 'male' | 'female';
 }
