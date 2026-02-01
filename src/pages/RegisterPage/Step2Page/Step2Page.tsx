@@ -16,7 +16,7 @@ export const Step2Page: React.FC<Step2PageProps> = ({
 	infoProps = {
 		title: 'Расскажите немного о себе',
 		text: 'Это поможет другим людям лучше вас узнать, чтобы выбрать для обмена',
-		image: '/src/shared/assets/images/light-bulb.png',
+		image: '/src/shared/assets/images/user-info.png',
 	},
 	onSubmit = () => {},
 }) => {
