@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { Filter } from '../../widgets/Filter';
 import { Header } from '../../widgets/Header';
 import { Footer } from '../../widgets/Footer';
@@ -41,6 +41,7 @@ export const HomePage = ({
 	const [subcategories, setSubcategories] = useState<ISkillSubcategory[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [cards, setCards] = useState<CardProps[]>([]);
+
 	const [filters, setFilters] = useState<Filters>({
 		mode: 'all',
 		skillIds: [],
@@ -79,12 +80,75 @@ export const HomePage = ({
 			.finally(() => setIsLoading(false));
 	}, []);
 
+	// Фильтрация
+	const filteredUsers = useMemo(() => {
+		if (!users.length) return [];
+
+		return users.filter((user) => {
+			// 1. Фильтр по полу
+			if (filters.gender && filters.gender !== 'any') {
+				if (user.gender !== filters.gender) return false;
+			}
+
+			// 2. Фильтр по городу
+			if (filters.cityIds && filters.cityIds.length > 0) {
+				// user.cityId - number (например, 1 для Москвы)
+				// filters.cityIds - string[] (например, ['moscow', 'spb'])
+			}
+
+			// 3. Фильтр по режиму и навыкам
+			const hasSelectedSkills = filters.skillIds && filters.skillIds.length > 0;
+
+			if (filters.mode === 'wantToLearn' && hasSelectedSkills) {
+				const userWantToLearnIds =
+					user.wantToLearn?.map((id) => id.toString()) || [];
+				const hasMatchingSkills = userWantToLearnIds.some((skillId) =>
+					filters.skillIds!.includes(skillId),
+				);
+				return hasMatchingSkills;
+			}
+
+			if (filters.mode === 'canTeach' && hasSelectedSkills) {
+				const userCanTeachIds = user.canTeach?.map((id) => id.toString()) || [];
+				const hasMatchingSkills = userCanTeachIds.some((skillId) =>
+					filters.skillIds!.includes(skillId),
+				);
+				return hasMatchingSkills;
+			}
+
+			if (filters.mode === 'all' && hasSelectedSkills) {
+				const userWantToLearnIds =
+					user.wantToLearn?.map((id) => id.toString()) || [];
+				const userCanTeachIds = user.canTeach?.map((id) => id.toString()) || [];
+
+				const matchesWantToLearn = userWantToLearnIds.some((skillId) =>
+					filters.skillIds!.includes(skillId),
+				);
+				const matchesCanTeach = userCanTeachIds.some((skillId) =>
+					filters.skillIds!.includes(skillId),
+				);
+
+				return matchesWantToLearn || matchesCanTeach;
+			}
+
+			// 4. Фильтр по поиску
+			if (filters.search && filters.search.trim() !== '') {
+				const searchLower = filters.search.toLowerCase();
+				const userName = user.name?.toLowerCase() || '';
+				return userName.includes(searchLower);
+			}
+
+			// 5. Если никакие фильтры не применены
+			return true;
+		});
+	}, [users, filters]);
+
 	useEffect(() => {
 		const citiesById = buildById(cities);
 		const categoriesById = buildById(categories);
 		const subcategoriesById = buildById(subcategories);
 
-		const cardsArrayVM: SkillCardVM[] = users.map((user) =>
+		const cardsArrayVM: SkillCardVM[] = filteredUsers.map((user) =>
 			mapSkillToCardVM(user, citiesById, categoriesById, subcategoriesById),
 		);
 		const cardsData = cardsArrayVM.map((item) => ({
@@ -96,14 +160,24 @@ export const HomePage = ({
 			wantToLearn: item.wantToLearn,
 		}));
 		setCards(cardsData);
-	}, [users, cities, categories, subcategories]);
+	}, [filteredUsers, cities, categories, subcategories]);
 
 	const handleModeChange = useCallback((mode: string) => {
+		let correctMode: 'all' | 'wantToLearn' | 'canTeach';
+
+		if (mode === 'learn') {
+			correctMode = 'wantToLearn';
+		} else if (mode === 'teach') {
+			correctMode = 'canTeach';
+		} else {
+			correctMode = 'all';
+		}
+
 		setFilters((prev) => ({
 			...prev,
-			mode: mode as 'all' | 'learn' | 'teach',
+			mode: correctMode,
 		}));
-		console.log('Mode changed to:', mode);
+		console.log('Mode changed to:', correctMode, '(original:', mode, ')');
 	}, []);
 
 	const handleSkillToggle = useCallback((skillId: string) => {
@@ -158,6 +232,13 @@ export const HomePage = ({
 		return <div className={styles.page}>Загрузка...</div>;
 	}
 
+	// Отладочный вывод
+	console.log('=== ФИЛЬТРАЦИЯ (MVP) ===');
+	console.log('Всего пользователей:', users.length);
+	console.log('Отфильтровано:', filteredUsers.length);
+	console.log('Режим (внутренний):', filters.mode);
+	console.log('Выбранные навыки:', filters.skillIds);
+
 	return (
 		<div className={styles.page}>
 			<div style={{ display: 'none' }}>
@@ -184,7 +265,13 @@ export const HomePage = ({
 							onCheckBoxToggle={handleSkillToggle}
 							onGenderChange={handleGenderChange}
 							onCityToggle={handleCityToggle}
-							selectedMode={filters.mode}
+							selectedMode={
+								filters.mode === 'wantToLearn'
+									? 'learn'
+									: filters.mode === 'canTeach'
+										? 'teach'
+										: 'all'
+							}
 							selectedGender={filters.gender}
 							selectedSkillIds={filters.skillIds}
 							selectedCityIds={filters.cityIds}

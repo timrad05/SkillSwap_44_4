@@ -13,7 +13,7 @@ export interface HomePageProps {
 }
 
 export interface Filters {
-	mode?: 'all' | 'learn' | 'teach';
+	mode?: 'all' | 'wantToLearn' | 'canTeach';
 	skillIds?: string[];
 	gender?: 'any' | 'male' | 'female';
 	cityIds?: string[];
