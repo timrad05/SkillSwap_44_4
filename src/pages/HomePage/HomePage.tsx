@@ -81,7 +81,7 @@ export const HomePage = ({
 			.finally(() => setIsLoading(false));
 	}, []);
 
-	// Фильтрация - ИСПРАВЛЕНО для работы с числовыми ID
+	// Фильтрация
 	const filteredUsers = useMemo(() => {
 		if (!users.length) return [];
 
