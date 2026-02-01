@@ -5,9 +5,10 @@ import chevronUpIcon from '../../shared/assets/icons/chevron-up.svg';
 import crossIcon from '../../shared/assets/icons/cross.svg';
 import styles from './Filter.module.scss';
 import type { TFilterProps } from './Filter.types';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import type { City } from '../../entities/city/model/types';
 import { getCities } from '../../api/cities';
+import type { ISkillSubcategory } from '../../entities/skill/model/types';
 
 export const Filter = ({
 	onRadioGroupChange,
@@ -19,6 +20,8 @@ export const Filter = ({
 	selectedGender = 'any',
 	selectedSkillIds = [],
 	selectedCityIds = [],
+	categories = [],
+	subcategories = [],
 	onReset,
 }: TFilterProps) => {
 	const [selectedSkillType, setSelectedSkillType] = useState(selectedMode);
@@ -35,17 +38,6 @@ export const Filter = ({
 	// Состояния для переключения шевронов
 	const [isCategoriesExpanded, setIsCategoriesExpanded] = useState(false);
 	const [isCitiesExpanded, setIsCitiesExpanded] = useState(false);
-
-	// Состояния для подкатегорий
-	const [creativityChecked, setCreativityChecked] = useState(false);
-	const [creativitySubcategories, setCreativitySubcategories] = useState<
-		Record<string, boolean>
-	>({});
-
-	// Состояние для отслеживания наведения на родительские категории
-	const [hoveredParentCategory, setHoveredParentCategory] = useState<
-		string | null
-	>(null);
 
 	const [cities, setCities] = useState<City[]>([]);
 	const [isCitiesLoading, setIsCitiesLoading] = useState(true);
@@ -65,9 +57,6 @@ export const Filter = ({
 			skillsState[id] = true;
 		});
 		setSelectedSkills(skillsState);
-
-		// Для категории творчества
-		setCreativityChecked(skillsState['creativity'] || false);
 	}, [selectedSkillIds]);
 
 	// Инициализация выбранных городов из пропсов
@@ -95,35 +84,27 @@ export const Filter = ({
 		{ value: 'teach', label: 'Могу научить' },
 	];
 
-	// Родительские категории навыков (все имеют подкатегории)
-	const skillCategoryOptions = [
-		{ value: 'business', label: 'Бизнес и карьера', hasSubcategories: true },
-		{
-			value: 'creativity',
-			label: 'Творчество и искусство',
-			hasSubcategories: true,
-		},
-		{ value: 'languages', label: 'Иностранные языки', hasSubcategories: true },
-		{
-			value: 'education',
-			label: 'Образование и развитие',
-			hasSubcategories: true,
-		},
-		{ value: 'health', label: 'Здоровье и лайфстайл', hasSubcategories: true },
-		{ value: 'home', label: 'Дом и уют', hasSubcategories: true },
-	];
+	const subcategoriesByCategoryId = useMemo(() => {
+		const map: Record<string, ISkillSubcategory[]> = {};
+		subcategories.forEach((subcategory) => {
+			const key = subcategory.categoryId.toString();
+			if (!map[key]) {
+				map[key] = [];
+			}
+			map[key].push(subcategory);
+		});
+		return map;
+	}, [subcategories]);
 
-	// Подкатегории для "Творчество и искусство"
-	const creativitySubcategoryOptions = [
-		{ value: 'drawing', label: 'Рисование и иллюстрация' },
-		{ value: 'photography', label: 'Фотография' },
-		{ value: 'video', label: 'Видеомонтаж' },
-		{ value: 'music', label: 'Музыка и звук' },
-		{ value: 'acting', label: 'Актерское мастерство' },
-		{ value: 'writing', label: 'Креативное письмо' },
-		{ value: 'artTherapy', label: 'Арт-терапия' },
-		{ value: 'decor', label: 'Декор и DIY' },
-	];
+	const skillCategoryOptions = categories.map((category) => {
+		const categoryId = category.id.toString();
+		return {
+			value: categoryId,
+			label: category.name,
+			hasSubcategories:
+				(subcategoriesByCategoryId[categoryId] || []).length > 0,
+		};
+	});
 
 	const authorGenderOptions = [
 		{ value: 'any', label: 'Не имеет значения' },
@@ -168,31 +149,45 @@ export const Filter = ({
 		};
 		setSelectedSkills(newSkills);
 
-		if (value === 'creativity') {
-			setCreativityChecked(!selectedSkills[value]);
-		}
-
-		if (onCheckBoxToggle) {
-			onCheckBoxToggle(value);
-		}
+		onCheckBoxToggle?.(value);
 	};
 
-	const handleCreativitySubcategoryToggle = (
-		value: string,
-		e?: React.MouseEvent,
-	) => {
+	const isCategoryChecked = (categoryId: string) => {
+		const categorySubcategories = subcategoriesByCategoryId[categoryId] || [];
+		if (categorySubcategories.length === 0) return false;
+		return categorySubcategories.every(
+			(subcategory) => !!selectedSkills[subcategory.id.toString()],
+		);
+	};
+
+	const handleCategoryToggle = (categoryId: string, e?: React.MouseEvent) => {
 		if (e) {
 			e.preventDefault();
 		}
 
-		const newSubcategories = {
-			...creativitySubcategories,
-			[value]: !creativitySubcategories[value],
-		};
-		setCreativitySubcategories(newSubcategories);
-		if (onCheckBoxToggle) {
-			onCheckBoxToggle(value);
-		}
+		const categorySubcategories = subcategoriesByCategoryId[categoryId] || [];
+		if (categorySubcategories.length === 0) return;
+
+		const shouldSelectAll = !isCategoryChecked(categoryId);
+		const newSkills = { ...selectedSkills };
+
+		categorySubcategories.forEach((subcategory) => {
+			const subcategoryId = subcategory.id.toString();
+			const isSelected = !!selectedSkills[subcategoryId];
+			const shouldToggle = shouldSelectAll ? !isSelected : isSelected;
+
+			if (shouldSelectAll) {
+				newSkills[subcategoryId] = true;
+			} else {
+				delete newSkills[subcategoryId];
+			}
+
+			if (shouldToggle) {
+				onCheckBoxToggle?.(subcategoryId);
+			}
+		});
+
+		setSelectedSkills(newSkills);
 	};
 
 	const handleCityToggle = (value: string, e?: React.MouseEvent) => {
@@ -218,14 +213,6 @@ export const Filter = ({
 	const handleAllCitiesClick = (e: React.MouseEvent) => {
 		e.preventDefault();
 		setIsCitiesExpanded(!isCitiesExpanded);
-	};
-
-	const handleParentCategoryMouseEnter = (value: string) => {
-		setHoveredParentCategory(value);
-	};
-
-	const handleParentCategoryMouseLeave = () => {
-		setHoveredParentCategory(null);
 	};
 
 	return (
@@ -264,65 +251,39 @@ export const Filter = ({
 				<h3 className={styles.subtitle}>Навыки</h3>
 				<div className={styles['checkbox-group']}>
 					{skillCategoryOptions.map((option) => {
-						const isHovered = hoveredParentCategory === option.value;
-						const isCreativityExpanded =
-							option.value === 'creativity' && creativityChecked;
-
-						if (option.value === 'creativity') {
-							return (
-								<div
-									key={option.value}
-									onMouseEnter={() =>
-										handleParentCategoryMouseEnter(option.value)
-									}
-									onMouseLeave={handleParentCategoryMouseLeave}
-								>
-									<CheckBox
-										option={{ value: option.value, label: option.label }}
-										checked={creativityChecked}
-										isParent={true}
-										hasSubcategories={option.hasSubcategories}
-										onToggle={(value) => handleSkillToggle(value)}
-										showChevron={isHovered || creativityChecked}
-										isExpanded={isCreativityExpanded}
-									/>
-
-									{/* Подкатегории для творчества */}
-									{creativityChecked && (
-										<div style={{ marginLeft: '32px', marginTop: '8px' }}>
-											{creativitySubcategoryOptions.map((subcategory) => (
-												<CheckBox
-													key={subcategory.value}
-													option={subcategory}
-													checked={!!creativitySubcategories[subcategory.value]}
-													onToggle={(value) =>
-														handleCreativitySubcategoryToggle(value)
-													}
-												/>
-											))}
-										</div>
-									)}
-								</div>
+						const categorySubcategories =
+							subcategoriesByCategoryId[option.value] || [];
+						const showSubcategories =
+							isCategoriesExpanded ||
+							categorySubcategories.some(
+								(subcategory) => selectedSkills[subcategory.id.toString()],
 							);
-						}
-
 						return (
-							<div
-								key={option.value}
-								onMouseEnter={() =>
-									handleParentCategoryMouseEnter(option.value)
-								}
-								onMouseLeave={handleParentCategoryMouseLeave}
-							>
+							<div key={option.value}>
 								<CheckBox
 									option={{ value: option.value, label: option.label }}
-									checked={!!selectedSkills[option.value]}
+									checked={isCategoryChecked(option.value)}
 									isParent={true}
 									hasSubcategories={option.hasSubcategories}
-									onToggle={(value) => handleSkillToggle(value)}
-									showChevron={isHovered || !!selectedSkills[option.value]}
-									isExpanded={!!selectedSkills[option.value]}
+									onToggle={handleCategoryToggle}
+									showChevron={option.hasSubcategories}
+									isExpanded={showSubcategories}
 								/>
+								{showSubcategories && categorySubcategories.length > 0 && (
+									<div style={{ marginLeft: '32px', marginTop: '8px' }}>
+										{categorySubcategories.map((subcategory) => (
+											<CheckBox
+												key={subcategory.id}
+												option={{
+													value: subcategory.id.toString(),
+													label: subcategory.name,
+												}}
+												checked={!!selectedSkills[subcategory.id.toString()]}
+												onToggle={handleSkillToggle}
+											/>
+										))}
+									</div>
+								)}
 							</div>
 						);
 					})}
