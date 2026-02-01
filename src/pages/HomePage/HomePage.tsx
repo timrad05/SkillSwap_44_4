@@ -312,7 +312,13 @@ export const HomePage = ({
 							</>
 						) : (
 							<section className={styles['cards-section']}>
-								<FilteredCards cards={cards} />
+								{filteredUsers.length === 0 ? (
+									<div className={styles['empty-state']} role="status">
+										Ничего не найдено
+									</div>
+								) : (
+									<FilteredCards cards={cards} />
+								)}
 							</section>
 						)}
 					</div>
