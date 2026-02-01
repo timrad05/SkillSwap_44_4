@@ -81,7 +81,7 @@ export const HomePage = ({
 			.finally(() => setIsLoading(false));
 	}, []);
 
-	// Фильтрация
+	// Фильтрация - ИСПРАВЛЕНО для работы с числовыми ID
 	const filteredUsers = useMemo(() => {
 		if (!users.length) return [];
 
@@ -93,8 +93,15 @@ export const HomePage = ({
 
 			// 2. Фильтр по городу
 			if (filters.cityIds && filters.cityIds.length > 0) {
-				// user.cityId - number (например, 1 для Москвы)
-				// filters.cityIds - string[] (например, ['moscow', 'spb'])
+				if (user.cityId === undefined) {
+					return false;
+				}
+
+				const selectedCityIds = filters.cityIds.map((id) => parseInt(id, 10));
+
+				if (!selectedCityIds.includes(user.cityId)) {
+					return false;
+				}
 			}
 
 			// 3. Фильтр по режиму и навыкам
@@ -247,6 +254,8 @@ export const HomePage = ({
 	console.log('Активные фильтры:', hasActiveFilters);
 	console.log('Режим (внутренний):', filters.mode);
 	console.log('Выбранные навыки:', filters.skillIds);
+	console.log('Выбранные города (ID):', filters.cityIds);
+	console.log('Все города:', cities);
 
 	return (
 		<div className={styles.page}>

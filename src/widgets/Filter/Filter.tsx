@@ -5,6 +5,8 @@ import chevronUpIcon from '../../shared/assets/icons/chevron-up.svg';
 import styles from './Filter.module.scss';
 import type { TFilterProps } from './Filter.types';
 import { useState, useEffect } from 'react';
+import type { City } from '../../entities/city/model/types';
+import { getCities } from '../../api/cities';
 
 export const Filter = ({
 	onRadioGroupChange,
@@ -42,6 +44,18 @@ export const Filter = ({
 	const [hoveredParentCategory, setHoveredParentCategory] = useState<
 		string | null
 	>(null);
+
+	const [cities, setCities] = useState<City[]>([]);
+	const [isCitiesLoading, setIsCitiesLoading] = useState(true);
+
+	useEffect(() => {
+		getCities()
+			.then((citiesData) => {
+				setCities(citiesData);
+			})
+			.catch((err) => console.error('Ошибка загрузки городов:', err))
+			.finally(() => setIsCitiesLoading(false));
+	}, []);
 
 	useEffect(() => {
 		const skillsState: Record<string, boolean> = {};
@@ -115,13 +129,17 @@ export const Filter = ({
 		{ value: 'female', label: 'Женский' },
 	];
 
-	const cityOptions = [
-		{ value: 'moscow', label: 'Москва' },
-		{ value: 'spb', label: 'Санкт-Петербург' },
-		{ value: 'novosibirsk', label: 'Новосибирск' },
-		{ value: 'ekaterinburg', label: 'Екатеринбург' },
-		{ value: 'kazan', label: 'Казань' },
-	];
+	// Получаем только первые 5 городов для отображения по умолчанию
+	const defaultCityOptions = cities.slice(0, 5).map((city) => ({
+		value: city.id.toString(), // Используем ID города как строку
+		label: city.name,
+	}));
+
+	// Полные данные городов для расширенного списка
+	const allCityOptions = cities.map((city) => ({
+		value: city.id.toString(), // Используем ID города как строку
+		label: city.name,
+	}));
 
 	const handleSkillTypeChange = (value: string) => {
 		setSelectedSkillType(value);
@@ -318,30 +336,38 @@ export const Filter = ({
 
 			<div className={styles.section}>
 				<h3 className={styles.subtitle}>Город</h3>
-				<div className={styles['checkbox-group']}>
-					{cityOptions.map((option) => (
-						<CheckBox
-							key={option.value}
-							option={option}
-							checked={!!selectedCities[option.value]}
-							onToggle={(value) => handleCityToggle(value)}
-						/>
-					))}
-				</div>
-				<button
-					type="button"
-					className={styles['expand-button']}
-					onClick={handleAllCitiesClick}
-					aria-expanded={isCitiesExpanded}
-				>
-					<span className={styles['expand-button-text']}>Все города</span>
-					<img
-						src={isCitiesExpanded ? chevronUpIcon : chevronDownIcon}
-						alt=""
-						aria-hidden="true"
-						className={styles['chevron-icon']}
-					/>
-				</button>
+				{isCitiesLoading ? (
+					<div className={styles.loading}>Загрузка городов...</div>
+				) : (
+					<>
+						<div className={styles['checkbox-group']}>
+							{(isCitiesExpanded ? allCityOptions : defaultCityOptions).map(
+								(option) => (
+									<CheckBox
+										key={option.value}
+										option={option}
+										checked={!!selectedCities[option.value]}
+										onToggle={(value) => handleCityToggle(value)}
+									/>
+								),
+							)}
+						</div>
+						<button
+							type="button"
+							className={styles['expand-button']}
+							onClick={handleAllCitiesClick}
+							aria-expanded={isCitiesExpanded}
+						>
+							<span className={styles['expand-button-text']}>Все города</span>
+							<img
+								src={isCitiesExpanded ? chevronUpIcon : chevronDownIcon}
+								alt=""
+								aria-hidden="true"
+								className={styles['chevron-icon']}
+							/>
+						</button>
+					</>
+				)}
 			</div>
 		</div>
 	);
