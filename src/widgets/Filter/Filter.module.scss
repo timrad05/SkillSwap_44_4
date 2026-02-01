@@ -12,6 +12,14 @@
 	margin-bottom: 20px;
 }
 
+.filter-wrapper {
+	display: flex;
+	gap: 40px;
+	height: 28px;
+	width: 284px;
+	align-items: center;
+}
+
 .title {
 	@include text-h2;
 
@@ -68,4 +76,26 @@
 	path {
 		fill: $color-text-link;
 	}
+}
+
+.reset-button {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 0;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	color: $color-button-pressed;
+}
+
+.reset-text {
+	@include text-body;
+}
+
+.reset-icon {
+	width: 24px;
+	height: 24px;
+	filter: invert(43%) sepia(67%) saturate(509%) hue-rotate(60deg)
+		brightness(90%) contrast(91%);
 }

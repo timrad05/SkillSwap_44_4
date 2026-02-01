@@ -8,4 +8,5 @@ export type TFilterProps = {
 	selectedGender?: string;
 	selectedSkillIds?: string[];
 	selectedCityIds?: string[];
+	onReset?: () => void;
 };

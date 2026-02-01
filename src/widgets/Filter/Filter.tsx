@@ -2,6 +2,7 @@ import { RadioGroup } from '../../shared/ui/RadioGroup';
 import { CheckBox } from '../../shared/ui/CheckBox';
 import chevronDownIcon from '../../shared/assets/icons/chevron-down.svg';
 import chevronUpIcon from '../../shared/assets/icons/chevron-up.svg';
+import crossIcon from '../../shared/assets/icons/cross.svg';
 import styles from './Filter.module.scss';
 import type { TFilterProps } from './Filter.types';
 import { useState, useEffect } from 'react';
@@ -16,6 +17,7 @@ export const Filter = ({
 	selectedGender = 'any',
 	selectedSkillIds = [],
 	selectedCityIds = [],
+	onReset,
 }: TFilterProps) => {
 	const [selectedSkillType, setSelectedSkillType] = useState(selectedMode);
 	const [selectedGenderState, setSelectedGenderState] =
@@ -210,8 +212,26 @@ export const Filter = ({
 
 	return (
 		<div className={`${styles.filter} ${className}`}>
-			<h2 className={styles.title}>Фильтры</h2>
+			<div className={styles['filter-wrapper']}>
+				<h2 className={styles.title}>Фильтры</h2>
+				<div className={styles['reset-button-wrapper']}>
+					<button
+						onClick={onReset}
+						className={styles['reset-button']}
+						type="button"
+					>
+						<span className={styles['reset-text']}>Сбросить</span>
 
+						<img
+							src={crossIcon}
+							alt="Сбросить"
+							className={styles['reset-icon']}
+							width="24"
+							height="24"
+						/>
+					</button>
+				</div>
+			</div>
 			<div className={styles.section}>
 				<RadioGroup
 					options={skillTypeOptions}
