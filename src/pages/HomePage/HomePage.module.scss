@@ -1,3 +1,18 @@
+@use '../../shared/styles/variables' as *;
+
+.empty-state {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	padding: 48px 0;
+	font-size: 16px;
+	line-height: 24px;
+	color: $color-caption;
+	font-family: $font-base;
+	text-align: center;
+}
+
 .page {
 	display: flex;
 	flex-direction: column;
