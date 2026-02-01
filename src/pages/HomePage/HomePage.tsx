@@ -4,6 +4,7 @@ import { Header } from '../../widgets/Header';
 import { Footer } from '../../widgets/Footer';
 import { RecommendedCards } from '../../widgets/RecommendedCards';
 import { Cards } from '../../widgets/Cards';
+import { FilteredCards } from '../../widgets/FilteredCards';
 import type { HomePageProps, Filters } from './HomePage.types';
 import styles from './HomePage.module.scss';
 
@@ -232,10 +233,18 @@ export const HomePage = ({
 		return <div className={styles.page}>Загрузка...</div>;
 	}
 
+	const hasActiveFilters =
+		(filters.search ? filters.search.trim().length > 0 : false) ||
+		(filters.skillIds?.length || 0) > 0 ||
+		(filters.cityIds?.length || 0) > 0 ||
+		filters.gender !== 'any' ||
+		filters.mode !== 'all';
+
 	// Отладочный вывод
 	console.log('=== ФИЛЬТРАЦИЯ (MVP) ===');
 	console.log('Всего пользователей:', users.length);
 	console.log('Отфильтровано:', filteredUsers.length);
+	console.log('Активные фильтры:', hasActiveFilters);
 	console.log('Режим (внутренний):', filters.mode);
 	console.log('Выбранные навыки:', filters.skillIds);
 
@@ -279,15 +288,23 @@ export const HomePage = ({
 					</aside>
 
 					<div className={styles.content}>
-						<section className={styles['cards-section']}>
-							<Cards {...cardsProps} cards={cards} />
-						</section>
-						<section className={styles['cards-section']}>
-							<Cards {...cardsProps} title="Новое" cards={cards} />
-						</section>
-						<section className={styles['recommended-section']}>
-							<RecommendedCards {...recommendedProps} cards={cards} />
-						</section>
+						{!hasActiveFilters ? (
+							<>
+								<section className={styles['cards-section']}>
+									<Cards {...cardsProps} cards={cards} />
+								</section>
+								<section className={styles['cards-section']}>
+									<Cards {...cardsProps} title="Новое" cards={cards} />
+								</section>
+								<section className={styles['recommended-section']}>
+									<RecommendedCards {...recommendedProps} cards={cards} />
+								</section>
+							</>
+						) : (
+							<section className={styles['cards-section']}>
+								<FilteredCards cards={cards} />
+							</section>
+						)}
 					</div>
 				</div>
 			</main>
