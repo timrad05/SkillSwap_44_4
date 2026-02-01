@@ -284,6 +284,8 @@ export const HomePage = ({
 							onGenderChange={handleGenderChange}
 							onCityToggle={handleCityToggle}
 							onReset={resetFilters}
+							categories={categories}
+							subcategories={subcategories}
 							selectedMode={
 								filters.mode === 'wantToLearn'
 									? 'learn'
