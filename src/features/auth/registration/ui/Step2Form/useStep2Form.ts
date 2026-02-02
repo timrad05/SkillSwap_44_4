@@ -16,6 +16,7 @@ import type { IRegistrationDraft } from '../../../../../entities/user/model/type
 
 export const useStep2Form = () => {
 	const navigate = useNavigate();
+
 	const [formData, setFormData] = useState({
 		name: '',
 		birthDate: '',
@@ -24,7 +25,11 @@ export const useStep2Form = () => {
 		learnCategoryId: '',
 		learnSubcategoryId: '',
 	});
+
+	const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+
 	const [errors, setErrors] = useState({ name: '' });
+
 	const [cities, setCities] = useState<City[]>([]);
 	const [categories, setCategories] = useState<ISkillCategory[]>([]);
 	const [subcategories, setSubcategories] = useState<ISkillSubcategory[]>([]);
@@ -58,6 +63,10 @@ export const useStep2Form = () => {
 				learnCategoryId: restoredCategoryId,
 				learnSubcategoryId: draft.wantToLearn?.[0]?.toString() || '',
 			});
+
+			if (draft.avatar) {
+				setAvatarPreview(draft.avatar);
+			}
 		}
 	}, [subcategories]);
 
@@ -69,7 +78,6 @@ export const useStep2Form = () => {
 		(field: keyof typeof formData) => (value: string) => {
 			setFormData((prev) => {
 				const newData = { ...prev, [field]: value };
-
 				if (field === 'learnCategoryId') {
 					const newCategoryId = Number(value);
 					const currentSubId = Number(prev.learnSubcategoryId);
@@ -78,7 +86,6 @@ export const useStep2Form = () => {
 						newData.learnSubcategoryId = '';
 					}
 				}
-
 				return newData;
 			});
 
@@ -110,6 +117,19 @@ export const useStep2Form = () => {
 			setUserDraft(draftUpdate);
 		};
 
+	const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (!file) return;
+
+		const reader = new FileReader();
+		reader.onload = () => {
+			const base64 = reader.result as string;
+			setAvatarPreview(base64);
+			setUserDraft({ avatar: base64 });
+		};
+		reader.readAsDataURL(file);
+	};
+
 	const handleNameBlur = () => {
 		if (!formData.name?.trim()) {
 			setErrors({ name: 'Имя обязательно для заполнения' });
@@ -127,12 +147,10 @@ export const useStep2Form = () => {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-
 		if (!formData.name?.trim()) {
 			setErrors({ name: 'Имя обязательно для заполнения' });
 			return;
 		}
-
 		navigate('/registration/step3');
 	};
 
@@ -144,12 +162,14 @@ export const useStep2Form = () => {
 
 	return {
 		formData,
+		avatarPreview,
 		errors,
 		openDropdown,
 		cities,
 		categories,
 		filteredSubcategories,
 		handleFieldChange,
+		handleAvatarChange,
 		handleDropdownToggle,
 		handleSubmit,
 		handleBack,
