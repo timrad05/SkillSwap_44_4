@@ -5,7 +5,7 @@ import { Footer } from '../../widgets/Footer';
 import { RecommendedCards } from '../../widgets/RecommendedCards';
 import { Cards } from '../../widgets/Cards';
 import { FilteredCards } from '../../widgets/FilteredCards';
-import { Chip } from '../../shared/ui/Chip'; // Добавляем импорт Chip
+import { Chip } from '../../shared/ui/Chip';
 import type { HomePageProps, Filters } from './HomePage.types';
 import styles from './HomePage.module.scss';
 
@@ -37,7 +37,6 @@ const DEFAULT_FILTERS: Filters = {
 	search: '',
 };
 
-// Тип для чипов
 type ChipType = {
 	id: string;
 	label: string;
@@ -59,7 +58,7 @@ export const HomePage = ({
 	const [isLoading, setIsLoading] = useState(true);
 	const [cards, setCards] = useState<CardProps[]>([]);
 	const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
-	const [chips, setChips] = useState<ChipType[]>([]); // Состояние для чипов
+	const [chips, setChips] = useState<ChipType[]>([]);
 
 	const handleModeChange = useCallback((mode: string) => {
 		let correctMode: 'all' | 'wantToLearn' | 'canTeach';
@@ -127,18 +126,15 @@ export const HomePage = ({
 		console.log('Search cleared');
 	}, []);
 
-	// Функция сброса
 	const resetFilters = useCallback(() => {
 		setFilters(DEFAULT_FILTERS);
-		setChips([]); // Очищаем чипы
+		setChips([]);
 		console.log('Все фильтры сброшены');
 	}, []);
 
-	// Эффект для обновления чипов при изменении фильтров
 	useEffect(() => {
 		const newChips: ChipType[] = [];
 
-		// Чип для поиска
 		if (filters.search && filters.search.trim() !== '') {
 			newChips.push({
 				id: 'search',
@@ -147,14 +143,12 @@ export const HomePage = ({
 			});
 		}
 
-		// Чип для режима
 		if (filters.mode && filters.mode !== 'all') {
 			const modeLabels: Record<'wantToLearn' | 'canTeach', string> = {
 				wantToLearn: 'Хочу научиться',
 				canTeach: 'Могу научить',
 			};
 
-			// Type guard для безопасности
 			if (filters.mode === 'wantToLearn' || filters.mode === 'canTeach') {
 				newChips.push({
 					id: 'mode',
@@ -164,9 +158,7 @@ export const HomePage = ({
 			}
 		}
 
-		// Чипы для навыков
 		if (filters.skillIds && filters.skillIds.length > 0) {
-			// Используем subcategories, так как именно они являются навыками
 			subcategories.forEach((subcategory) => {
 				if (filters.skillIds?.includes(subcategory.id.toString())) {
 					newChips.push({
@@ -178,7 +170,6 @@ export const HomePage = ({
 			});
 		}
 
-		// Чипы для городов
 		if (filters.cityIds && filters.cityIds.length > 0) {
 			cities.forEach((city) => {
 				if (filters.cityIds?.includes(city.id.toString())) {
@@ -191,14 +182,12 @@ export const HomePage = ({
 			});
 		}
 
-		// Чип для пола
 		if (filters.gender && filters.gender !== 'any') {
 			const genderLabels: Record<'male' | 'female', string> = {
 				male: 'Мужской',
 				female: 'Женский',
 			};
 
-			// Проверяем, что gender точно 'male' или 'female'
 			if (filters.gender === 'male' || filters.gender === 'female') {
 				newChips.push({
 					id: 'gender',
@@ -211,14 +200,12 @@ export const HomePage = ({
 		setChips(newChips);
 	}, [filters, cities, subcategories]);
 
-	// Обработчик удаления чипа
 	const handleChipRemove = useCallback((chip: ChipType) => {
 		console.log('Removing chip:', chip);
 
 		setFilters((prev) => {
 			const newFilters = { ...prev };
 
-			// Извлекаем ID перед switch
 			const skillId = chip.id.replace('skill-', '');
 			const cityId = chip.id.replace('city-', '');
 
@@ -243,7 +230,6 @@ export const HomePage = ({
 					newFilters.gender = 'any';
 					break;
 				default:
-					// Ничего не делаем для неизвестных типов
 					break;
 			}
 
