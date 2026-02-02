@@ -2,15 +2,28 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCategories } from '../../../../../api/categories';
 import { getSubcategories } from '../../../../../api/subcategories';
+import {
+	addSkill,
+	clearSkillDraft,
+	getSkillDraft,
+	setSkillDraft,
+} from '../../../../../entities/skill/model/storageUtils';
 import type {
 	ISkillCategory,
 	ISkillSubcategory,
+	Skill,
 } from '../../../../../entities/skill/model/types';
 import {
+	addUser,
+	clearUserDraft,
 	getUserDraft,
-	setUserDraft,
+	getUsers,
+	setCurrentUser,
 } from '../../../../../entities/user/model/storageUtils';
-import type { IRegistrationDraft } from '../../../../../entities/user/model/types';
+import type {
+	ICurrentUser,
+	IStoredUser,
+} from '../../../../../entities/user/model/types';
 
 export const useStep3Form = () => {
 	const navigate = useNavigate();
@@ -35,33 +48,38 @@ export const useStep3Form = () => {
 	const [subcategories, setSubcategories] = useState<ISkillSubcategory[]>([]);
 	const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-	// Состояние для загруженных изображений
-	const [images, setImages] = useState<File[]>([]);
+	// Фото — только превью (base64 из draft + новые URL.createObjectURL)
+	const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+
+	const [isSkillEditOpen, setIsSkillEditOpen] = useState(false);
 
 	useEffect(() => {
 		getCategories().then(setCategories);
 		getSubcategories().then(setSubcategories);
 	}, []);
 
+	// Восстановление черновика навыка
 	useEffect(() => {
-		const draft = getUserDraft();
-		if (draft) {
+		const skillDraft = getSkillDraft();
+		if (skillDraft) {
 			let restoredCategoryId = '';
-			if (draft.canTeach?.length && draft.canTeach[0]) {
-				const subcategoryId = draft.canTeach[0];
-				const subcategory = subcategories.find(
-					(sub) => sub.id === subcategoryId,
+			if (skillDraft.subcategoryId) {
+				const sub = subcategories.find(
+					(s) => s.id === skillDraft.subcategoryId,
 				);
-				if (subcategory) {
-					restoredCategoryId = subcategory.categoryId.toString();
-				}
+				if (sub) restoredCategoryId = sub.categoryId.toString();
 			}
+
 			setFormData({
-				teachSkillTitle: '',
+				teachSkillTitle: skillDraft.title || '',
 				teachCategoryId: restoredCategoryId,
-				teachSubcategoryId: draft.canTeach?.[0]?.toString() || '',
-				teachDescription: '',
+				teachSubcategoryId: skillDraft.subcategoryId?.toString() || '',
+				teachDescription: skillDraft.description || '',
 			});
+
+			if (skillDraft.images && skillDraft.images.length > 0) {
+				setImagePreviews(skillDraft.images);
+			}
 		}
 	}, [subcategories]);
 
@@ -84,18 +102,21 @@ export const useStep3Form = () => {
 				return newData;
 			});
 
+			setSkillDraft({
+				title: field === 'teachSkillTitle' ? value : formData.teachSkillTitle,
+				subcategoryId:
+					field === 'teachSubcategoryId'
+						? Number(value)
+						: Number(formData.teachSubcategoryId),
+				description:
+					field === 'teachDescription' ? value : formData.teachDescription,
+			});
+
 			if (field === 'teachSkillTitle' && value?.trim()) {
 				setErrors((prev) => ({ ...prev, teachSkillTitle: '' }));
 			}
 			if (field === 'teachDescription' && value?.trim()) {
 				setErrors((prev) => ({ ...prev, teachDescription: '' }));
-			}
-
-			if (field === 'teachSubcategoryId') {
-				const draftUpdate: Partial<IRegistrationDraft> = {
-					canTeach: value ? [Number(value)] : undefined,
-				};
-				setUserDraft(draftUpdate);
 			}
 		};
 
@@ -121,31 +142,40 @@ export const useStep3Form = () => {
 		}
 	};
 
-	// Обработчик новых файлов — сразу проверяем количество и показываем ошибку
-	const handleImagesChange = (newFiles: File[]) => {
-		setImages((prev) => {
-			const updated = [...prev, ...newFiles];
+	const handleImagesChange = (files: File[]) => {
+		if (!files?.length) return;
 
-			// Показываем ошибку сразу, если фото есть, но меньше 4
-			if (updated.length > 0 && updated.length < 4) {
-				setErrors((prevErrors) => ({
-					...prevErrors,
-					images: `Необходимо загрузить минимум 4 изображения (загружено ${updated.length})`,
-				}));
-			} else if (updated.length >= 4) {
-				// Очищаем ошибку, когда достаточно
-				setErrors((prevErrors) => ({ ...prevErrors, images: '' }));
-			}
+		// Создаём временные превью для отображения
+		const newPreviews = files.map((file) => URL.createObjectURL(file));
+		setImagePreviews((prev) => [...prev, ...newPreviews]);
 
-			return updated;
+		// Конвертируем новые файлы в base64 и сохраняем в draft
+		Promise.all(
+			files.map(
+				(file) =>
+					new Promise<string>((resolve) => {
+						const reader = new FileReader();
+						reader.onload = () => resolve(reader.result as string);
+						reader.readAsDataURL(file);
+					}),
+			),
+		).then((base64Array) => {
+			const draft = getSkillDraft() || {};
+			const updatedImages = [...(draft.images || []), ...base64Array];
+			setSkillDraft({ ...draft, images: updatedImages });
+			// Синхронизируем превью с сохранёнными base64 (на случай, если URL.createObjectURL потеряется)
+			setImagePreviews(updatedImages);
 		});
 	};
+
+	// Количество всегда берём из превью — это самый надёжный источник
+	const imagesCount = imagePreviews.length;
 
 	const isFormValid =
 		formData.teachSkillTitle?.trim() !== '' &&
 		formData.teachSubcategoryId?.trim() !== '' &&
 		formData.teachDescription?.trim() !== '' &&
-		images.length >= 4;
+		imagesCount >= 4;
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -155,34 +185,106 @@ export const useStep3Form = () => {
 		if (!formData.teachSkillTitle?.trim()) {
 			setErrors((prev) => ({
 				...prev,
-				teachSkillTitle: 'Название навыка обязательно для заполнения',
+				teachSkillTitle: 'Название навыка обязательно',
 			}));
 			hasError = true;
 		}
-
 		if (!formData.teachDescription?.trim()) {
 			setErrors((prev) => ({
 				...prev,
-				teachDescription: 'Описание обязательно для заполнения',
+				teachDescription: 'Описание обязательно',
 			}));
 			hasError = true;
 		}
-
 		if (!formData.teachSubcategoryId?.trim()) {
 			hasError = true;
 		}
-
-		if (images.length < 4) {
+		if (imagesCount < 4) {
 			setErrors((prev) => ({
 				...prev,
-				images: 'Необходимо загрузить минимум 4 изображения',
+				images: `Необходимо загрузить минимум 4 изображения (загружено ${imagesCount})`,
 			}));
 			hasError = true;
 		}
 
 		if (hasError) return;
 
+		setIsSkillEditOpen(true);
+	};
+
+	const handleSkillEditDone = () => {
+		const userDraft = getUserDraft();
+		if (!userDraft?.email || !userDraft?.password) {
+			console.error('Нет данных пользователя для завершения регистрации');
+			return;
+		}
+
+		// 1. Создаём пользователя
+		const users = getUsers();
+		const maxId = users.length > 0 ? Math.max(...users.map((u) => u.id)) : 0;
+		const newUserId = maxId + 1;
+
+		const storedUser: IStoredUser = {
+			id: newUserId,
+			name: userDraft.name || userDraft.email.split('@')[0] || 'Пользователь',
+			email: userDraft.email,
+			password: userDraft.password,
+			avatar: userDraft.avatar,
+			cityId: userDraft.cityId,
+			dateOfBirth: userDraft.dateOfBirth,
+			gender: userDraft.gender,
+			registrationDate: new Date().toISOString(),
+			canTeach: [],
+			wantToLearn: [],
+		};
+
+		addUser(storedUser);
+
+		// 2. Текущий пользователь (без пароля)
+		const currentUser: ICurrentUser = {
+			id: newUserId,
+			name: storedUser.name,
+			email: storedUser.email,
+			avatar: storedUser.avatar,
+			cityId: storedUser.cityId,
+			dateOfBirth: storedUser.dateOfBirth,
+			gender: storedUser.gender,
+			registrationDate: storedUser.registrationDate,
+		};
+
+		setCurrentUser(currentUser);
+
+		// 3. Создаём навык
+		const newSkill: Skill = {
+			id: Date.now(),
+			userId: newUserId,
+			title: formData.teachSkillTitle,
+			description: formData.teachDescription,
+			categoryId: Number(formData.teachCategoryId),
+			subcategoryId: Number(formData.teachSubcategoryId),
+			category:
+				categories.find((c) => c.id === Number(formData.teachCategoryId))
+					?.name || '',
+			subcategory:
+				subcategories.find((s) => s.id === Number(formData.teachSubcategoryId))
+					?.name || '',
+			createdAt: new Date().toISOString(),
+			images: imagePreviews,
+		};
+
+		addSkill(newSkill);
+
+		// 4. Очистка черновиков
+		clearUserDraft();
+		clearSkillDraft();
+
+		// 5. Завершение
+		setIsSkillEditOpen(false);
 		navigate('/skill');
+	};
+
+	const handleSkillEditClose = () => {
+		setIsSkillEditOpen(false);
 	};
 
 	const handleBack = () => navigate('/registration/step2');
@@ -196,6 +298,7 @@ export const useStep3Form = () => {
 		errors,
 		openDropdown,
 		categories,
+		subcategories,
 		filteredSubcategories,
 		handleFieldChange,
 		handleDropdownToggle,
@@ -205,6 +308,10 @@ export const useStep3Form = () => {
 		handleTitleBlur,
 		handleDescriptionBlur,
 		handleImagesChange,
-		imagesCount: images.length,
+		imagesCount,
+		imagePreviews,
+		isSkillEditOpen,
+		handleSkillEditDone,
+		handleSkillEditClose,
 	};
 };
