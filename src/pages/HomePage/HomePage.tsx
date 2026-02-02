@@ -5,6 +5,7 @@ import { Footer } from '../../widgets/Footer';
 import { RecommendedCards } from '../../widgets/RecommendedCards';
 import { Cards } from '../../widgets/Cards';
 import { FilteredCards } from '../../widgets/FilteredCards';
+import { Chip } from '../../shared/ui/Chip';
 import type { HomePageProps, Filters } from './HomePage.types';
 import styles from './HomePage.module.scss';
 
@@ -36,6 +37,12 @@ const DEFAULT_FILTERS: Filters = {
 	search: '',
 };
 
+type ChipType = {
+	id: string;
+	label: string;
+	type: 'search' | 'mode' | 'skill' | 'city' | 'gender';
+};
+
 export const HomePage = ({
 	headerProps = {},
 	filterProps = {},
@@ -51,6 +58,7 @@ export const HomePage = ({
 	const [isLoading, setIsLoading] = useState(true);
 	const [cards, setCards] = useState<CardProps[]>([]);
 	const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
+	const [chips, setChips] = useState<ChipType[]>([]);
 
 	const handleModeChange = useCallback((mode: string) => {
 		let correctMode: 'all' | 'wantToLearn' | 'canTeach';
@@ -118,10 +126,115 @@ export const HomePage = ({
 		console.log('Search cleared');
 	}, []);
 
-	// Функция сброса
 	const resetFilters = useCallback(() => {
 		setFilters(DEFAULT_FILTERS);
+		setChips([]);
 		console.log('Все фильтры сброшены');
+	}, []);
+
+	useEffect(() => {
+		const newChips: ChipType[] = [];
+
+		if (filters.search && filters.search.trim() !== '') {
+			newChips.push({
+				id: 'search',
+				label: `Поиск: "${filters.search}"`,
+				type: 'search',
+			});
+		}
+
+		if (filters.mode && filters.mode !== 'all') {
+			const modeLabels: Record<'wantToLearn' | 'canTeach', string> = {
+				wantToLearn: 'Хочу научиться',
+				canTeach: 'Могу научить',
+			};
+
+			if (filters.mode === 'wantToLearn' || filters.mode === 'canTeach') {
+				newChips.push({
+					id: 'mode',
+					label: modeLabels[filters.mode],
+					type: 'mode',
+				});
+			}
+		}
+
+		if (filters.skillIds && filters.skillIds.length > 0) {
+			subcategories.forEach((subcategory) => {
+				if (filters.skillIds?.includes(subcategory.id.toString())) {
+					newChips.push({
+						id: `skill-${subcategory.id}`,
+						label: subcategory.name,
+						type: 'skill',
+					});
+				}
+			});
+		}
+
+		if (filters.cityIds && filters.cityIds.length > 0) {
+			cities.forEach((city) => {
+				if (filters.cityIds?.includes(city.id.toString())) {
+					newChips.push({
+						id: `city-${city.id}`,
+						label: city.name,
+						type: 'city',
+					});
+				}
+			});
+		}
+
+		if (filters.gender && filters.gender !== 'any') {
+			const genderLabels: Record<'male' | 'female', string> = {
+				male: 'Мужской',
+				female: 'Женский',
+			};
+
+			if (filters.gender === 'male' || filters.gender === 'female') {
+				newChips.push({
+					id: 'gender',
+					label: genderLabels[filters.gender],
+					type: 'gender',
+				});
+			}
+		}
+
+		setChips(newChips);
+	}, [filters, cities, subcategories]);
+
+	const handleChipRemove = useCallback((chip: ChipType) => {
+		console.log('Removing chip:', chip);
+
+		setFilters((prev) => {
+			const newFilters = { ...prev };
+
+			const skillId = chip.id.replace('skill-', '');
+			const cityId = chip.id.replace('city-', '');
+
+			switch (chip.type) {
+				case 'search':
+					newFilters.search = '';
+					break;
+				case 'mode':
+					newFilters.mode = 'all';
+					break;
+				case 'skill':
+					newFilters.skillIds = (prev.skillIds || []).filter(
+						(id) => id !== skillId,
+					);
+					break;
+				case 'city':
+					newFilters.cityIds = (prev.cityIds || []).filter(
+						(id) => id !== cityId,
+					);
+					break;
+				case 'gender':
+					newFilters.gender = 'any';
+					break;
+				default:
+					break;
+			}
+
+			return newFilters;
+		});
 	}, []);
 
 	useEffect(() => {
@@ -300,6 +413,21 @@ export const HomePage = ({
 					</aside>
 
 					<div className={styles.content}>
+						{/* Контейнер для чипов */}
+						{chips.length > 0 && (
+							<div className={styles.chipsContainer}>
+								<div className={styles.chipsWrapper}>
+									{chips.map((chip) => (
+										<Chip
+											key={chip.id}
+											label={chip.label}
+											onRemove={() => handleChipRemove(chip)}
+										/>
+									))}
+								</div>
+							</div>
+						)}
+
 						{!hasActiveFilters ? (
 							<>
 								<section className={styles['cards-section']}>
