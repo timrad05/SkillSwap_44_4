@@ -1,80 +1,14 @@
-import { useState } from 'react';
 import type { Step1FormProps } from './Step1Form.types';
 import { InputField } from '../../../../../shared/ui/InputField';
 import { Button } from '../../../../../shared/ui/Button';
 import cls from './Step1Form.module.scss';
-
 import AppleIcon from '../../../../../shared/assets/icons/Apple.svg';
 import GoogleIcon from '../../../../../shared/assets/icons/Google.svg';
+import { useStep1Form } from './useStep1Form';
 
 export const Step1Form = ({ className = '' }: Step1FormProps) => {
-	const [formData, setFormData] = useState({
-		email: '',
-		password: '',
-	});
-
-	const [errors, setErrors] = useState({
-		email: '',
-		password: '',
-	});
-
-	const handleInputChange =
-		(field: keyof typeof formData) =>
-		(e: React.ChangeEvent<HTMLInputElement>) => {
-			setFormData((prev) => ({
-				...prev,
-				[field]: e.target.value,
-			}));
-
-			if (errors[field]) {
-				setErrors((prev) => ({
-					...prev,
-					[field]: '',
-				}));
-			}
-		};
-
-	const handleBlur = (field: keyof typeof formData) => () => {
-		if (!formData[field]) {
-			setErrors((prev) => ({
-				...prev,
-				[field]:
-					field === 'email'
-						? 'Email обязателен для заполнения'
-						: 'Пароль обязателен для заполнения',
-			}));
-		}
-	};
-
-	const validateForm = () => {
-		const newErrors = {
-			email: '',
-			password: '',
-		};
-
-		if (!formData.email) {
-			newErrors.email = 'Email обязателен для заполнения';
-		}
-
-		if (!formData.password) {
-			newErrors.password = 'Пароль обязателен для заполнения';
-		} else if (formData.password.length < 8) {
-			newErrors.password = 'Пароль должен содержать минимум 8 символов';
-		}
-
-		setErrors(newErrors);
-		return !newErrors.email && !newErrors.password;
-	};
-
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-
-		if (!validateForm()) {
-			return;
-		}
-
-		console.log('Registration step 1:', formData);
-	};
+	const { formData, errors, isFormValid, handleChange, handleSubmit } =
+		useStep1Form();
 
 	return (
 		<form className={`${cls.form} ${className}`} onSubmit={handleSubmit}>
@@ -84,7 +18,6 @@ export const Step1Form = ({ className = '' }: Step1FormProps) => {
 					<img src={GoogleIcon} alt="Google" />
 					Продолжить с Google
 				</button>
-
 				<button type="button" className={cls['social-button']}>
 					<img src={AppleIcon} alt="Apple" />
 					Продолжить с Apple
@@ -102,8 +35,7 @@ export const Step1Form = ({ className = '' }: Step1FormProps) => {
 					label="Email"
 					placeholder="Введите email"
 					value={formData.email}
-					onChange={handleInputChange('email')}
-					onBlur={handleBlur('email')}
+					onChange={handleChange('email')}
 					required
 					error={!!errors.email}
 					errorText={errors.email}
@@ -116,8 +48,7 @@ export const Step1Form = ({ className = '' }: Step1FormProps) => {
 					type="password"
 					variant="password"
 					value={formData.password}
-					onChange={handleInputChange('password')}
-					onBlur={handleBlur('password')}
+					onChange={handleChange('password')}
 					required
 					error={!!errors.password}
 					errorText={errors.password}
@@ -126,7 +57,7 @@ export const Step1Form = ({ className = '' }: Step1FormProps) => {
 			</div>
 
 			{/* Кнопка */}
-			<Button type="submit" variant="primary">
+			<Button type="submit" variant="primary" disabled={!isFormValid}>
 				Далее
 			</Button>
 		</form>
