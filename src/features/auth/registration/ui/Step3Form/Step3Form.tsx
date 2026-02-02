@@ -7,8 +7,13 @@ import { DropDown } from '../../../../../shared/ui/DropDown';
 import type { DropDownOption } from '../../../../../shared/ui/DropDown/DropDown.types';
 import { Textarea } from '../../../../../shared/ui/Textarea';
 import { Button } from '../../../../../shared/ui/Button';
+import { useNavigate } from 'react-router-dom';
+import { getUserDraft } from '../../../../../entities/user/model';
 
 export const Step3Form = ({ className = '' }: Step3FormProps) => {
+	const navigate = useNavigate();
+	const [shouldRender, setShouldRender] = useState(false);
+
 	const [formData, setFormData] = useState({
 		name: '',
 		category: '',
@@ -20,6 +25,7 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 		name: '',
 		category: '',
 		subcategory: '',
+		description: '',
 	});
 
 	const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -48,6 +54,24 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 	];
 
 	useEffect(() => {
+		const userDraft = getUserDraft();
+
+		if (!userDraft?.email || !userDraft?.password) {
+			navigate('/registration/step1', { replace: true });
+			return;
+		}
+
+		if (!userDraft?.name || !userDraft?.cityId) {
+			navigate('/registration/step2', { replace: true });
+			return;
+		}
+
+		setShouldRender(true);
+	}, [navigate]);
+
+	useEffect(() => {
+		if (!shouldRender) return;
+
 		const handleClickOutside = (event: MouseEvent) => {
 			if (openDropdown && dropdownRefs.current[openDropdown]) {
 				const dropdownElement = dropdownRefs.current[openDropdown];
@@ -64,7 +88,7 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
-	}, [openDropdown]);
+	}, [openDropdown, shouldRender]);
 
 	const handleInputChange =
 		(field: keyof typeof formData) =>
@@ -73,12 +97,7 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 				...prev,
 				[field]: e.target.value,
 			}));
-			if (errors.name) {
-				setErrors((prev) => ({
-					...prev,
-					[field]: e.target.value,
-				}));
-			}
+			setErrors((prev) => ({ ...prev, [field]: '' }));
 		};
 
 	const handleDropdownChange =
@@ -88,6 +107,7 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 				[field]: value,
 			}));
 			setOpenDropdown(null);
+			setErrors((prev) => ({ ...prev, [field]: '' }));
 		};
 
 	const handleDropdownTogle = (field: keyof typeof formData) => {
@@ -107,6 +127,7 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 			subcategory: formData.subcategory
 				? ''
 				: 'Поле обязательное для заполнения',
+			description: '',
 		};
 
 		setErrors(newErrors);
@@ -115,14 +136,16 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 			return;
 		}
 
-		// Тут будет логика отправки формы
 		console.log('Step 3 form submitted:', formData);
 	};
 
 	const handleBackClick = () => {
-		console.log('Back button clicked');
-		// Тут будет переход на предыдущий шаг
+		navigate('/registration/step2');
 	};
+
+	if (!shouldRender) {
+		return null;
+	}
 
 	return (
 		<form className={clsx(styles.form, className)} onSubmit={handleSubmit}>
@@ -169,7 +192,7 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 					value={formData.description}
 					onChange={handleInputChange('description')}
 					required={false}
-					id="skillName-input"
+					id="skillDescription-input"
 				/>
 			</div>
 			<div className={clsx(styles.buttons)}>
