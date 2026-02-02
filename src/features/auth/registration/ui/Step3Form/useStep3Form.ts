@@ -22,15 +22,21 @@ export const useStep3Form = () => {
 		teachDescription: '',
 	});
 
-	const [errors, setErrors] = useState({
+	const [errors, setErrors] = useState<{
+		teachSkillTitle: string;
+		teachDescription: string;
+		images?: string;
+	}>({
 		teachSkillTitle: '',
 		teachDescription: '',
 	});
 
 	const [categories, setCategories] = useState<ISkillCategory[]>([]);
 	const [subcategories, setSubcategories] = useState<ISkillSubcategory[]>([]);
-
 	const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
+	// Состояние для загруженных изображений
+	const [images, setImages] = useState<File[]>([]);
 
 	useEffect(() => {
 		getCategories().then(setCategories);
@@ -86,8 +92,9 @@ export const useStep3Form = () => {
 			}
 
 			if (field === 'teachSubcategoryId') {
-				const draftUpdate: Partial<IRegistrationDraft> = {};
-				draftUpdate.canTeach = value ? [Number(value)] : undefined;
+				const draftUpdate: Partial<IRegistrationDraft> = {
+					canTeach: value ? [Number(value)] : undefined,
+				};
 				setUserDraft(draftUpdate);
 			}
 		};
@@ -114,10 +121,31 @@ export const useStep3Form = () => {
 		}
 	};
 
+	// Обработчик новых файлов — сразу проверяем количество и показываем ошибку
+	const handleImagesChange = (newFiles: File[]) => {
+		setImages((prev) => {
+			const updated = [...prev, ...newFiles];
+
+			// Показываем ошибку сразу, если фото есть, но меньше 4
+			if (updated.length > 0 && updated.length < 4) {
+				setErrors((prevErrors) => ({
+					...prevErrors,
+					images: `Необходимо загрузить минимум 4 изображения (загружено ${updated.length})`,
+				}));
+			} else if (updated.length >= 4) {
+				// Очищаем ошибку, когда достаточно
+				setErrors((prevErrors) => ({ ...prevErrors, images: '' }));
+			}
+
+			return updated;
+		});
+	};
+
 	const isFormValid =
 		formData.teachSkillTitle?.trim() !== '' &&
 		formData.teachSubcategoryId?.trim() !== '' &&
-		formData.teachDescription?.trim() !== '';
+		formData.teachDescription?.trim() !== '' &&
+		images.length >= 4;
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -141,6 +169,14 @@ export const useStep3Form = () => {
 		}
 
 		if (!formData.teachSubcategoryId?.trim()) {
+			hasError = true;
+		}
+
+		if (images.length < 4) {
+			setErrors((prev) => ({
+				...prev,
+				images: 'Необходимо загрузить минимум 4 изображения',
+			}));
 			hasError = true;
 		}
 
@@ -168,5 +204,7 @@ export const useStep3Form = () => {
 		isFormValid,
 		handleTitleBlur,
 		handleDescriptionBlur,
+		handleImagesChange,
+		imagesCount: images.length,
 	};
 };

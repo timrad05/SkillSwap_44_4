@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { Button } from '../../../../../shared/ui/Button';
 import { DropDown } from '../../../../../shared/ui/DropDown';
+import { ImageUploader } from '../../../../../shared/ui/ImageUploader';
 import { InputField } from '../../../../../shared/ui/InputField';
 import { Textarea } from '../../../../../shared/ui/Textarea';
 import styles from './Step3Form.module.scss';
@@ -21,6 +22,8 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 		isFormValid,
 		handleTitleBlur,
 		handleDescriptionBlur,
+		handleImagesChange,
+		imagesCount,
 	} = useStep3Form();
 
 	return (
@@ -37,54 +40,64 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 					errorText={errors.teachSkillTitle}
 					id="skillName-input"
 				/>
-			</div>
 
-			<div className={styles['dropdown-field']}>
-				<DropDown
-					options={categories.map((cat) => ({
-						value: cat.id.toString(),
-						label: cat.name,
-					}))}
-					label="Категория навыка"
-					placeholder="Выберите категорию навыка"
-					value={formData.teachCategoryId}
-					onChange={handleFieldChange('teachCategoryId')}
-					isOpen={openDropdown === 'category'}
-					required={true}
-					onToggle={() => handleDropdownToggle('category')}
-				/>
-			</div>
+				<div className={styles['dropdown-field']}>
+					<DropDown
+						options={categories.map((cat) => ({
+							value: cat.id.toString(),
+							label: cat.name,
+						}))}
+						label="Категория навыка"
+						placeholder="Выберите категорию навыка"
+						value={formData.teachCategoryId}
+						onChange={handleFieldChange('teachCategoryId')}
+						isOpen={openDropdown === 'category'}
+						required={true}
+						onToggle={() => handleDropdownToggle('category')}
+					/>
+				</div>
 
-			<div className={styles['dropdown-field']}>
-				<DropDown
-					options={filteredSubcategories.map((sub) => ({
-						value: sub.id.toString(),
-						label: sub.name,
-					}))}
-					label="Подкатегория навыка"
-					placeholder="Выберите подкатегорию навыка"
-					value={formData.teachSubcategoryId}
-					onChange={handleFieldChange('teachSubcategoryId')}
-					isOpen={openDropdown === 'subcategory'}
-					required={true}
-					onToggle={() => handleDropdownToggle('subcategory')}
-				/>
-			</div>
+				<div className={styles['dropdown-field']}>
+					<DropDown
+						options={filteredSubcategories.map((sub) => ({
+							value: sub.id.toString(),
+							label: sub.name,
+						}))}
+						label="Подкатегория навыка"
+						placeholder="Выберите подкатегорию навыка"
+						value={formData.teachSubcategoryId}
+						onChange={handleFieldChange('teachSubcategoryId')}
+						isOpen={openDropdown === 'subcategory'}
+						required={true}
+						onToggle={() => handleDropdownToggle('subcategory')}
+					/>
+				</div>
 
-			<div className={styles['textarea-field']}>
-				<Textarea
-					label="Описание"
-					placeholder="Коротко опишите, чему можете научить"
-					value={formData.teachDescription}
-					onChange={(e) =>
-						handleFieldChange('teachDescription')(e.target.value)
-					}
-					onBlur={handleDescriptionBlur}
-					required={true}
-					error={!!errors.teachDescription}
-					errorText={errors.teachDescription}
-					id="skillDescription-input"
-				/>
+				<div className={styles['textarea-field']}>
+					<Textarea
+						label="Описание"
+						placeholder="Коротко опишите, чему можете научить"
+						value={formData.teachDescription}
+						onChange={(e) =>
+							handleFieldChange('teachDescription')(e.target.value)
+						}
+						onBlur={handleDescriptionBlur}
+						required={true}
+						error={!!errors.teachDescription}
+						errorText={errors.teachDescription}
+						id="skillDescription-input"
+					/>
+				</div>
+
+				<div className={styles['image-uploader-field']}>
+					<ImageUploader
+						onFilesChange={handleImagesChange}
+						multiple={true}
+						error={!!errors.images}
+						errorText={errors.images}
+						valueCount={imagesCount}
+					/>
+				</div>
 			</div>
 
 			<div className={clsx(styles.buttons)}>
