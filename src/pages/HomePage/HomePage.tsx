@@ -135,14 +135,6 @@ export const HomePage = ({
 	useEffect(() => {
 		const newChips: ChipType[] = [];
 
-		if (filters.search && filters.search.trim() !== '') {
-			newChips.push({
-				id: 'search',
-				label: `Поиск: "${filters.search}"`,
-				type: 'search',
-			});
-		}
-
 		if (filters.mode && filters.mode !== 'all') {
 			const modeLabels: Record<'wantToLearn' | 'canTeach', string> = {
 				wantToLearn: 'Хочу научиться',
@@ -210,9 +202,6 @@ export const HomePage = ({
 			const cityId = chip.id.replace('city-', '');
 
 			switch (chip.type) {
-				case 'search':
-					newFilters.search = '';
-					break;
 				case 'mode':
 					newFilters.mode = 'all';
 					break;
