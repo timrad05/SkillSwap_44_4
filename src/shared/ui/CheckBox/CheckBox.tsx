@@ -14,7 +14,16 @@ export const CheckBox = ({
 	showChevron = false,
 	isExpanded = false,
 }: TCheckBoxProps & { showChevron?: boolean; isExpanded?: boolean }) => {
-	const handleClick = () => {
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		e.stopPropagation(); // ← останавливаем всплытие
+		if (!isDisabled && onToggle) {
+			onToggle(option.value);
+		}
+	};
+
+	const handleLabelClick = (e: React.MouseEvent) => {
+		e.preventDefault();
+		e.stopPropagation(); // ← ВАЖНО: останавливаем всплытие
 		if (!isDisabled && onToggle) {
 			onToggle(option.value);
 		}
@@ -38,7 +47,8 @@ export const CheckBox = ({
 				id={checkboxId}
 				checked={checked}
 				disabled={isDisabled}
-				onChange={handleClick}
+				onChange={handleInputChange}
+				onClick={(e) => e.stopPropagation()}
 				className={styles['checkbox-input']}
 				aria-checked={checked}
 				aria-disabled={isDisabled}
@@ -48,6 +58,7 @@ export const CheckBox = ({
 				className={`${styles['checkbox-label']} ${
 					isDisabled ? styles.disabled : ''
 				} ${isParent ? styles.parent : ''}`}
+				onClick={handleLabelClick}
 			>
 				<span className={styles['checkbox-icon']}>
 					<div className={`${styles['icon-mask']} ${iconClass}`} />
