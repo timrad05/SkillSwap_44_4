@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useMemo, useState } from 'react';
 import { Skill } from '../../shared/ui/Skill';
+import userCircleIcon from '../../shared/assets/icons/user-circle.svg';
 import { SkillCard } from '../../shared/ui/SkillCard';
 import { Footer } from '../../widgets/Footer';
 import { Header } from '../../widgets/Header';
@@ -26,17 +26,21 @@ export const SkillPage: React.FC<SkillPageProps> = ({
 		],
 	},
 }) => {
-	const location = useLocation();
 	const [showSuccess, setShowSuccess] = useState(false);
 
-	useEffect(() => {
-		const params = new URLSearchParams(location.search);
-		if (params.get('success') === 'true') {
-			setShowSuccess(true);
-			// Убираем параметр из URL (чтобы модалка не появлялась при перезагрузке)
-			window.history.replaceState({}, '', '/skill');
-		}
-	}, [location.search]);
+	const skillPropsWithSuccess = useMemo(
+		() => ({
+			...skillProps,
+			buttonProps: {
+				...skillProps.buttonProps,
+				onClick: () => {
+					setShowSuccess(true);
+					skillProps.buttonProps.onClick();
+				},
+			},
+		}),
+		[skillProps],
+	);
 
 	return (
 		<div className={styles.page}>
@@ -48,7 +52,7 @@ export const SkillPage: React.FC<SkillPageProps> = ({
 						<SkillCard {...userCardProps} />
 					</div>
 					<div className={styles['skill-container']}>
-						<Skill {...skillProps} />
+						<Skill {...skillPropsWithSuccess} />
 					</div>
 				</div>
 				<div className={styles['similar-cards-section']}>
@@ -66,25 +70,13 @@ export const SkillPage: React.FC<SkillPageProps> = ({
 					<div className={styles['modal-success-wrapper']}>
 						<ModalSuccess
 							icon={
-								<svg
-									width="75"
-									height="75"
-									viewBox="0 0 77 77"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path
-										d="M75.75 38.25C75.75 58.9607 58.9607 75.75 38.25 75.75C17.5393 75.75 0.75 58.9607 0.75 38.25C0.75 17.5393 17.5393 0.75 38.25 0.75C58.9607 0.75 75.75 17.5393 75.75 38.25Z"
-										stroke="#253017"
-										strokeWidth="1.5"
-									/>
-									<path
-										d="M25.1006 39.0901L31.606 45.5957C33.508 47.4977 36.5917 47.4977 38.4935 45.5956L52.9358 31.1523"
-										stroke="#253017"
-										strokeWidth="1.5"
-										strokeLinecap="round"
-									/>
-								</svg>
+								<img
+									src={userCircleIcon}
+									alt=""
+									aria-hidden="true"
+									width={100}
+									height={100}
+								/>
 							}
 							title="Ваше предложение создано"
 							text="Теперь вы можете предложить обмен"
