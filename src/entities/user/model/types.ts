@@ -1,6 +1,7 @@
 export interface User {
 	id: number;
 	name: string;
+	email: string;
 	avatar?: string;
 	cityId?: number;
 	dateOfBirth?: string;
@@ -8,3 +9,21 @@ export interface User {
 	wantToLearn?: number[];
 	gender?: 'male' | 'female';
 }
+
+export interface IStoredUser extends User {
+	password: string;
+}
+
+export interface IRegistrationDraft {
+	name?: string;
+	email?: string;
+	avatar?: string;
+	cityId?: number;
+	dateOfBirth?: string;
+	canTeach?: number[];
+	wantToLearn?: number[];
+	gender?: 'male' | 'female';
+	password?: string;
+}
+
+export type ICurrentUser = User;
