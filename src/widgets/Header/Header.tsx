@@ -40,22 +40,28 @@ export const Header: FC<HeaderProps> = ({
 	if (isAuthPage) {
 		return (
 			<header className={clsx(style.header, className)}>
-				<Logo name="SkillSwap" icon={logoIcon} size="medium" />
-				<Button
-					variant="secondary"
-					onClick={() => alert('Закрыть')}
-					className={clsx(style['close-button'])}
-				>
-					<p>Закрыть</p>
-					<img src={crossIcon} alt="Закрыть" className={clsx(style.cross)} />
-				</Button>
+				<Link to="/">
+					<Logo name="SkillSwap" icon={logoIcon} size="medium" />
+				</Link>
+				<Link to="/">
+					<Button
+						variant="secondary"
+						onClick={() => alert('Закрыть')}
+						className={clsx(style['close-button'])}
+					>
+						<p>Закрыть</p>
+						<img src={crossIcon} alt="Закрыть" className={clsx(style.cross)} />
+					</Button>
+				</Link>
 			</header>
 		);
 	}
 
 	return (
 		<header className={clsx(style.header, className)}>
-			<Logo name="SkillSwap" icon={logoIcon} size="medium" />
+			<Link to="/">
+				<Logo name="SkillSwap" icon={logoIcon} size="medium" />
+			</Link>
 
 			<HeaderMenu
 				items={[

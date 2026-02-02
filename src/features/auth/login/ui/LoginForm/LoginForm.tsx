@@ -6,6 +6,7 @@ import cls from './LoginForm.module.scss';
 
 import AppleIcon from '../../../../../shared/assets/icons/Apple.svg';
 import GoogleIcon from '../../../../../shared/assets/icons/Google.svg';
+import { Link } from 'react-router-dom';
 
 export const LoginForm = ({ className = '' }: LoginFormProps) => {
 	const [formData, setFormData] = useState({
@@ -129,9 +130,11 @@ export const LoginForm = ({ className = '' }: LoginFormProps) => {
 					Войти
 				</Button>
 
-				<button type="button" className={cls['register-button']}>
-					Зарегистрироваться
-				</button>
+				<Link to="/registration/step1">
+					<button type="button" className={cls['register-button']}>
+						Зарегистрироваться
+					</button>
+				</Link>
 			</div>
 		</form>
 	);
