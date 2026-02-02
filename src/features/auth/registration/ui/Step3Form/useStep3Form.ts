@@ -48,9 +48,7 @@ export const useStep3Form = () => {
 	const [subcategories, setSubcategories] = useState<ISkillSubcategory[]>([]);
 	const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-	// Фото — только превью (base64 из draft + новые URL.createObjectURL)
 	const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-
 	const [isSkillEditOpen, setIsSkillEditOpen] = useState(false);
 
 	useEffect(() => {
@@ -58,7 +56,6 @@ export const useStep3Form = () => {
 		getSubcategories().then(setSubcategories);
 	}, []);
 
-	// Восстановление черновика навыка
 	useEffect(() => {
 		const skillDraft = getSkillDraft();
 		if (skillDraft) {
@@ -69,14 +66,12 @@ export const useStep3Form = () => {
 				);
 				if (sub) restoredCategoryId = sub.categoryId.toString();
 			}
-
 			setFormData({
 				teachSkillTitle: skillDraft.title || '',
 				teachCategoryId: restoredCategoryId,
 				teachSubcategoryId: skillDraft.subcategoryId?.toString() || '',
 				teachDescription: skillDraft.description || '',
 			});
-
 			if (skillDraft.images && skillDraft.images.length > 0) {
 				setImagePreviews(skillDraft.images);
 			}
@@ -101,7 +96,6 @@ export const useStep3Form = () => {
 				}
 				return newData;
 			});
-
 			setSkillDraft({
 				title: field === 'teachSkillTitle' ? value : formData.teachSkillTitle,
 				subcategoryId:
@@ -111,7 +105,6 @@ export const useStep3Form = () => {
 				description:
 					field === 'teachDescription' ? value : formData.teachDescription,
 			});
-
 			if (field === 'teachSkillTitle' && value?.trim()) {
 				setErrors((prev) => ({ ...prev, teachSkillTitle: '' }));
 			}
@@ -144,12 +137,8 @@ export const useStep3Form = () => {
 
 	const handleImagesChange = (files: File[]) => {
 		if (!files?.length) return;
-
-		// Создаём временные превью для отображения
 		const newPreviews = files.map((file) => URL.createObjectURL(file));
 		setImagePreviews((prev) => [...prev, ...newPreviews]);
-
-		// Конвертируем новые файлы в base64 и сохраняем в draft
 		Promise.all(
 			files.map(
 				(file) =>
@@ -163,12 +152,10 @@ export const useStep3Form = () => {
 			const draft = getSkillDraft() || {};
 			const updatedImages = [...(draft.images || []), ...base64Array];
 			setSkillDraft({ ...draft, images: updatedImages });
-			// Синхронизируем превью с сохранёнными base64 (на случай, если URL.createObjectURL потеряется)
 			setImagePreviews(updatedImages);
 		});
 	};
 
-	// Количество всегда берём из превью — это самый надёжный источник
 	const imagesCount = imagePreviews.length;
 
 	const isFormValid =
@@ -179,9 +166,7 @@ export const useStep3Form = () => {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-
 		let hasError = false;
-
 		if (!formData.teachSkillTitle?.trim()) {
 			setErrors((prev) => ({
 				...prev,
@@ -206,9 +191,7 @@ export const useStep3Form = () => {
 			}));
 			hasError = true;
 		}
-
 		if (hasError) return;
-
 		setIsSkillEditOpen(true);
 	};
 
@@ -219,7 +202,6 @@ export const useStep3Form = () => {
 			return;
 		}
 
-		// 1. Создаём пользователя
 		const users = getUsers();
 		const maxId = users.length > 0 ? Math.max(...users.map((u) => u.id)) : 0;
 		const newUserId = maxId + 1;
@@ -240,7 +222,6 @@ export const useStep3Form = () => {
 
 		addUser(storedUser);
 
-		// 2. Текущий пользователь (без пароля)
 		const currentUser: ICurrentUser = {
 			id: newUserId,
 			name: storedUser.name,
@@ -254,7 +235,6 @@ export const useStep3Form = () => {
 
 		setCurrentUser(currentUser);
 
-		// 3. Создаём навык
 		const newSkill: Skill = {
 			id: Date.now(),
 			userId: newUserId,
@@ -274,13 +254,11 @@ export const useStep3Form = () => {
 
 		addSkill(newSkill);
 
-		// 4. Очистка черновиков
 		clearUserDraft();
 		clearSkillDraft();
 
-		// 5. Завершение
 		setIsSkillEditOpen(false);
-		navigate('/skill');
+		navigate('/skill?success=true'); // ← редирект с флагом успеха
 	};
 
 	const handleSkillEditClose = () => {

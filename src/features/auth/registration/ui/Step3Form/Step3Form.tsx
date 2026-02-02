@@ -49,7 +49,6 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 						errorText={errors.teachSkillTitle}
 						id="skillName-input"
 					/>
-
 					<div className={styles['dropdown-field']}>
 						<DropDown
 							options={categories.map((cat) => ({
@@ -65,7 +64,6 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 							onToggle={() => handleDropdownToggle('category')}
 						/>
 					</div>
-
 					<div className={styles['dropdown-field']}>
 						<DropDown
 							options={filteredSubcategories.map((sub) => ({
@@ -81,7 +79,6 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 							onToggle={() => handleDropdownToggle('subcategory')}
 						/>
 					</div>
-
 					<div className={styles['textarea-field']}>
 						<Textarea
 							label="Описание"
@@ -97,7 +94,6 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 							id="skillDescription-input"
 						/>
 					</div>
-
 					<div className={styles['image-uploader-field']}>
 						<ImageUploader
 							onFilesChange={handleImagesChange}
@@ -108,7 +104,6 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 						/>
 					</div>
 				</div>
-
 				<div className={clsx(styles.buttons)}>
 					<Button type="button" variant="secondary" onClick={handleBack}>
 						Назад
