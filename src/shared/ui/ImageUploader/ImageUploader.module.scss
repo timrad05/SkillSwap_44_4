@@ -1,5 +1,11 @@
 @use '../../styles/variables' as *;
 
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
 .uploader {
 	width: 436px;
 	height: 96px;
@@ -27,6 +33,10 @@
 	&.dragging {
 		border-color: $color-text-link;
 		background: rgba($color-text-link, 0.05);
+	}
+
+	&.error {
+		border-color: $color-error;
 	}
 }
 
@@ -75,4 +85,23 @@
 	&:hover {
 		text-decoration: underline;
 	}
+}
+
+.count {
+	font-family: $font-base;
+	color: $color-caption;
+	font-size: 14px;
+	line-height: 1.5;
+	letter-spacing: 2%;
+}
+
+.error-text {
+	margin-top: 8px;
+	color: $color-error;
+	font-size: 12px;
+	line-height: 12px;
+	letter-spacing: 2%;
+	font-family: $font-base;
+	width: 436px;
+	text-align: left;
 }

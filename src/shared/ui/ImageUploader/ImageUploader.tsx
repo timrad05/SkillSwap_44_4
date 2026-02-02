@@ -42,7 +42,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 	disabled = false,
 	error = false,
 	errorText,
-	valueCount = 0, // количество уже загруженных фото (передаётся извне)
+	valueCount = 0,
 }) => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [isDragging, setIsDragging] = useState(false);
@@ -57,13 +57,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 		e.preventDefault();
 		e.stopPropagation();
 		setIsDragging(false);
-
 		if (disabled) return;
-
 		const files = Array.from(e.dataTransfer.files).filter((file) =>
 			file.type.startsWith('image/'),
 		);
-
 		if (files.length > 0) {
 			onFilesChange?.(files);
 		}
@@ -90,48 +87,50 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 	};
 
 	return (
-		<div
-			className={`
-        ${cls.uploader}
-        ${isDragging ? cls.dragging : ''}
-        ${disabled ? cls.disabled : ''}
-        ${error ? cls.error : ''}
-        ${className}
-      `}
-			onClick={handleClick}
-			onDrop={handleDrop}
-			onDragOver={handleDragOver}
-			onDragLeave={handleDragLeave}
-		>
-			{isDragging && <div className={cls.overlay} />}
+		<div className={cls.wrapper}>
+			{/* Сам блок загрузки */}
+			<div
+				className={`
+          ${cls.uploader}
+          ${isDragging ? cls.dragging : ''}
+          ${disabled ? cls.disabled : ''}
+          ${error ? cls.error : ''}
+          ${className}
+        `}
+				onClick={handleClick}
+				onDrop={handleDrop}
+				onDragOver={handleDragOver}
+				onDragLeave={handleDragLeave}
+			>
+				{isDragging && <div className={cls.overlay} />}
 
-			<div className={cls.content}>
-				<p className={cls.text}>
-					Перетащите или&nbsp;выберите изображения навыка
-				</p>
-				<div className={cls.button}>
-					<GalleryAddSmallIcon />
-					<span className={cls['button-text']}>Выбрать изображение</span>
+				<div className={cls.content}>
+					<p className={cls.text}>
+						Перетащите или&nbsp;выберите изображения навыка
+					</p>
+					<div className={cls.button}>
+						<GalleryAddSmallIcon />
+						<span className={cls['button-text']}>Выбрать изображение</span>
+					</div>
+					{valueCount > 0 && (
+						<div className={cls.count}>Загружено: {valueCount} фото</div>
+					)}
 				</div>
 
-				{valueCount > 0 && (
-					<div className={cls.count}>Загружено: {valueCount} фото</div>
-				)}
+				<input
+					ref={fileInputRef}
+					type="file"
+					accept={accept}
+					multiple={multiple}
+					onChange={handleChange}
+					disabled={disabled}
+					hidden
+				/>
 			</div>
 
 			{error && errorText && (
 				<div className={cls['error-text']}>{errorText}</div>
 			)}
-
-			<input
-				ref={fileInputRef}
-				type="file"
-				accept={accept}
-				multiple={multiple}
-				onChange={handleChange}
-				disabled={disabled}
-				hidden
-			/>
 		</div>
 	);
 };
