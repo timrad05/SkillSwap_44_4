@@ -32,6 +32,10 @@ export const Step3Form = ({ className = '' }: Step3FormProps) => {
 		handleSkillEditClose,
 	} = useStep3Form();
 
+	if (!categories.length || !subcategories.length) {
+		return <div className={styles.loading}>Загрузка...</div>;
+	}
+
 	return (
 		<>
 			<form className={clsx(styles.form, className)} onSubmit={handleSubmit}>

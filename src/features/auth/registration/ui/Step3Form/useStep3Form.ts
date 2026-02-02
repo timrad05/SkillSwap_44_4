@@ -27,6 +27,7 @@ import type {
 
 export const useStep3Form = () => {
 	const navigate = useNavigate();
+	const [isChecking, setIsChecking] = useState(true);
 
 	const [formData, setFormData] = useState({
 		teachSkillTitle: '',
@@ -52,11 +53,31 @@ export const useStep3Form = () => {
 	const [isSkillEditOpen, setIsSkillEditOpen] = useState(false);
 
 	useEffect(() => {
-		getCategories().then(setCategories);
-		getSubcategories().then(setSubcategories);
-	}, []);
+		const userDraft = getUserDraft();
+
+		if (!userDraft?.email || !userDraft?.password) {
+			navigate('/registration/step1', { replace: true });
+			return;
+		}
+
+		if (!userDraft?.name || !userDraft?.cityId) {
+			navigate('/registration/step2', { replace: true });
+			return;
+		}
+
+		setIsChecking(false);
+	}, [navigate]);
 
 	useEffect(() => {
+		if (isChecking) return;
+
+		getCategories().then(setCategories);
+		getSubcategories().then(setSubcategories);
+	}, [isChecking]);
+
+	useEffect(() => {
+		if (isChecking) return;
+
 		const skillDraft = getSkillDraft();
 		if (skillDraft) {
 			let restoredCategoryId = '';
@@ -76,7 +97,7 @@ export const useStep3Form = () => {
 				setImagePreviews(skillDraft.images);
 			}
 		}
-	}, [subcategories]);
+	}, [subcategories, isChecking]);
 
 	const filteredSubcategories = subcategories.filter(
 		(sub) => sub.categoryId === Number(formData.teachCategoryId),
@@ -258,7 +279,7 @@ export const useStep3Form = () => {
 		clearSkillDraft();
 
 		setIsSkillEditOpen(false);
-		navigate('/skill?success=true'); // ← редирект с флагом успеха
+		navigate('/skill?success=true');
 	};
 
 	const handleSkillEditClose = () => {
