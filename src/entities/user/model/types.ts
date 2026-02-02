@@ -8,6 +8,8 @@ export interface User {
 	canTeach?: number[];
 	wantToLearn?: number[];
 	gender?: 'male' | 'female';
+	about?: string;
+	registrationDate?: string;
 }
 
 export interface IStoredUser extends User {
