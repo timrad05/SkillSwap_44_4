@@ -1,9 +1,9 @@
 import type { ICurrentUser, IRegistrationDraft, IStoredUser } from './types';
 
 // Константы для ключей localStorage
-const STORED_USERS_KEY = 'stored_users';
-const USER_DRAFT_KEY = 'user_draft';
-const CURRENT_USER_KEY = 'current_user';
+const STORED_USERS_KEY = 'skillswap:users';
+const USER_DRAFT_KEY = 'skillswap:userDraft';
+const CURRENT_USER_KEY = 'skillswap:currentUser';
 
 /**
  * Безопасное получение данных из localStorage с обработкой ошибок парсинга
