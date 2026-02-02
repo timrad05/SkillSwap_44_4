@@ -20,6 +20,7 @@ export const Step2Form = ({ className = '' }: Step2FormProps) => {
 		handleSubmit,
 		handleBack,
 		isFormValid,
+		handleNameBlur,
 	} = useStep2Form();
 
 	const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -32,6 +33,7 @@ export const Step2Form = ({ className = '' }: Step2FormProps) => {
 					placeholder="Введите ваше имя"
 					value={formData.name}
 					onChange={(e) => handleFieldChange('name')(e.target.value)}
+					onBlur={handleNameBlur}
 					required={true}
 					error={!!errors.name}
 					errorText={errors.name}

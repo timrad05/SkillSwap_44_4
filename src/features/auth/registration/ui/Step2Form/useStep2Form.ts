@@ -82,8 +82,8 @@ export const useStep2Form = () => {
 				return newData;
 			});
 
-			if (field === 'name') {
-				setErrors((prev) => ({ ...prev, name: '' }));
+			if (field === 'name' && value?.trim()) {
+				setErrors({ name: '' });
 			}
 
 			const draftUpdate: Partial<IRegistrationDraft> = {};
@@ -109,6 +109,14 @@ export const useStep2Form = () => {
 			}
 			setUserDraft(draftUpdate);
 		};
+
+	const handleNameBlur = () => {
+		if (!formData.name?.trim()) {
+			setErrors({ name: 'Имя обязательно для заполнения' });
+		} else {
+			setErrors({ name: '' });
+		}
+	};
 
 	const isFormValid =
 		!!formData.name?.trim() &&
@@ -146,5 +154,6 @@ export const useStep2Form = () => {
 		handleSubmit,
 		handleBack,
 		isFormValid,
+		handleNameBlur,
 	};
 };
