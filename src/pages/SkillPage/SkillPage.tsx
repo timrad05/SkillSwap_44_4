@@ -10,7 +10,7 @@ import styles from './SkillPage.module.scss';
 import type { SkillPageProps } from './SkillPage.types';
 
 export const SkillPage: React.FC<SkillPageProps> = ({
-	headerProps = { isAuthorized: false, isAuthPage: false },
+	headerProps = {},
 	skillProps,
 	userCardProps,
 	similarCardsProps,

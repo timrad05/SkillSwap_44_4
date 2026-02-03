@@ -74,8 +74,11 @@ export const Header: FC<HeaderProps> = ({
 		};
 	}, []);
 
-	const finalIsAuthorized =
-		propIsAuthorized !== undefined ? propIsAuthorized : internalIsAuthorized;
+	const finalIsAuthorized = (() => {
+		if (propIsAuthorized === false) return false;
+
+		return internalIsAuthorized;
+	})();
 	const finalUserName = propUserName || userName;
 	const finalUserAvatar = propUserAvatar || userAvatar;
 
