@@ -22,6 +22,7 @@ import { ServerErrorPage } from '../pages/ServerErrorPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
 /* SkillPage */
 import { SkillPage } from '../pages/SkillPage';
+import { OnlyUnauthRoute } from './OnlyUnauthRoute';
 
 function App() {
 	return (
@@ -59,10 +60,22 @@ function App() {
 						/>
 					}
 				/>
-				<Route path="login" element={<LoginPage />} />
-				<Route path="registration/step1" element={<Step1Page />} />
-				<Route path="registration/step2" element={<Step2Page />} />
-				<Route path="registration/step3" element={<Step3Page />} />
+				<Route
+					path="login"
+					element={<OnlyUnauthRoute component={<LoginPage />} />}
+				/>
+				<Route
+					path="registration/step1"
+					element={<OnlyUnauthRoute component={<Step1Page />} />}
+				/>
+				<Route
+					path="registration/step2"
+					element={<OnlyUnauthRoute component={<Step2Page />} />}
+				/>
+				<Route
+					path="registration/step3"
+					element={<OnlyUnauthRoute component={<Step3Page />} />}
+				/>
 				<Route
 					path="profile"
 					element={
