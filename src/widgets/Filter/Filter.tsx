@@ -35,8 +35,12 @@ export const Filter = ({
 		{},
 	);
 
-	// Состояния для переключения шевронов
+	// Состояния для переключения шевронов категорий
 	const [isCategoriesExpanded, setIsCategoriesExpanded] = useState(false);
+	// Состояния для раскрытия отдельных категорий
+	const [expandedCategories, setExpandedCategories] = useState<
+		Record<string, boolean>
+	>({});
 	const [isCitiesExpanded, setIsCitiesExpanded] = useState(false);
 
 	const [cities, setCities] = useState<City[]>([]);
@@ -114,13 +118,13 @@ export const Filter = ({
 
 	// Получаем только первые 5 городов для отображения по умолчанию
 	const defaultCityOptions = cities.slice(0, 5).map((city) => ({
-		value: city.id.toString(), // Используем ID города как строку
+		value: city.id.toString(),
 		label: city.name,
 	}));
 
 	// Полные данные городов для расширенного списка
 	const allCityOptions = cities.map((city) => ({
-		value: city.id.toString(), // Используем ID города как строку
+		value: city.id.toString(),
 		label: city.name,
 	}));
 
@@ -138,8 +142,11 @@ export const Filter = ({
 		}
 	};
 
-	const handleSkillToggle = (value: string, e?: React.MouseEvent) => {
-		if (e) {
+	const handleSkillToggle = (
+		value: string,
+		e?: React.MouseEvent | React.ChangeEvent,
+	) => {
+		if (e && 'preventDefault' in e) {
 			e.preventDefault();
 		}
 
@@ -160,8 +167,11 @@ export const Filter = ({
 		);
 	};
 
-	const handleCategoryToggle = (categoryId: string, e?: React.MouseEvent) => {
-		if (e) {
+	const handleCategoryCheckboxToggle = (
+		categoryId: string,
+		e?: React.MouseEvent | React.ChangeEvent,
+	) => {
+		if (e && 'preventDefault' in e) {
 			e.preventDefault();
 		}
 
@@ -173,8 +183,6 @@ export const Filter = ({
 
 		categorySubcategories.forEach((subcategory) => {
 			const subcategoryId = subcategory.id.toString();
-			const isSelected = !!selectedSkills[subcategoryId];
-			const shouldToggle = shouldSelectAll ? !isSelected : isSelected;
 
 			if (shouldSelectAll) {
 				newSkills[subcategoryId] = true;
@@ -182,16 +190,32 @@ export const Filter = ({
 				delete newSkills[subcategoryId];
 			}
 
-			if (shouldToggle) {
-				onCheckBoxToggle?.(subcategoryId);
-			}
+			// Вызываем колбэк для каждой подкатегории
+			onCheckBoxToggle?.(subcategoryId);
 		});
 
 		setSelectedSkills(newSkills);
 	};
 
-	const handleCityToggle = (value: string, e?: React.MouseEvent) => {
+	const handleCategoryExpandToggle = (
+		categoryId: string,
+		e?: React.MouseEvent,
+	) => {
 		if (e) {
+			e.preventDefault();
+		}
+
+		setExpandedCategories((prev) => ({
+			...prev,
+			[categoryId]: !prev[categoryId],
+		}));
+	};
+
+	const handleCityToggle = (
+		value: string,
+		e?: React.MouseEvent | React.ChangeEvent,
+	) => {
+		if (e && 'preventDefault' in e) {
 			e.preventDefault();
 		}
 
@@ -215,6 +239,17 @@ export const Filter = ({
 		setIsCitiesExpanded(!isCitiesExpanded);
 	};
 
+	const shouldShowSubcategories = (categoryId: string) => {
+		const categorySubcategories = subcategoriesByCategoryId[categoryId] || [];
+		return (
+			expandedCategories[categoryId] ||
+			categorySubcategories.some(
+				(subcategory) => selectedSkills[subcategory.id.toString()],
+			) ||
+			isCategoriesExpanded
+		);
+	};
+
 	return (
 		<div className={`${styles.filter} ${className}`}>
 			<div className={styles['filter-wrapper']}>
@@ -226,7 +261,6 @@ export const Filter = ({
 						type="button"
 					>
 						<span className={styles['reset-text']}>Сбросить</span>
-
 						<img
 							src={crossIcon}
 							alt="Сбросить"
@@ -253,19 +287,18 @@ export const Filter = ({
 					{skillCategoryOptions.map((option) => {
 						const categorySubcategories =
 							subcategoriesByCategoryId[option.value] || [];
-						const showSubcategories =
-							isCategoriesExpanded ||
-							categorySubcategories.some(
-								(subcategory) => selectedSkills[subcategory.id.toString()],
-							);
+						const showSubcategories = shouldShowSubcategories(option.value);
+						const isCategorySelected = isCategoryChecked(option.value);
+
 						return (
 							<div key={option.value}>
 								<CheckBox
 									option={{ value: option.value, label: option.label }}
-									checked={isCategoryChecked(option.value)}
+									checked={isCategorySelected}
 									isParent={true}
 									hasSubcategories={option.hasSubcategories}
-									onToggle={handleCategoryToggle}
+									onToggle={handleCategoryCheckboxToggle}
+									onLabelClick={handleCategoryExpandToggle}
 									showChevron={option.hasSubcategories}
 									isExpanded={showSubcategories}
 								/>
@@ -328,7 +361,7 @@ export const Filter = ({
 										key={option.value}
 										option={option}
 										checked={!!selectedCities[option.value]}
-										onToggle={(value) => handleCityToggle(value)}
+										onToggle={handleCityToggle}
 									/>
 								),
 							)}
