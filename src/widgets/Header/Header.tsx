@@ -14,6 +14,7 @@ import { ThemeToggle } from '../../shared/ui/ThemeToggle';
 import style from './Header.module.scss';
 import type { HeaderProps } from './Header.types';
 import { getCurrentUser } from '../../entities/user/model/storageUtils';
+import { ProfileModal } from '../../shared/ui/ProfileModal';
 
 const CURRENT_USER_KEY = 'skillswap:currentUser';
 
@@ -29,6 +30,7 @@ export const Header: FC<HeaderProps> = ({
 		useState<boolean>(false);
 	const [userName, setUserName] = useState<string>('User');
 	const [userAvatar, setUserAvatar] = useState<string | undefined>(undefined);
+	const [isProfileModalOpen, setIsProfileModalOpen] = useState(false); // ДОБАВЛЕНО
 
 	const checkAuthorization = () => {
 		const currentUser = getCurrentUser();
@@ -82,6 +84,31 @@ export const Header: FC<HeaderProps> = ({
 	const finalUserName = propUserName || userName;
 	const finalUserAvatar = propUserAvatar || userAvatar;
 
+	// ДОБАВЛЕНО: Обработчики для модалки
+	const handleProfileClick = () => {
+		setIsProfileModalOpen(true);
+	};
+
+	const handleCloseModal = () => {
+		setIsProfileModalOpen(false);
+	};
+
+	const handleProfileAction = () => {
+		console.log('Переход в личный кабинет');
+		// Здесь можно добавить навигацию:
+		// navigate('/profile');
+		setIsProfileModalOpen(false);
+	};
+
+	const handleLogoutAction = () => {
+		localStorage.removeItem('skillswap:currentUser');
+		console.log('Выход из аккаунта');
+		// Здесь можно добавить навигацию:
+		// navigate('/login');
+		// window.location.reload(); // если нужно обновить страницу
+		setIsProfileModalOpen(false);
+	};
+
 	const chevronDownIcon = (
 		<svg viewBox="0 0 24 24" fill="none">
 			<path
@@ -121,60 +148,80 @@ export const Header: FC<HeaderProps> = ({
 	}
 
 	return (
-		<header className={clsx(style.header, className)}>
-			<Link to="/">
-				<Logo name="SkillSwap" icon={logoIcon} size="medium" />
-			</Link>
+		// ДОБАВЛЕНО: Обернули в Fragment чтобы модалка рендерилась рядом
+		<>
+			<header className={clsx(style.header, className)}>
+				<Link to="/">
+					<Logo name="SkillSwap" icon={logoIcon} size="medium" />
+				</Link>
 
-			<HeaderMenu
-				items={[
-					{ id: 'about', label: 'О проекте' },
-					{ id: 'skills', label: 'Все навыки', icon: chevronDownIcon },
-				]}
-			/>
+				<HeaderMenu
+					items={[
+						{ id: 'about', label: 'О проекте' },
+						{ id: 'skills', label: 'Все навыки', icon: chevronDownIcon },
+					]}
+				/>
 
-			<Search placeholder="Поиск..." {...searchProps} />
+				<Search placeholder="Поиск..." {...searchProps} />
 
-			{finalIsAuthorized ? (
-				<div className={clsx(style['auth-buttons'])}>
-					<ThemeToggle theme="dark" />
-					<button
-						className={clsx(style.icon)}
-						onClick={() => alert('Уведомления')}
-					>
-						<img src={notificationIcon} alt="Уведомления" />
-					</button>
-					<button
-						className={clsx(style.icon)}
-						onClick={() => alert('Избранное')}
-					>
-						<img src={blankLikeIcon} alt="Избранное" />
-					</button>
-					<HeaderProfile name={finalUserName} avatar={finalUserAvatar} />
-				</div>
-			) : (
-				<>
-					<ThemeToggle theme="dark" />
-					<div className={clsx(style['un-auth-buttons'])}>
-						<Link to="/login">
-							<Button
-								variant="secondary"
-								className={clsx(style['header-button'])}
-							>
-								Войти
-							</Button>
-						</Link>
-						<Link to="/registration/step1">
-							<Button
-								variant="primary"
-								className={clsx(style['header-button'])}
-							>
-								Зарегистрироваться
-							</Button>
-						</Link>
+				{finalIsAuthorized ? (
+					<div className={clsx(style['auth-buttons'])}>
+						<ThemeToggle theme="dark" />
+						<button
+							className={clsx(style.icon)}
+							onClick={() => alert('Уведомления')}
+						>
+							<img src={notificationIcon} alt="Уведомления" />
+						</button>
+						<button
+							className={clsx(style.icon)}
+							onClick={() => alert('Избранное')}
+						>
+							<img src={blankLikeIcon} alt="Избранное" />
+						</button>
+						{/* ИЗМЕНЕНО: Добавлен onClick и переданы обработчики */}
+						<HeaderProfile
+							name={finalUserName}
+							avatar={finalUserAvatar}
+							onClick={handleProfileClick}
+						/>
 					</div>
-				</>
+				) : (
+					<>
+						<ThemeToggle theme="dark" />
+						<div className={clsx(style['un-auth-buttons'])}>
+							<Link to="/login">
+								<Button
+									variant="secondary"
+									className={clsx(style['header-button'])}
+								>
+									Войти
+								</Button>
+							</Link>
+							<Link to="/registration/step1">
+								<Button
+									variant="primary"
+									className={clsx(style['header-button'])}
+								>
+									Зарегистрироваться
+								</Button>
+							</Link>
+						</div>
+					</>
+				)}
+			</header>
+
+			{/* ДОБАВЛЕНО: Рендерим модалку рядом с хедером */}
+			{finalIsAuthorized && (
+				<div style={{ position: 'relative', display: 'inline-block' }}>
+					<ProfileModal
+						isOpen={isProfileModalOpen}
+						onClose={handleCloseModal}
+						onProfileClick={handleProfileAction}
+						onLogout={handleLogoutAction}
+					/>
+				</div>
 			)}
-		</header>
+		</>
 	);
 };
