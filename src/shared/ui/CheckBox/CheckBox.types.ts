@@ -9,7 +9,8 @@ export type TCheckBoxProps = {
 	isDisabled?: boolean;
 	hasSubcategories?: boolean;
 	isParent?: boolean;
-	onToggle?: (value: string) => void;
+	onToggle?: (value: string, e?: React.MouseEvent | React.ChangeEvent) => void;
+	onLabelClick?: (value: string, e?: React.MouseEvent) => void;
 	className?: string;
 	showChevron?: boolean;
 	isExpanded?: boolean;

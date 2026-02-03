@@ -10,22 +10,46 @@ export const CheckBox = ({
 	hasSubcategories = false,
 	isParent = false,
 	onToggle,
+	onLabelClick,
 	className = '',
 	showChevron = false,
 	isExpanded = false,
-}: TCheckBoxProps & { showChevron?: boolean; isExpanded?: boolean }) => {
+}: TCheckBoxProps & {
+	showChevron?: boolean;
+	isExpanded?: boolean;
+}) => {
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		e.stopPropagation(); // ← останавливаем всплытие
+		e.stopPropagation();
 		if (!isDisabled && onToggle) {
-			onToggle(option.value);
+			onToggle(option.value, e);
 		}
 	};
 
 	const handleLabelClick = (e: React.MouseEvent) => {
 		e.preventDefault();
-		e.stopPropagation(); // ← ВАЖНО: останавливаем всплытие
-		if (!isDisabled && onToggle) {
-			onToggle(option.value);
+		e.stopPropagation();
+
+		const target = e.target as HTMLElement;
+		const isCheckboxClick =
+			target.closest(`.${styles['checkbox-icon']}`) ||
+			target.closest(`.${styles['icon-mask']}`) ||
+			target.closest(`.${styles['checkbox-input']}`);
+		const isChevronClick =
+			target.closest(`.${styles.chevron}`) ||
+			target.closest(`.${styles['chevron-container']}`);
+
+		if (isCheckboxClick) {
+			if (!isDisabled && onToggle) {
+				onToggle(option.value, e);
+			}
+		} else if (
+			hasSubcategories &&
+			(isChevronClick || !isCheckboxClick) &&
+			onLabelClick
+		) {
+			onLabelClick(option.value, e);
+		} else if (!isDisabled && onToggle) {
+			onToggle(option.value, e);
 		}
 	};
 
