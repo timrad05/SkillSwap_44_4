@@ -7,7 +7,14 @@ import cls from './LoginForm.module.scss';
 import AppleIcon from '../../../../../shared/assets/icons/Apple.svg';
 import GoogleIcon from '../../../../../shared/assets/icons/Google.svg';
 
+import { getUsers } from '../../../../../entities/user/model';
+import { useNavigate } from 'react-router-dom';
+
 export const LoginForm = ({ className = '' }: LoginFormProps) => {
+	const navigate = useNavigate();
+
+	const localStorageUsers = getUsers();
+
 	const [formData, setFormData] = useState({
 		email: '',
 		password: '',
@@ -71,7 +78,21 @@ export const LoginForm = ({ className = '' }: LoginFormProps) => {
 			return;
 		}
 
-		console.log('Form submitted:', formData);
+		const user = localStorageUsers.filter((item) => {
+			return (
+				item.email === formData.email && item.password === formData.password
+			);
+		})[0];
+
+		if (user) {
+			navigate('/');
+		} else {
+			setErrors((prev) => ({
+				...prev,
+				email: 'Неверный email или пароль',
+				password: 'Неверный email или пароль',
+			}));
+		}
 	};
 
 	return (
