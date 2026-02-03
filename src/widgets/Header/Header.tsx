@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import type { FC } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import blankLikeIcon from '../../shared/assets/icons/blankLike.svg';
 import crossIcon from '../../shared/assets/icons/cross.svg';
@@ -12,13 +13,72 @@ import { Search } from '../../shared/ui/Search';
 import { ThemeToggle } from '../../shared/ui/ThemeToggle';
 import style from './Header.module.scss';
 import type { HeaderProps } from './Header.types';
+import { getCurrentUser } from '../../entities/user/model/storageUtils';
+
+const CURRENT_USER_KEY = 'skillswap:currentUser';
 
 export const Header: FC<HeaderProps> = ({
-	isAuthorized = false,
+	isAuthorized: propIsAuthorized,
 	isAuthPage = false,
 	className,
 	searchProps,
+	userName: propUserName,
+	userAvatar: propUserAvatar,
 }) => {
+	const [internalIsAuthorized, setInternalIsAuthorized] =
+		useState<boolean>(false);
+	const [userName, setUserName] = useState<string>('User');
+	const [userAvatar, setUserAvatar] = useState<string | undefined>(undefined);
+
+	const checkAuthorization = () => {
+		const currentUser = getCurrentUser();
+
+		if (currentUser) {
+			setInternalIsAuthorized(true);
+			setUserName(currentUser.name || 'User');
+			setUserAvatar(currentUser.avatar);
+		} else {
+			setInternalIsAuthorized(false);
+			setUserName('User');
+			setUserAvatar(undefined);
+		}
+	};
+
+	useEffect(() => {
+		let lastUserData = localStorage.getItem(CURRENT_USER_KEY);
+
+		const checkForChanges = () => {
+			const currentUserData = localStorage.getItem(CURRENT_USER_KEY);
+
+			if (currentUserData !== lastUserData) {
+				lastUserData = currentUserData;
+				checkAuthorization();
+			}
+		};
+
+		checkAuthorization();
+
+		const interval = setInterval(checkForChanges, 500);
+
+		const handleStorageChange = (event: StorageEvent) => {
+			if (event.key === CURRENT_USER_KEY) {
+				checkAuthorization();
+			}
+		};
+
+		window.addEventListener('storage', handleStorageChange);
+
+		return () => {
+			clearInterval(interval);
+			window.removeEventListener('storage', handleStorageChange);
+		};
+	}, []);
+
+	const finalIsAuthorized =
+		propIsAuthorized !== undefined ? propIsAuthorized : internalIsAuthorized;
+	const finalUserName = propUserName || userName;
+	const finalUserAvatar = propUserAvatar || userAvatar;
+
 	const chevronDownIcon = (
 		<svg viewBox="0 0 24 24" fill="none">
 			<path
@@ -72,25 +132,22 @@ export const Header: FC<HeaderProps> = ({
 
 			<Search placeholder="Поиск..." {...searchProps} />
 
-			{isAuthorized ? (
+			{finalIsAuthorized ? (
 				<div className={clsx(style['auth-buttons'])}>
 					<ThemeToggle theme="dark" />
-					{/* заглушка */}
 					<button
 						className={clsx(style.icon)}
 						onClick={() => alert('Уведомления')}
 					>
 						<img src={notificationIcon} alt="Уведомления" />
 					</button>
-					{/* заглушка */}
 					<button
 						className={clsx(style.icon)}
 						onClick={() => alert('Избранное')}
 					>
 						<img src={blankLikeIcon} alt="Избранное" />
 					</button>
-					{/* потом брать данные из стора или добавить в пропсы и передавать сюда */}
-					<HeaderProfile name="User" />
+					<HeaderProfile name={finalUserName} avatar={finalUserAvatar} />
 				</div>
 			) : (
 				<>

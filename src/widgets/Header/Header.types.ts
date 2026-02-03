@@ -8,4 +8,6 @@ export interface HeaderProps {
 	onClose?: () => void;
 	children?: ReactNode; // для кастомизации, если нужно
 	searchProps?: SearchProps;
+	userName?: string;
+	userAvatar?: string;
 }
