@@ -1,0 +1,64 @@
+@use '../../styles/variables' as *;
+
+.modal {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 24px;
+	top: -10px;
+	left: 425px;
+	padding: 40px;
+	background: $color-card;
+	border-radius: 12px;
+	border: 1px solid;
+	border-color: $color-toggle;
+	min-width: 260px;
+	z-index: 10000;
+	overflow: hidden;
+	animation: slideDown 0.2s ease;
+}
+
+.button {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: 100%;
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-family: Roboto, sans-serif;
+	font-size: 16px;
+	font-weight: 500;
+	color: $color-text;
+	transition: background-color 0.2s ease;
+
+	&:last-child {
+		border-bottom: none;
+	}
+
+	&:hover {
+		color: $color-text-link;
+
+		.icon {
+			filter: brightness(0) saturate(50%) invert(54%) sepia(29%) saturate(1515%)
+				hue-rotate(57deg) brightness(97%) contrast(84%);
+		}
+	}
+
+	&.danger {
+		&:hover {
+			color: $color-text-link;
+		}
+
+		.icon {
+			fill: $color-text-link;
+		}
+	}
+}
+
+.icon {
+	width: 24px;
+	height: 24px;
+	transition: fill 0.2s ease;
+}

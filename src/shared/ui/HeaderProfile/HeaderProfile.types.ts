@@ -1,4 +1,5 @@
-export interface HeaderProfileProps {
+export type HeaderProfileProps = {
 	name: string;
-	avatar?: string; // опционально, если нет можно показать заглушку или инициалы
-}
+	avatar?: string;
+	onClick?: () => void; // ДОБАВЛЕНО
+};
