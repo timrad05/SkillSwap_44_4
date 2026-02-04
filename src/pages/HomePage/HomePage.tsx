@@ -333,6 +333,7 @@ export const HomePage = ({
 			name: item.userName,
 			city: item.cityName,
 			age: item.age,
+			likes: item.likes,
 			canTeach: item.canTeach,
 			wantToLearn: item.wantToLearn,
 		}));
@@ -368,6 +369,7 @@ export const HomePage = ({
 					name: cardVM.userName,
 					city: cardVM.cityName,
 					age: cardVM.age,
+					likes: cardVM.likes,
 					canTeach: cardVM.canTeach,
 					wantToLearn: cardVM.wantToLearn,
 				},

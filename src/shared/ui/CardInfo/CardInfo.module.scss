@@ -35,7 +35,18 @@
 }
 
 .like {
+	display: flex;
+	align-items: center;
 	position: absolute;
 	top: 12px;
 	right: 12px;
+}
+
+.count {
+	font-size: 16px;
+	color: $color-caption;
+	font-weight: 500;
+	min-width: 20px;
+	text-align: center;
+	line-height: 1;
 }

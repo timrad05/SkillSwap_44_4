@@ -10,6 +10,7 @@ export interface CardProps {
 	name: string;
 	city: string;
 	age: number;
+	likes: number;
 
 	canTeach: CardTag[];
 	wantToLearn: CardTag[];

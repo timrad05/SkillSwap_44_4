@@ -3,11 +3,14 @@ import styles from './CardInfo.module.scss';
 import type { CardInfoProps } from './CardInfo.types.ts';
 import { Like } from '../Like';
 
+// Расскоментируй likes и <span> для отображения числа лайков!
+
 export const CardInfo: FC<CardInfoProps> = ({
 	avatar,
 	name,
 	city,
 	age,
+	likes,
 	onLikeClick,
 	isLiked = false,
 	showLikeButton = true,
@@ -25,6 +28,7 @@ export const CardInfo: FC<CardInfoProps> = ({
 
 			{showLikeButton && (
 				<div className={styles.like}>
+					<span className={styles.count}>{likes}</span>
 					<Like isActive={isLiked} onClick={onLikeClick} />
 				</div>
 			)}

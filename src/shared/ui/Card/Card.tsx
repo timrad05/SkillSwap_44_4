@@ -12,6 +12,7 @@ export const Card = ({
 	name,
 	city,
 	age,
+	likes,
 	canTeach,
 	wantToLearn,
 	onMoreClick,
@@ -45,6 +46,7 @@ export const Card = ({
 				name={name}
 				city={city}
 				age={age}
+				likes={likes}
 				onLikeClick={handleLikeClick}
 				isLiked={isLiked}
 			/>
