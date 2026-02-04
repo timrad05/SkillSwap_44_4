@@ -245,8 +245,7 @@ export const Filter = ({
 			expandedCategories[categoryId] ||
 			categorySubcategories.some(
 				(subcategory) => selectedSkills[subcategory.id.toString()],
-			) ||
-			isCategoriesExpanded
+			)
 		);
 	};
 
