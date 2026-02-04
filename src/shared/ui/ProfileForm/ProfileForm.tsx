@@ -1,53 +1,100 @@
-import { useState } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { BirthDatePicker } from '../BirthDatePicker';
 import { Button } from '../Button';
 import { DropDown } from '../DropDown';
 import { InputField } from '../InputField';
 import { Textarea } from '../Textarea';
 import styles from './ProfileForm.module.scss';
+import type { ProfileFormProps } from './ProfileForm.types';
 
-export const ProfileForm = () => {
-	const [birthDate, setBirthDate] = useState('28.10.1995'); //чтобы менять дату. потом заменить на данные с сервера
+export const ProfileForm: FC<ProfileFormProps> = ({
+	profileFormData,
+	handleSubmit,
+	handleDateChange,
+	handleInputChange,
+	handleCityChange,
+	handleGenderChange,
+	handleTextAreaChange,
+	error,
+	cities,
+	isFormChanged,
+}) => {
+	const [citiesValue, setCitiesValue] = useState<
+		{ value: string; label: string }[]
+	>([]);
+	useEffect(() => {
+		setCitiesValue(
+			cities?.map((c) => {
+				return { value: c.id.toString(), label: c.name };
+			}) || [],
+		);
+	}, [cities]);
 
 	return (
-		<form className={styles.form}>
+		<form className={styles.form} onSubmit={handleSubmit}>
 			<div className={styles.block}>
 				<InputField
+					name={'email'}
 					label="Почта"
-					value="Mariia@gmail.com"
+					value={profileFormData.email}
 					variant="change"
+					onChange={handleInputChange}
+					required={true}
 					disabled
+					error={error['email'] != null}
+					errorText={error['email'] || ''}
 				/>
 				<button type="button" className={styles['password-link']}>
 					Изменить пароль
 				</button>
 			</div>
-			<InputField label="Имя" value="Мария" variant="change" />
+			<InputField
+				label="Имя"
+				name={'name'}
+				value={profileFormData.name}
+				variant="change"
+				required={true}
+				onChange={handleInputChange}
+				error={error['name'] != null}
+				errorText={error['name'] || ''}
+			/>
 			<div className={styles.row}>
 				<BirthDatePicker
 					label="Дата рождения"
-					value={birthDate}
-					onChange={setBirthDate}
+					value={profileFormData.dateOfBirth}
+					onChange={handleDateChange}
 					placeholder="дд.мм.гггг"
 					className={styles['custom-date-picker']}
 				/>
 				<DropDown
 					label="Пол"
-					value="female"
-					options={[{ value: 'female', label: 'Женский' }]}
+					value={profileFormData.gender}
+					options={[
+						{ value: 'female', label: 'Женский' },
+						{ value: 'male', label: 'Мужской' },
+					]}
+					onChange={handleGenderChange}
 				/>
 			</div>
 			<DropDown
 				label="Город"
-				value="moscow"
-				options={[{ value: 'moscow', label: 'Москва' }]}
+				value={profileFormData.cityId?.toString()}
+				options={citiesValue}
+				onChange={handleCityChange}
 			/>
 			<Textarea
+				name={'about'}
 				label="О себе"
-				value="Люблю учиться новому, особенно если это можно делать за чаем и в пижаме. Всегда готова пообщаться и обменяться чем-то интересным!"
+				value={profileFormData.about}
+				onChange={handleTextAreaChange}
 				showIcon
 			/>
-			<Button disabled className={styles.submit}>
+			<Button
+				disabled={
+					!isFormChanged || error['name'] != null || error['email'] != null
+				}
+				type="submit"
+			>
 				Сохранить
 			</Button>
 		</form>

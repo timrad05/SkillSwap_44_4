@@ -6,4 +6,5 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	children: ReactNode;
 	variant?: ButtonVariant;
 	disabled?: boolean;
+	type?: 'submit' | 'reset' | 'button' | undefined;
 }
