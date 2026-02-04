@@ -128,6 +128,21 @@ export const Filter = ({
 		label: city.name,
 	}));
 
+	// Проверяем, есть ли активные фильтры
+	const hasActiveFilters = useMemo(() => {
+		return (
+			selectedSkillType !== 'all' ||
+			selectedGenderState !== 'any' ||
+			selectedSkillIds.length > 0 ||
+			selectedCityIds.length > 0
+		);
+	}, [
+		selectedSkillType,
+		selectedGenderState,
+		selectedSkillIds,
+		selectedCityIds,
+	]);
+
 	const handleSkillTypeChange = (value: string) => {
 		setSelectedSkillType(value);
 		if (onRadioGroupChange) {
@@ -254,22 +269,24 @@ export const Filter = ({
 		<div className={`${styles.filter} ${className}`}>
 			<div className={styles['filter-wrapper']}>
 				<h2 className={styles.title}>Фильтры</h2>
-				<div className={styles['reset-button-wrapper']}>
-					<button
-						onClick={onReset}
-						className={styles['reset-button']}
-						type="button"
-					>
-						<span className={styles['reset-text']}>Сбросить</span>
-						<img
-							src={crossIcon}
-							alt="Сбросить"
-							className={styles['reset-icon']}
-							width="24"
-							height="24"
-						/>
-					</button>
-				</div>
+				{hasActiveFilters && (
+					<div className={styles['reset-button-wrapper']}>
+						<button
+							onClick={onReset}
+							className={styles['reset-button']}
+							type="button"
+						>
+							<span className={styles['reset-text']}>Сбросить</span>
+							<img
+								src={crossIcon}
+								alt="Сбросить"
+								className={styles['reset-icon']}
+								width="24"
+								height="24"
+							/>
+						</button>
+					</div>
+				)}
 			</div>
 			<div className={styles.section}>
 				<RadioGroup
