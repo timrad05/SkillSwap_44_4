@@ -163,6 +163,7 @@ function App() {
 										name: 'Илона',
 										city: 'Екатеринбург',
 										age: 33,
+										likes: 21,
 										canTeach: [
 											{ text: 'Английский язык', color: 'languages' as const },
 										],
@@ -177,6 +178,7 @@ function App() {
 										name: 'Михаил',
 										city: 'Новосибирск',
 										age: 29,
+										likes: 11,
 										canTeach: [
 											{ text: 'Английский язык', color: 'languages' as const },
 										],
@@ -191,6 +193,7 @@ function App() {
 										name: 'Мария',
 										city: 'Краснодар',
 										age: 21,
+										likes: 16,
 										canTeach: [
 											{ text: 'Английский язык', color: 'languages' as const },
 										],
@@ -205,6 +208,7 @@ function App() {
 										name: 'Виктория',
 										city: 'Кемерово',
 										age: 30,
+										likes: 32,
 										canTeach: [
 											{ text: 'Английский язык', color: 'languages' as const },
 										],

@@ -21,6 +21,7 @@ export const Default: Story = {
 				name: 'Иван',
 				city: 'Санкт-Петербург',
 				age: 34,
+				likes: 21,
 				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
@@ -33,6 +34,7 @@ export const Default: Story = {
 				name: 'Виктория',
 				city: 'Кемерово',
 				age: 30,
+				likes: 22,
 				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
@@ -44,6 +46,7 @@ export const Default: Story = {
 				name: 'Виктория',
 				city: 'Сочи',
 				age: 31,
+				likes: 23,
 				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
@@ -55,6 +58,7 @@ export const Default: Story = {
 				name: 'Елена',
 				city: 'Красноярск',
 				age: 28,
+				likes: 25,
 				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
@@ -66,6 +70,7 @@ export const Default: Story = {
 				name: 'Константин',
 				city: 'Иркутск',
 				age: 36,
+				likes: 27,
 				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
@@ -77,6 +82,7 @@ export const Default: Story = {
 				name: 'София',
 				city: 'Абакан',
 				age: 24,
+				likes: 28,
 				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
@@ -88,6 +94,7 @@ export const Default: Story = {
 				name: 'Екатерина',
 				city: 'Пермь',
 				age: 33,
+				likes: 21,
 				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
@@ -99,6 +106,7 @@ export const Default: Story = {
 				name: 'Дарья',
 				city: 'Ярославль',
 				age: 26,
+				likes: 31,
 				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },
@@ -110,6 +118,7 @@ export const Default: Story = {
 				name: 'Алла',
 				city: 'Архангельск',
 				age: 22,
+				likes: 32,
 				canTeach: [{ text: 'Игра на барабанах', color: 'creativity' }],
 				wantToLearn: [
 					{ text: 'Тайм менеджмент', color: 'education' },

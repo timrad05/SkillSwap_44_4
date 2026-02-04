@@ -151,6 +151,30 @@ export const useStep2Form = () => {
 			setErrors({ name: 'Имя обязательно для заполнения' });
 			return;
 		}
+		const selectedSubcategoryId = Number(formData.learnSubcategoryId);
+		const selectedCategoryId = Number(formData.learnCategoryId);
+
+		if (selectedSubcategoryId && selectedCategoryId) {
+			const selectedSubcategory = subcategories.find(
+				(s) => s.id === selectedSubcategoryId,
+			);
+			const selectedCategory = categories.find(
+				(c) => c.id === selectedCategoryId,
+			);
+
+			localStorage.setItem(
+				'step2WantToLearn',
+				JSON.stringify({
+					text:
+						selectedSubcategory && selectedCategory
+							? `${selectedCategory.name} • ${selectedSubcategory.name}`
+							: 'Не указано',
+					categoryId: selectedCategoryId,
+					subcategoryId: selectedSubcategoryId,
+				}),
+			);
+		}
+
 		navigate('/registration/step3');
 	};
 

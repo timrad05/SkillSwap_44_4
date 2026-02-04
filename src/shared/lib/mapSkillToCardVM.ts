@@ -20,6 +20,7 @@ export type UserLike = {
 	dateOfBirth?: string;
 	canTeach?: number[];
 	wantToLearn?: number[];
+	likes?: number;
 };
 
 export type SkillCardVM = {
@@ -28,6 +29,7 @@ export type SkillCardVM = {
 	cityName: string;
 	age: number;
 	avatar?: string;
+	likes: number;
 	canTeach: skillLike[];
 	wantToLearn: skillLike[];
 };
@@ -106,6 +108,7 @@ export const mapSkillToCardVM = (
 		cityName: city?.name ?? '—',
 		avatar: user?.avatar,
 		age: age || 0,
+		likes: user.likes || 0,
 		canTeach: canTeach,
 		wantToLearn: wantToLearn,
 	};

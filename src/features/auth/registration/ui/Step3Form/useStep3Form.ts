@@ -227,6 +227,18 @@ export const useStep3Form = () => {
 		const maxId = users.length > 0 ? Math.max(...users.map((u) => u.id)) : 0;
 		const newUserId = maxId + 1;
 
+		const step2Data = localStorage.getItem('step2WantToLearn');
+		const wantToLearnData = step2Data ? JSON.parse(step2Data) : null;
+
+		const teachSubcategoryId = Number(formData.teachSubcategoryId);
+
+		const canTeachArray = teachSubcategoryId ? [teachSubcategoryId] : [];
+
+		const wantToLearnArray =
+			wantToLearnData && wantToLearnData.subcategoryId
+				? [wantToLearnData.subcategoryId]
+				: [];
+
 		const storedUser: IStoredUser = {
 			id: newUserId,
 			name: userDraft.name || userDraft.email.split('@')[0] || 'Пользователь',
@@ -237,8 +249,8 @@ export const useStep3Form = () => {
 			dateOfBirth: userDraft.dateOfBirth,
 			gender: userDraft.gender,
 			registrationDate: new Date().toISOString(),
-			canTeach: [],
-			wantToLearn: [],
+			canTeach: canTeachArray,
+			wantToLearn: wantToLearnArray,
 		};
 
 		addUser(storedUser);
@@ -262,19 +274,75 @@ export const useStep3Form = () => {
 			title: formData.teachSkillTitle,
 			description: formData.teachDescription,
 			categoryId: Number(formData.teachCategoryId),
-			subcategoryId: Number(formData.teachSubcategoryId),
+			subcategoryId: teachSubcategoryId,
 			category:
 				categories.find((c) => c.id === Number(formData.teachCategoryId))
 					?.name || '',
 			subcategory:
-				subcategories.find((s) => s.id === Number(formData.teachSubcategoryId))
-					?.name || '',
+				subcategories.find((s) => s.id === teachSubcategoryId)?.name || '',
 			createdAt: new Date().toISOString(),
 			images: imagePreviews,
 		};
 
 		addSkill(newSkill);
 
+		const teachCategory = categories.find(
+			(c) => c.id === Number(formData.teachCategoryId),
+		);
+		const teachSubcategory = subcategories.find(
+			(s) => s.id === teachSubcategoryId,
+		);
+
+		const wantToLearnCategory = wantToLearnData?.categoryId
+			? categories.find((c) => c.id === wantToLearnData.categoryId)
+			: null;
+		const wantToLearnSubcategory = wantToLearnData?.subcategoryId
+			? subcategories.find((s) => s.id === wantToLearnData.subcategoryId)
+			: null;
+
+		const skillPageData = {
+			user: {
+				id: newUserId,
+				name: storedUser.name,
+				avatar: storedUser.avatar,
+				cityId: storedUser.cityId,
+				dateOfBirth: storedUser.dateOfBirth,
+				gender: storedUser.gender,
+				canTeach:
+					teachCategory && teachSubcategory
+						? [
+								{
+									text: `${teachCategory.name} • ${teachSubcategory.name}`,
+									color: 'default',
+								},
+							]
+						: [],
+				wantsToLearn:
+					wantToLearnCategory && wantToLearnSubcategory
+						? [
+								{
+									text: `${wantToLearnCategory.name} • ${wantToLearnSubcategory.name}`,
+									color: 'default',
+								},
+							]
+						: [],
+			},
+			skill: {
+				id: newSkill.id,
+				title: newSkill.title,
+				description: newSkill.description,
+				category: newSkill.category,
+				subcategory: newSkill.subcategory,
+				images: imagePreviews.slice(0, 4),
+				createdAt: newSkill.createdAt,
+			},
+			timestamp: new Date().toISOString(),
+		};
+
+		console.log('Saving to localStorage:', skillPageData);
+		localStorage.setItem('skillPageData', JSON.stringify(skillPageData));
+
+		localStorage.removeItem('step2WantToLearn');
 		clearUserDraft();
 		clearSkillDraft();
 

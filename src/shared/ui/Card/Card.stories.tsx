@@ -47,6 +47,7 @@ export const Interactive: Story = {
 		name: 'Иван',
 		city: 'Санкт-Петербург',
 		age: 34,
+		likes: 15,
 		canTeach: [{ text: 'Английский язык', color: 'languages' }],
 		wantToLearn: [
 			{ text: 'Тайм менеджмент', color: 'education' },
