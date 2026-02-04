@@ -35,8 +35,8 @@ export const Filter = ({
 		{},
 	);
 
-	// Состояния для переключения шевронов категорий
-	const [isCategoriesExpanded, setIsCategoriesExpanded] = useState(false);
+	// Состояние для переключения кнопки "Все категории"
+	const [isAllCategoriesShown, setIsAllCategoriesShown] = useState(false);
 	// Состояния для раскрытия отдельных категорий
 	const [expandedCategories, setExpandedCategories] = useState<
 		Record<string, boolean>
@@ -231,7 +231,7 @@ export const Filter = ({
 
 	const handleAllCategoriesClick = (e: React.MouseEvent) => {
 		e.preventDefault();
-		setIsCategoriesExpanded(!isCategoriesExpanded);
+		setIsAllCategoriesShown(!isAllCategoriesShown);
 	};
 
 	const handleAllCitiesClick = (e: React.MouseEvent) => {
@@ -241,6 +241,7 @@ export const Filter = ({
 
 	const shouldShowSubcategories = (categoryId: string) => {
 		const categorySubcategories = subcategoriesByCategoryId[categoryId] || [];
+
 		return (
 			expandedCategories[categoryId] ||
 			categorySubcategories.some(
@@ -248,6 +249,11 @@ export const Filter = ({
 			)
 		);
 	};
+
+	const MAX_VISIBLE_CATEGORIES = 6;
+	const visibleCategories = isAllCategoriesShown
+		? skillCategoryOptions
+		: skillCategoryOptions.slice(0, MAX_VISIBLE_CATEGORIES);
 
 	return (
 		<div className={`${styles.filter} ${className}`}>
@@ -283,7 +289,7 @@ export const Filter = ({
 			<div className={styles.section}>
 				<h3 className={styles.subtitle}>Навыки</h3>
 				<div className={styles['checkbox-group']}>
-					{skillCategoryOptions.map((option) => {
+					{visibleCategories.map((option) => {
 						const categorySubcategories =
 							subcategoriesByCategoryId[option.value] || [];
 						const showSubcategories = shouldShowSubcategories(option.value);
@@ -324,11 +330,13 @@ export const Filter = ({
 					type="button"
 					className={styles['expand-button']}
 					onClick={handleAllCategoriesClick}
-					aria-expanded={isCategoriesExpanded}
+					aria-expanded={isAllCategoriesShown}
 				>
-					<span className={styles['expand-button-text']}>Все категории</span>
+					<span className={styles['expand-button-text']}>
+						{isAllCategoriesShown ? 'Все категории' : 'Все категории'}
+					</span>
 					<img
-						src={isCategoriesExpanded ? chevronUpIcon : chevronDownIcon}
+						src={isAllCategoriesShown ? chevronUpIcon : chevronDownIcon}
 						alt=""
 						aria-hidden="true"
 						className={styles['chevron-icon']}
@@ -371,7 +379,9 @@ export const Filter = ({
 							onClick={handleAllCitiesClick}
 							aria-expanded={isCitiesExpanded}
 						>
-							<span className={styles['expand-button-text']}>Все города</span>
+							<span className={styles['expand-button-text']}>
+								{isCitiesExpanded ? 'Все города' : 'Все города'}
+							</span>
 							<img
 								src={isCitiesExpanded ? chevronUpIcon : chevronDownIcon}
 								alt=""
