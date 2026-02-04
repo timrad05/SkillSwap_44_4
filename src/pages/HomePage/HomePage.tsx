@@ -389,6 +389,42 @@ export const HomePage = ({
 		return sorted.map((item) => item.card);
 	}, [users, cities, categories, subcategories]);
 
+	const popularCards = useMemo(() => {
+		if (
+			!users.length ||
+			!cities.length ||
+			!categories.length ||
+			!subcategories.length
+		) {
+			return [];
+		}
+
+		const citiesById = buildById(cities);
+		const categoriesById = buildById(categories);
+		const subcategoriesById = buildById(subcategories);
+
+		const cards = users.map((user) => {
+			const cardVM = mapSkillToCardVM(
+				user,
+				citiesById,
+				categoriesById,
+				subcategoriesById,
+			);
+
+			return {
+				avatar: cardVM.avatar || '',
+				name: cardVM.userName,
+				city: cardVM.cityName,
+				age: cardVM.age,
+				likes: cardVM.likes ?? 0,
+				canTeach: cardVM.canTeach,
+				wantToLearn: cardVM.wantToLearn,
+			};
+		});
+
+		return [...cards].sort((a, b) => b.likes - a.likes);
+	}, [users, cities, categories, subcategories]);
+
 	if (isLoading) {
 		return <div className={styles.page}>Загрузка...</div>;
 	}
@@ -470,7 +506,11 @@ export const HomePage = ({
 						{!hasActiveFilters ? (
 							<>
 								<section className={styles['cards-section']}>
-									<Cards {...cardsProps} cards={cards} />
+									<Cards
+										{...cardsProps}
+										title="Популярное"
+										cards={popularCards}
+									/>
 								</section>
 								<section className={styles['cards-section']}>
 									{/* Показываем отсортированные карточки в разделе "Новое" */}
