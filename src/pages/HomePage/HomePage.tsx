@@ -339,6 +339,54 @@ export const HomePage = ({
 		setCards(cardsData);
 	}, [filteredUsers, cities, categories, subcategories]);
 
+	const newestCards = useMemo(() => {
+		if (
+			!users.length ||
+			!cities.length ||
+			!categories.length ||
+			!subcategories.length
+		) {
+			return [];
+		}
+
+		const citiesById = buildById(cities);
+		const categoriesById = buildById(categories);
+		const subcategoriesById = buildById(subcategories);
+
+		const userCards = users.map((user) => {
+			const cardVM = mapSkillToCardVM(
+				user,
+				citiesById,
+				categoriesById,
+				subcategoriesById,
+			);
+
+			return {
+				user,
+				card: {
+					avatar: cardVM.avatar || '',
+					name: cardVM.userName,
+					city: cardVM.cityName,
+					age: cardVM.age,
+					canTeach: cardVM.canTeach,
+					wantToLearn: cardVM.wantToLearn,
+				},
+			};
+		});
+
+		const sorted = [...userCards].sort((a, b) => {
+			const dateAStr = a.user.registrationDate || '1970-01-01';
+			const dateBStr = b.user.registrationDate || '1970-01-01';
+
+			const dateA = new Date(dateAStr).getTime();
+			const dateB = new Date(dateBStr).getTime();
+
+			return dateB - dateA;
+		});
+
+		return sorted.map((item) => item.card);
+	}, [users, cities, categories, subcategories]);
+
 	if (isLoading) {
 		return <div className={styles.page}>Загрузка...</div>;
 	}
@@ -423,7 +471,8 @@ export const HomePage = ({
 									<Cards {...cardsProps} cards={cards} />
 								</section>
 								<section className={styles['cards-section']}>
-									<Cards {...cardsProps} title="Новое" cards={cards} />
+									{/* Показываем отсортированные карточки в разделе "Новое" */}
+									<Cards {...cardsProps} title="Новое" cards={newestCards} />
 								</section>
 								<section className={styles['recommended-section']}>
 									<RecommendedCards {...recommendedProps} cards={cards} />
