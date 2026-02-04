@@ -11,7 +11,8 @@
 			"gender": "male",
 			"registrationDate": "2026-01-19",
 			"canTeach": [1],
-			"wantToLearn": [42, 35]
+			"wantToLearn": [42, 35],
+			"likes": 27
 		},
 		{
 			"id": 2,
@@ -24,7 +25,8 @@
 			"gender": "female",
 			"registrationDate": "2026-01-20",
 			"canTeach": [9],
-			"wantToLearn": [40, 33]
+			"wantToLearn": [40, 33],
+			"likes": 42
 		},
 		{
 			"id": 3,
@@ -37,7 +39,8 @@
 			"gender": "male",
 			"registrationDate": "2026-01-21",
 			"canTeach": [17],
-			"wantToLearn": [39, 34]
+			"wantToLearn": [39, 34],
+			"likes": 15
 		},
 		{
 			"id": 4,
@@ -50,7 +53,8 @@
 			"gender": "female",
 			"registrationDate": "2026-01-22",
 			"canTeach": [22],
-			"wantToLearn": [37, 31]
+			"wantToLearn": [37, 31],
+			"likes": 38
 		},
 		{
 			"id": 5,
@@ -63,7 +67,8 @@
 			"gender": "male",
 			"registrationDate": "2026-01-23",
 			"canTeach": [2],
-			"wantToLearn": [26, 33]
+			"wantToLearn": [26, 33],
+			"likes": 5
 		},
 		{
 			"id": 6,
@@ -76,7 +81,8 @@
 			"gender": "female",
 			"registrationDate": "2026-01-24",
 			"canTeach": [10],
-			"wantToLearn": [41, 25]
+			"wantToLearn": [41, 25],
+			"likes": 33
 		},
 		{
 			"id": 7,
@@ -89,7 +95,8 @@
 			"gender": "male",
 			"registrationDate": "2026-01-25",
 			"canTeach": [18],
-			"wantToLearn": [24, 32]
+			"wantToLearn": [24, 32],
+			"likes": 19
 		},
 		{
 			"id": 8,
@@ -102,7 +109,8 @@
 			"gender": "female",
 			"registrationDate": "2026-01-26",
 			"canTeach": [23],
-			"wantToLearn": [27, 6]
+			"wantToLearn": [27, 6],
+			"likes": 47
 		},
 		{
 			"id": 9,
@@ -115,7 +123,8 @@
 			"gender": "male",
 			"registrationDate": "2026-01-27",
 			"canTeach": [3],
-			"wantToLearn": [5, 20]
+			"wantToLearn": [5, 20],
+			"likes": 12
 		},
 		{
 			"id": 10,
@@ -128,7 +137,8 @@
 			"gender": "female",
 			"registrationDate": "2026-01-28",
 			"canTeach": [11],
-			"wantToLearn": [4, 19]
+			"wantToLearn": [4, 19],
+			"likes": 29
 		}
 	]
 }

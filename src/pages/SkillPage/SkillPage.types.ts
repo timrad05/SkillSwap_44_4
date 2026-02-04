@@ -45,6 +45,7 @@ export interface SkillPageProps {
 			name: string;
 			city: string;
 			age: number;
+			likes: number;
 			canTeach: Array<{ text: string; color?: TagColor }>;
 			wantToLearn: Array<{ text: string; color?: TagColor }>;
 			isLiked?: boolean;
