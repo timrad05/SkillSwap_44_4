@@ -19,4 +19,5 @@ export interface Filters {
 	cityIds?: string[];
 	search?: string;
 	showNewest?: boolean;
+	showPopular?: boolean;
 }

@@ -9,7 +9,7 @@ export const Cards: FC<CardsProps> = ({
 	title,
 	cards,
 	showAllButton = false,
-	viewAllText = 'Смотреть все',
+	viewAllText = '',
 	onViewAllClick,
 	className = '',
 }) => {
