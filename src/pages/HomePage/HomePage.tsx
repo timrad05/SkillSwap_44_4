@@ -328,7 +328,7 @@ export const HomePage = ({
 		const cardsArrayVM: SkillCardVM[] = filteredUsers.map((user) =>
 			mapSkillToCardVM(user, citiesById, categoriesById, subcategoriesById),
 		);
-		const cardsData = cardsArrayVM.map((item) => ({
+		const cardsData = cardsArrayVM.map((item, index) => ({
 			avatar: item.avatar || '',
 			name: item.userName,
 			city: item.cityName,
@@ -336,6 +336,7 @@ export const HomePage = ({
 			likes: item.likes,
 			canTeach: item.canTeach,
 			wantToLearn: item.wantToLearn,
+			registrationDate: filteredUsers[index]?.registrationDate,
 		}));
 		setCards(cardsData);
 	}, [filteredUsers, cities, categories, subcategories]);

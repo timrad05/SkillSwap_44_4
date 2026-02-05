@@ -18,4 +18,6 @@ export interface CardProps {
 	onMoreClick?: () => void;
 	onLikeClick?: () => void;
 	isLiked?: boolean;
+
+	registrationDate?: string;
 }
