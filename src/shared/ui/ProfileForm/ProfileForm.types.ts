@@ -20,6 +20,7 @@ export interface ProfileFormProps {
 	handleGenderChange: (value: string) => void;
 	handleCityChange: (value: string) => void;
 	handleTextAreaChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+	handlePasswordChange: (value: string) => void;
 	updateError?: string;
 	cities?: City[];
 	error: { email: string | null; name: string | null };

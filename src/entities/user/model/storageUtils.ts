@@ -55,8 +55,10 @@ export function getUsers(): IStoredUser[] {
  */
 export function addUser(user: IStoredUser): void {
 	const users = getUsers();
-	users.push(user);
-	safeSetItem(STORED_USERS_KEY, users);
+	const updatedUsers = users.map((u) =>
+		u.id === user.id ? { ...u, ...user } : u,
+	);
+	safeSetItem(STORED_USERS_KEY, updatedUsers);
 }
 
 /**
