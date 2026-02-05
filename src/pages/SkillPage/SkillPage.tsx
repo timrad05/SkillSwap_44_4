@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { Skill } from '../../shared/ui/Skill';
-import userCircleIcon from '../../shared/assets/icons/user-circle.svg';
+import notificationIcon from '../../shared/assets/icons/notification.svg';
 import { SkillCard } from '../../shared/ui/SkillCard';
 import { Footer } from '../../widgets/Footer';
 import { Header } from '../../widgets/Header';
@@ -143,15 +143,15 @@ export const SkillPage: React.FC<SkillPageProps> = ({
 						<ModalSuccess
 							icon={
 								<img
-									src={userCircleIcon}
+									src={notificationIcon}
 									alt=""
 									aria-hidden="true"
 									width={100}
 									height={100}
 								/>
 							}
-							title="Ваше предложение создано"
-							text="Теперь вы можете предложить обмен"
+							title="Вы предложили обмен"
+							text="Теперь дождитесь подтверждения. Вам придёт уведомление"
 							onClose={() => setShowSuccess(false)}
 						/>
 					</div>
