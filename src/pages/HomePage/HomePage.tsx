@@ -36,12 +36,20 @@ const DEFAULT_FILTERS: Filters = {
 	cityIds: [],
 	search: '',
 	showNewest: false,
+	showPopular: false,
 };
 
 type ChipType = {
 	id: string;
 	label: string;
-	type: 'search' | 'mode' | 'skill' | 'city' | 'gender' | 'showNewest';
+	type:
+		| 'search'
+		| 'mode'
+		| 'skill'
+		| 'city'
+		| 'gender'
+		| 'showNewest'
+		| 'showPopular';
 };
 
 export const HomePage = ({
@@ -61,6 +69,7 @@ export const HomePage = ({
 	const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
 	const [chips, setChips] = useState<ChipType[]>([]);
 	const [showAllNewest, setShowAllNewest] = useState(false);
+	const [showAllPopular, setShowAllPopular] = useState(false);
 
 	const handleModeChange = useCallback((mode: string) => {
 		let correctMode: 'all' | 'wantToLearn' | 'canTeach';
@@ -128,19 +137,31 @@ export const HomePage = ({
 		console.log('Search cleared');
 	}, []);
 
-	const handleViewAllClick = useCallback(() => {
+	const handleViewAllNewestClick = useCallback(() => {
 		setShowAllNewest(true);
 		setFilters((prev) => ({
 			...prev,
 			showNewest: true,
+			showPopular: false,
 		}));
 		console.log('View all newest clicked');
+	}, []);
+
+	const handleViewAllPopularClick = useCallback(() => {
+		setShowAllPopular(true);
+		setFilters((prev) => ({
+			...prev,
+			showPopular: true,
+			showNewest: false,
+		}));
+		console.log('View all popular clicked');
 	}, []);
 
 	const resetFilters = useCallback(() => {
 		setFilters(DEFAULT_FILTERS);
 		setChips([]);
 		setShowAllNewest(false);
+		setShowAllPopular(false);
 		console.log('Все фильтры сброшены');
 	}, []);
 
@@ -174,6 +195,10 @@ export const HomePage = ({
 					newFilters.showNewest = false;
 					setShowAllNewest(false);
 					break;
+				case 'showPopular':
+					newFilters.showPopular = false;
+					setShowAllPopular(false);
+					break;
 				default:
 					break;
 			}
@@ -181,6 +206,15 @@ export const HomePage = ({
 			return newFilters;
 		});
 	}, []);
+
+	useEffect(() => {
+		if (filters.showNewest === false) {
+			setShowAllNewest(false);
+		}
+		if (filters.showPopular === false) {
+			setShowAllPopular(false);
+		}
+	}, [filters.showNewest, filters.showPopular]);
 
 	useEffect(() => {
 		const newChips: ChipType[] = [];
@@ -244,6 +278,14 @@ export const HomePage = ({
 				id: 'showNewest',
 				label: 'Новые',
 				type: 'showNewest',
+			});
+		}
+
+		if (filters.showPopular) {
+			newChips.push({
+				id: 'showPopular',
+				label: 'Популярное',
+				type: 'showPopular',
 			});
 		}
 
@@ -454,8 +496,12 @@ export const HomePage = ({
 		});
 
 		const sorted = [...cards].sort((a, b) => b.likes - a.likes);
-		return sorted.slice(0, 3);
+		return sorted;
 	}, [users, cities, categories, subcategories]);
+
+	const popularCardsLimited = useMemo(() => {
+		return popularCards.slice(0, 3);
+	}, [popularCards]);
 
 	const hasActiveFilters = useMemo(() => {
 		return (
@@ -464,7 +510,8 @@ export const HomePage = ({
 			(filters.cityIds?.length || 0) > 0 ||
 			filters.gender !== 'any' ||
 			filters.mode !== 'all' ||
-			filters.showNewest === true
+			filters.showNewest === true ||
+			filters.showPopular === true
 		);
 	}, [filters]);
 
@@ -480,6 +527,7 @@ export const HomePage = ({
 	console.log('Выбранные навыки:', filters.skillIds);
 	console.log('Выбранные города:', filters.cityIds);
 	console.log('Show all newest:', showAllNewest);
+	console.log('Show all popular:', showAllPopular);
 
 	return (
 		<div className={styles.page}>
@@ -538,14 +586,16 @@ export const HomePage = ({
 								</div>
 							</div>
 						)}
-
 						{!hasActiveFilters ? (
 							<>
 								<section className={styles['cards-section']}>
 									<Cards
 										{...cardsProps}
 										title="Популярное"
-										cards={popularCards}
+										cards={popularCardsLimited}
+										showAllButton={true}
+										viewAllText="Смотреть все"
+										onViewAllClick={handleViewAllPopularClick}
 									/>
 								</section>
 								<section className={styles['cards-section']}>
@@ -555,21 +605,31 @@ export const HomePage = ({
 										cards={newestCardsLimited}
 										showAllButton={true}
 										viewAllText="Смотреть все"
-										onViewAllClick={handleViewAllClick}
+										onViewAllClick={handleViewAllNewestClick}
 									/>
 								</section>
 								<section className={styles['recommended-section']}>
 									<RecommendedCards {...recommendedProps} cards={cards} />
 								</section>
 							</>
-						) : showAllNewest || filters.showNewest ? (
+						) : filters.showNewest ? (
 							<section className={styles['cards-section']}>
 								{newestCards.length === 0 ? (
 									<div className={styles['empty-state']} role="status">
 										Ничего не найдено
 									</div>
 								) : (
-									<FilteredCards cards={newestCards} />
+									<FilteredCards cards={newestCards} filterType="newest" />
+								)}
+							</section>
+						) : filters.showPopular ? (
+							<section className={styles['cards-section']}>
+								{popularCards.length === 0 ? (
+									<div className={styles['empty-state']} role="status">
+										Ничего не найдено
+									</div>
+								) : (
+									<FilteredCards cards={popularCards} filterType="popular" />
 								)}
 							</section>
 						) : (
@@ -579,7 +639,7 @@ export const HomePage = ({
 										Ничего не найдено
 									</div>
 								) : (
-									<FilteredCards cards={cards} />
+									<FilteredCards cards={cards} filterType="default" />
 								)}
 							</section>
 						)}
