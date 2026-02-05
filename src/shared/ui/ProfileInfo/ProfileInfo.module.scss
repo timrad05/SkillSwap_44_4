@@ -9,6 +9,17 @@
 	width: 244px;
 	height: 244px;
 	flex-shrink: 0;
+	cursor: pointer; // Делаем кликабельной всю область
+
+	&:hover .avatar {
+		opacity: 0.9;
+		transition: opacity 0.2s ease;
+	}
+
+	&:hover .edit-button {
+		background-color: #d0e6cc;
+		transform: scale(1.05);
+	}
 }
 
 .avatar {
@@ -16,6 +27,12 @@
 	height: 100%;
 	border-radius: 50%;
 	object-fit: cover;
+	transition: opacity 0.2s ease;
+
+	&.uploading {
+		opacity: 0.7;
+		filter: blur(1px);
+	}
 }
 
 .edit-button {
@@ -26,7 +43,7 @@
 	height: 36px;
 	border-radius: 50%;
 	border: none;
-	background-color: #e6f2e3;
+	background-color: #d7ead3;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
@@ -34,5 +51,9 @@
 
 	&:hover {
 		background-color: #d7ead3;
+	}
+
+	&:active {
+		transform: scale(0.95);
 	}
 }
