@@ -134,11 +134,7 @@ export const Header: FC<HeaderProps> = ({
 					<Logo name="SkillSwap" icon={logoIcon} size="medium" />
 				</Link>
 				<Link to="/">
-					<Button
-						variant="secondary"
-						onClick={() => alert('Закрыть')}
-						className={clsx(style['close-button'])}
-					>
+					<Button variant="secondary" className={clsx(style['close-button'])}>
 						<p>Закрыть</p>
 						<img src={crossIcon} alt="Закрыть" className={clsx(style.cross)} />
 					</Button>
