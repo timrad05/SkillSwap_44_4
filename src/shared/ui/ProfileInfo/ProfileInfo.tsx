@@ -6,8 +6,11 @@ import styles from './ProfileInfo.module.scss';
 import { useEffect, useRef, useState, type SyntheticEvent } from 'react';
 
 import {
+	addUser,
+	getCurrentUser,
 	setCurrentUser,
 	type ICurrentUser,
+	type IStoredUser,
 } from '../../../entities/user/model';
 
 import galleryEditIcon from '../../assets/icons/gallery-edit.svg';
@@ -79,6 +82,7 @@ export const ProfileInfo = ({
 				...formValue,
 			};
 			setCurrentUser(userData);
+			user = getCurrentUser();
 			setIsFormChanged(false);
 		}
 	};
@@ -170,6 +174,13 @@ export const ProfileInfo = ({
 		fileInputRef.current?.click();
 	};
 
+	const handlePasswordChange = (value: string) => {
+		if (user) {
+			const userData: IStoredUser = { password: value, ...user };
+			addUser(userData);
+		}
+	};
+
 	return (
 		<div className={styles.wrapper}>
 			<ProfileForm
@@ -180,6 +191,7 @@ export const ProfileInfo = ({
 				handleCityChange={handleCityChange}
 				handleGenderChange={handleGenderChange}
 				handleTextAreaChange={handleTextAreaChange}
+				handlePasswordChange={handlePasswordChange}
 				cities={cities}
 				isFormChanged={isFormChanged}
 				error={error}
