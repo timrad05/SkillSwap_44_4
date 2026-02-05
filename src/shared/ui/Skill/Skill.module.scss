@@ -30,6 +30,17 @@
 	padding: 4px;
 }
 
+.counter {
+	font-size: 16px;
+	color: $color-caption;
+	font-weight: 500;
+	min-width: 20px;
+	text-align: center;
+	line-height: 1;
+	margin-right: -8px;
+	align-self: center;
+}
+
 .content-row {
 	display: flex;
 	gap: 77px;
