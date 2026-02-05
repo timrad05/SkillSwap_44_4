@@ -35,12 +35,13 @@ const DEFAULT_FILTERS: Filters = {
 	gender: 'any',
 	cityIds: [],
 	search: '',
+	showNewest: false,
 };
 
 type ChipType = {
 	id: string;
 	label: string;
-	type: 'search' | 'mode' | 'skill' | 'city' | 'gender';
+	type: 'search' | 'mode' | 'skill' | 'city' | 'gender' | 'showNewest';
 };
 
 export const HomePage = ({
@@ -59,6 +60,7 @@ export const HomePage = ({
 	const [cards, setCards] = useState<CardProps[]>([]);
 	const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
 	const [chips, setChips] = useState<ChipType[]>([]);
+	const [showAllNewest, setShowAllNewest] = useState(false);
 
 	const handleModeChange = useCallback((mode: string) => {
 		let correctMode: 'all' | 'wantToLearn' | 'canTeach';
@@ -126,10 +128,58 @@ export const HomePage = ({
 		console.log('Search cleared');
 	}, []);
 
+	const handleViewAllClick = useCallback(() => {
+		setShowAllNewest(true);
+		setFilters((prev) => ({
+			...prev,
+			showNewest: true,
+		}));
+		console.log('View all newest clicked');
+	}, []);
+
 	const resetFilters = useCallback(() => {
 		setFilters(DEFAULT_FILTERS);
 		setChips([]);
+		setShowAllNewest(false);
 		console.log('Все фильтры сброшены');
+	}, []);
+
+	const handleChipRemove = useCallback((chip: ChipType) => {
+		console.log('Removing chip:', chip);
+
+		setFilters((prev) => {
+			const newFilters = { ...prev };
+
+			const skillId = chip.id.replace('skill-', '');
+			const cityId = chip.id.replace('city-', '');
+
+			switch (chip.type) {
+				case 'mode':
+					newFilters.mode = 'all';
+					break;
+				case 'skill':
+					newFilters.skillIds = (prev.skillIds || []).filter(
+						(id) => id !== skillId,
+					);
+					break;
+				case 'city':
+					newFilters.cityIds = (prev.cityIds || []).filter(
+						(id) => id !== cityId,
+					);
+					break;
+				case 'gender':
+					newFilters.gender = 'any';
+					break;
+				case 'showNewest':
+					newFilters.showNewest = false;
+					setShowAllNewest(false);
+					break;
+				default:
+					break;
+			}
+
+			return newFilters;
+		});
 	}, []);
 
 	useEffect(() => {
@@ -189,42 +239,16 @@ export const HomePage = ({
 			}
 		}
 
+		if (filters.showNewest) {
+			newChips.push({
+				id: 'showNewest',
+				label: 'Новые',
+				type: 'showNewest',
+			});
+		}
+
 		setChips(newChips);
 	}, [filters, cities, subcategories]);
-
-	const handleChipRemove = useCallback((chip: ChipType) => {
-		console.log('Removing chip:', chip);
-
-		setFilters((prev) => {
-			const newFilters = { ...prev };
-
-			const skillId = chip.id.replace('skill-', '');
-			const cityId = chip.id.replace('city-', '');
-
-			switch (chip.type) {
-				case 'mode':
-					newFilters.mode = 'all';
-					break;
-				case 'skill':
-					newFilters.skillIds = (prev.skillIds || []).filter(
-						(id) => id !== skillId,
-					);
-					break;
-				case 'city':
-					newFilters.cityIds = (prev.cityIds || []).filter(
-						(id) => id !== cityId,
-					);
-					break;
-				case 'gender':
-					newFilters.gender = 'any';
-					break;
-				default:
-					break;
-			}
-
-			return newFilters;
-		});
-	}, []);
 
 	useEffect(() => {
 		Promise.all([
@@ -373,6 +397,7 @@ export const HomePage = ({
 					likes: cardVM.likes,
 					canTeach: cardVM.canTeach,
 					wantToLearn: cardVM.wantToLearn,
+					registrationDate: user.registrationDate,
 				},
 			};
 		});
@@ -389,6 +414,10 @@ export const HomePage = ({
 
 		return sorted.map((item) => item.card);
 	}, [users, cities, categories, subcategories]);
+
+	const newestCardsLimited = useMemo(() => {
+		return newestCards.slice(0, 3);
+	}, [newestCards]);
 
 	const popularCards = useMemo(() => {
 		if (
@@ -420,31 +449,37 @@ export const HomePage = ({
 				likes: cardVM.likes ?? 0,
 				canTeach: cardVM.canTeach,
 				wantToLearn: cardVM.wantToLearn,
+				registrationDate: user.registrationDate,
 			};
 		});
 
-		return [...cards].sort((a, b) => b.likes - a.likes);
+		const sorted = [...cards].sort((a, b) => b.likes - a.likes);
+		return sorted.slice(0, 3);
 	}, [users, cities, categories, subcategories]);
+
+	const hasActiveFilters = useMemo(() => {
+		return (
+			(filters.search ? filters.search.trim().length > 0 : false) ||
+			(filters.skillIds?.length || 0) > 0 ||
+			(filters.cityIds?.length || 0) > 0 ||
+			filters.gender !== 'any' ||
+			filters.mode !== 'all' ||
+			filters.showNewest === true
+		);
+	}, [filters]);
 
 	if (isLoading) {
 		return <div className={styles.page}>Загрузка...</div>;
 	}
 
-	const hasActiveFilters =
-		(filters.search ? filters.search.trim().length > 0 : false) ||
-		(filters.skillIds?.length || 0) > 0 ||
-		(filters.cityIds?.length || 0) > 0 ||
-		filters.gender !== 'any' ||
-		filters.mode !== 'all';
-
-	console.log('=== ФИЛЬТРАЦИЯ (MVP) ===');
+	console.log('=== ФИЛЬТРАЦИЯ ===');
 	console.log('Всего пользователей:', users.length);
 	console.log('Отфильтровано:', filteredUsers.length);
 	console.log('Активные фильтры:', hasActiveFilters);
-	console.log('Режим (внутренний):', filters.mode);
+	console.log('Режим:', filters.mode);
 	console.log('Выбранные навыки:', filters.skillIds);
-	console.log('Выбранные города (ID):', filters.cityIds);
-	console.log('Все города:', cities);
+	console.log('Выбранные города:', filters.cityIds);
+	console.log('Show all newest:', showAllNewest);
 
 	return (
 		<div className={styles.page}>
@@ -514,13 +549,29 @@ export const HomePage = ({
 									/>
 								</section>
 								<section className={styles['cards-section']}>
-									{/* Показываем отсортированные карточки в разделе "Новое" */}
-									<Cards {...cardsProps} title="Новое" cards={newestCards} />
+									<Cards
+										{...cardsProps}
+										title="Новое"
+										cards={newestCardsLimited}
+										showAllButton={true}
+										viewAllText="Смотреть все"
+										onViewAllClick={handleViewAllClick}
+									/>
 								</section>
 								<section className={styles['recommended-section']}>
 									<RecommendedCards {...recommendedProps} cards={cards} />
 								</section>
 							</>
+						) : showAllNewest || filters.showNewest ? (
+							<section className={styles['cards-section']}>
+								{newestCards.length === 0 ? (
+									<div className={styles['empty-state']} role="status">
+										Ничего не найдено
+									</div>
+								) : (
+									<FilteredCards cards={newestCards} />
+								)}
+							</section>
 						) : (
 							<section className={styles['cards-section']}>
 								{filteredUsers.length === 0 ? (

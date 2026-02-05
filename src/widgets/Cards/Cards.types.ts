@@ -4,6 +4,7 @@ export interface CardsProps {
 	title?: string;
 	cards: CardProps[];
 	viewAllText?: string;
+	showAllButton?: boolean;
 	onViewAllClick?: () => void;
 	className?: string;
 }
