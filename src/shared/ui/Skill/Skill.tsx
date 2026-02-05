@@ -20,6 +20,7 @@ export const Skill: React.FC<SkillProps> = ({
 }) => {
 	// Локальное состояние лайка
 	const [internalIsLiked, setInternalIsLiked] = useState(false);
+	const [likeCount, setLikeCount] = useState(0);
 
 	// Если isLiked передан извне - используем его, иначе внутреннее состояние
 	const isLiked =
@@ -31,9 +32,11 @@ export const Skill: React.FC<SkillProps> = ({
 			externalOnLikeClick();
 		} else {
 			// Иначе управляем внутренним состоянием
-			setInternalIsLiked(!isLiked);
+			const newLikedState = !isLiked;
+			setInternalIsLiked(newLikedState);
+			setLikeCount((prev) => (newLikedState ? prev + 1 : prev - 1));
 			console.log(
-				`Лайк навыка "${title}": ${!isLiked ? 'поставлен' : 'убран'}`,
+				`Лайк навыка "${title}": ${newLikedState ? 'поставлен' : 'убран'}`,
 			);
 		}
 	};
@@ -60,6 +63,7 @@ export const Skill: React.FC<SkillProps> = ({
 			{/* Группа с иконками */}
 			<div className={styles['icons-group']}>
 				<div className={styles['icons-row']}>
+					<span className={styles.counter}>{likeCount}</span>
 					<Like
 						isActive={isLiked}
 						onClick={handleLikeClick}

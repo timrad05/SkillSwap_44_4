@@ -50,3 +50,13 @@
 	text-align: center;
 	line-height: 1;
 }
+
+.counter {
+	font-size: 16px;
+	color: $color-caption;
+	font-weight: 500;
+	min-width: 20px;
+	text-align: center;
+	line-height: 1;
+	align-self: center;
+}
