@@ -98,6 +98,12 @@ export function getCurrentUser(): ICurrentUser | null {
  */
 export function setCurrentUser(user: ICurrentUser): void {
 	safeSetItem(CURRENT_USER_KEY, user);
+
+	const allUsers = getUsers();
+	const updatedUsers = allUsers.map((u) =>
+		u.id === user.id ? { ...u, ...user } : u,
+	);
+	safeSetItem(STORED_USERS_KEY, updatedUsers);
 }
 
 /**

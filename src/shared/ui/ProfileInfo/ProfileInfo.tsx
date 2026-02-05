@@ -3,12 +3,14 @@ import type { ProfileInfoProps } from './ProfileInfo.types';
 
 import styles from './ProfileInfo.module.scss';
 
-import { useEffect, useState, type SyntheticEvent } from 'react';
+import { useEffect, useRef, useState, type SyntheticEvent } from 'react';
 
 import {
 	setCurrentUser,
 	type ICurrentUser,
 } from '../../../entities/user/model';
+
+import galleryEditIcon from '../../assets/icons/gallery-edit.svg';
 
 export const ProfileInfo = ({
 	avatarUrl = 'https://placehold.co/160x160',
@@ -26,6 +28,8 @@ export const ProfileInfo = ({
 		gender: undefined,
 		about: '',
 	});
+
+	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		setFormValue({
@@ -128,6 +132,44 @@ export const ProfileInfo = ({
 		}));
 	};
 
+	const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (!file) return;
+
+		// Проверка типа файла
+		if (!file.type.startsWith('image/')) {
+			alert('Пожалуйста, выберите изображение (JPEG, PNG, GIF)');
+			return;
+		}
+
+		// Проверка размера (5MB максимум)
+		if (file.size > 5 * 1024 * 1024) {
+			alert('Размер файла не должен превышать 5MB');
+			return;
+		}
+
+		// Создание Data URL для предпросмотра
+		const reader = new FileReader();
+		reader.onload = (event) => {
+			const imageUrl = event.target?.result as string;
+
+			// ТОЛЬКО обновляем состояние формы для предпросмотра
+			// НЕ сохраняем в localStorage!
+			setFormValue((prevState) => ({
+				...prevState,
+				avatar: imageUrl,
+			}));
+		};
+		reader.onerror = () => {
+			alert('Ошибка при чтении файла');
+		};
+		reader.readAsDataURL(file);
+	};
+
+	const triggerFileInput = () => {
+		fileInputRef.current?.click();
+	};
+
 	return (
 		<div className={styles.wrapper}>
 			<ProfileForm
@@ -145,17 +187,27 @@ export const ProfileInfo = ({
 
 			<div className={styles['avatar-wrapper']}>
 				<img
-					src={user?.avatar || avatarUrl}
+					src={formValue.avatar || user?.avatar || avatarUrl}
 					alt="Аватар пользователя"
 					className={styles.avatar}
+				/>
+
+				{/* Скрытый input для загрузки файла */}
+				<input
+					type="file"
+					ref={fileInputRef}
+					accept="image/*"
+					onChange={handleAvatarChange}
+					style={{ display: 'none' }}
 				/>
 
 				<button
 					type="button"
 					className={styles['edit-button']}
+					onClick={triggerFileInput}
 					aria-label="Изменить фото профиля"
 				>
-					✎
+					<img src={galleryEditIcon} alt="" className={styles['edit-icon']} />
 				</button>
 			</div>
 		</div>
