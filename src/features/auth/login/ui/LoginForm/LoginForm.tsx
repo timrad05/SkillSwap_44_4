@@ -8,7 +8,7 @@ import AppleIcon from '../../../../../shared/assets/icons/Apple.svg';
 import GoogleIcon from '../../../../../shared/assets/icons/Google.svg';
 import { Link } from 'react-router-dom';
 
-import { getUsers } from '../../../../../entities/user/model';
+import { getUsers, setCurrentUser } from '../../../../../entities/user/model';
 import { useNavigate } from 'react-router-dom';
 
 export const LoginForm = ({ className = '' }: LoginFormProps) => {
@@ -86,6 +86,7 @@ export const LoginForm = ({ className = '' }: LoginFormProps) => {
 		})[0];
 
 		if (user) {
+			setCurrentUser(user);
 			navigate('/');
 		} else {
 			setErrors((prev) => ({
