@@ -1,27 +1,40 @@
-import { Card } from '../../shared/ui/Card/Card';
-import { Link } from 'react-router-dom';
+import type { FC } from 'react';
+import { Card } from '../../shared/ui/Card';
 import type { CardsProps } from './Cards.types';
 import styles from './Cards.module.scss';
 import { Button } from '../../shared/ui/Button';
-import chevronRightIcon from '/src/shared/assets/icons/chevron-right.svg';
+import chevronRightIcon from '../../shared/assets/icons/chevron-right.svg';
 
-export const Cards = ({
+export const Cards: FC<CardsProps> = ({
 	title,
 	cards,
+	showAllButton = false,
 	viewAllText = 'Смотреть все',
 	onViewAllClick,
 	className = '',
-}: CardsProps) => {
+}) => {
+	// Берем только первые 3 карточки для отображения
 	const displayedCards = cards.slice(0, 3);
+
+	if (!cards || cards.length === 0) {
+		return null;
+	}
+
+	const handleViewAllClick = (e: React.MouseEvent) => {
+		e.preventDefault();
+		if (onViewAllClick) {
+			onViewAllClick();
+		}
+	};
 
 	return (
 		<div className={`${styles.container} ${className}`}>
 			<div className={styles.header}>
 				<h2 className={styles.title}>{title}</h2>
-				<Link to="/skill">
+				{showAllButton && onViewAllClick && (
 					<Button
 						variant="tertiary"
-						onClick={onViewAllClick}
+						onClick={handleViewAllClick}
 						className={styles['view-all-button']}
 					>
 						{viewAllText}
@@ -31,7 +44,7 @@ export const Cards = ({
 							className={styles['chevron-right-icon']}
 						/>
 					</Button>
-				</Link>
+				)}
 			</div>
 			<div className={styles.grid}>
 				{displayedCards.map((card, index) => (

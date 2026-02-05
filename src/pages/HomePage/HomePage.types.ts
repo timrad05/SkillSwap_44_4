@@ -18,4 +18,5 @@ export interface Filters {
 	gender?: 'any' | 'male' | 'female';
 	cityIds?: string[];
 	search?: string;
+	showNewest?: boolean;
 }
