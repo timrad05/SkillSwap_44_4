@@ -33,3 +33,19 @@
 	grid-template-columns: repeat(3, 1fr);
 	gap: 24px;
 }
+
+.loader-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 30px 0;
+	width: 100%;
+	grid-column: 1 / -1;
+	color: #888;
+	font-size: 16px;
+}
+
+.observer-target {
+	height: 20px;
+	width: 100%;
+}
