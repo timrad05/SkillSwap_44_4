@@ -1,0 +1,36 @@
+@use '../../styles/variables' as *;
+@use '../../styles/fonts' as *;
+
+.chip {
+	display: inline-flex;
+	align-items: center;
+	height: 48px;
+	padding: 12px 24px;
+	gap: 8px;
+	background: $color-card;
+	border-radius: 12px;
+	font-size: 16px;
+	color: $color-text;
+	margin-right: 12px;
+	margin-bottom: 12px;
+	font-family: Roboto, sans-serif;
+}
+
+.chip-label {
+	white-space: nowrap;
+}
+
+.chip-remove {
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.chip-remove-icon {
+	width: 24px;
+	height: 24px;
+}

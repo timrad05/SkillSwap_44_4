@@ -1,0 +1,152 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.dropdown {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+
+	.text {
+		font-size: 16px;
+		line-height: 24px;
+		color: $color-text;
+		font-weight: 400;
+	}
+
+	.label {
+		padding-block-end: 4px;
+
+		&.required::after {
+			content: ' *';
+			color: $color-error;
+		}
+	}
+
+	.trigger {
+		width: 100%;
+		padding: 10px;
+		border: 1px solid;
+		border-color: $color-toggle;
+		border-radius: 12px;
+		background: $color-input;
+		cursor: pointer;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		box-sizing: border-box;
+
+		&:disabled {
+			background: $color-disabled;
+			cursor: not-allowed;
+		}
+	}
+
+	.placeholder {
+		color: $color-caption;
+	}
+
+	.selected {
+		color: $color-text-link;
+		font-weight: 500;
+	}
+
+	.icon {
+		margin-left: 10px;
+		font-size: 12px;
+	}
+
+	.menu {
+		position: absolute;
+		box-sizing: border-box;
+		top: 100%;
+		left: 0;
+		right: 0;
+		background: $color-card;
+		border: 1px solid;
+		border-color: $color-toggle;
+		border-top: none;
+		border-radius: 0 0 12px 12px;
+		z-index: 1;
+		margin-top: -1px;
+		overflow-y: hidden;
+
+		.scrollbar {
+			overflow: hidden auto;
+			width: 100%;
+			max-block-size: 10rem;
+
+			&::-webkit-scrollbar-thumb:hover {
+				background: $color-button-hover !important;
+			}
+
+			&::-webkit-scrollbar-track {
+				background-color: none;
+			}
+
+			&::-webkit-scrollbar {
+				width: 4px;
+				background-color: none;
+			}
+
+			&::-webkit-scrollbar-thumb {
+				background-color: $color-toggle;
+				border-radius: 2px;
+			}
+		}
+
+		.empty-box {
+			padding-inline: 20px;
+			padding-block: 4px;
+			display: flex;
+			justify-content: start;
+			align-items: center;
+		}
+
+		.option {
+			padding-inline: 20px;
+			padding-block: 4px;
+			gap: 10px;
+			border-radius: 4px;
+			cursor: pointer;
+			display: flex;
+			justify-content: start;
+			align-items: center;
+
+			&:hover {
+				background: $color-button-hover;
+				background-clip: padding-box;
+			}
+
+			&.selected {
+				background: $color-button-hover;
+				color: $color-text-link;
+			}
+
+			&.disabled {
+				color: $color-disabled-text;
+				cursor: not-allowed;
+				background: $color-background;
+
+				&:hover {
+					background: $color-background;
+				}
+			}
+		}
+	}
+
+	&:not(.open) {
+		.trigger:hover {
+			border-color: $color-button-hover;
+		}
+	}
+
+	&.open {
+		.trigger {
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+			border-bottom-color: transparent;
+		}
+	}
+}

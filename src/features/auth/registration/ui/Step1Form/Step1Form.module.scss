@@ -1,0 +1,68 @@
+@use '../../../../../shared/styles/variables' as *;
+
+.form {
+	display: flex;
+	flex-direction: column;
+	width: 556px;
+	font-family: $font-base;
+	background: var(--info-bg, #fff);
+	height: 692px;
+	padding-inline: 60px;
+	padding-top: 121.5px;
+	border-radius: 16px;
+}
+
+.fields {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-bottom: 32px;
+}
+
+.socials {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-bottom: 24px;
+}
+
+.social-button {
+	all: unset;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	height: 48px;
+	width: 100%;
+	border: 1px solid #e5e5e5;
+	border-radius: 12px;
+	font-size: 16px;
+	font-weight: 500;
+	cursor: pointer;
+	background-color: #fff;
+
+	img {
+		width: 20px;
+		height: 20px;
+	}
+}
+
+.divider {
+	display: flex;
+	align-items: center;
+	margin: 16px 0 24px;
+	color: #9ca3af;
+	font-size: 14px;
+
+	&::before,
+	&::after {
+		content: '';
+		flex: 1;
+		height: 1px;
+		background-color: #e5e7eb;
+	}
+
+	span {
+		padding: 0 12px;
+	}
+}

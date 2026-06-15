@@ -1,0 +1,18 @@
+{
+	"extends": "./tsconfig.app.json",
+	"compilerOptions": {
+		"types": ["jest", "@testing-library/jest-dom", "vite/client"],
+		"esModuleInterop": true,
+
+		"module": "CommonJS",
+		"moduleResolution": "node",
+		"verbatimModuleSyntax": false
+	},
+	"include": [
+		"src",
+		"**/*.test.ts",
+		"**/*.test.tsx",
+		"**/*.spec.ts",
+		"**/*.spec.tsx"
+	]
+}

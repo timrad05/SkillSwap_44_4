@@ -1,0 +1,79 @@
+@use '../../styles/variables' as *;
+
+.button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+	padding-block: 12px;
+	width: 100%;
+	height: 48px;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 12px;
+	border: none;
+	gap: 8px;
+	font-size: 16px;
+}
+
+.primary {
+	background-color: $color-accent;
+	color: $color-text;
+	transition: all 0.2s ease;
+}
+
+.primary:hover {
+	background-color: $color-button-hover;
+	color: $color-text;
+}
+
+.primary:active {
+	background-color: $color-button-pressed;
+	color: $color-input;
+}
+
+.primary:disabled {
+	background-color: $color-disabled;
+	color: $color-caption;
+}
+
+.secondary {
+	background-color: $color-card;
+	color: $color-text;
+	border: 1px solid;
+	border-color: $color-accent;
+	transition: all 0.2s ease;
+}
+
+.secondary:hover {
+	background-color: $color-card;
+	color: $color-caption;
+	border-color: $color-button-hover;
+}
+
+.secondary:active {
+	background-color: $color-card;
+	color: $color-text;
+	border-color: $color-button-pressed;
+}
+
+.secondary:disabled {
+	background-color: $color-card;
+	color: $color-disabled-text;
+	border-color: $color-disabled;
+}
+
+.tertiary {
+	background-color: $color-card;
+	color: $color-text;
+}
+
+.tertiary:hover {
+	border: 1px solid;
+	border-color: $color-button-hover;
+}
+
+.tertiary:active {
+	border: 1px solid;
+	border-color: $color-button-pressed;
+}

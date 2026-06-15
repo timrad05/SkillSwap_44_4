@@ -1,0 +1,71 @@
+@use '../../shared/styles/variables' as *;
+
+.empty-state {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	padding: 48px 0;
+	font-size: 16px;
+	line-height: 24px;
+	color: $color-caption;
+	font-family: $font-base;
+	text-align: center;
+}
+
+.page {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-height: 100vh;
+	width: 100%;
+}
+
+.main {
+	flex: auto;
+	width: 100%;
+	max-width: 1440px;
+	padding: 0 36px;
+	box-sizing: border-box;
+}
+
+.layout {
+	display: flex;
+	gap: 24px;
+	width: 100%;
+}
+
+.sidebar {
+	flex: 0 0 324px;
+	position: sticky;
+	top: 24px;
+	height: fit-content;
+}
+
+.content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	min-width: 0;
+	max-width: calc(100% - 324px - 24px);
+	overflow: hidden;
+	padding: 20px 0;
+}
+
+.cards-section {
+	width: 100%;
+}
+
+.recommended-section {
+	width: 100%;
+}
+
+.header-wrapper {
+	width: 100%;
+}
+
+.footer-wrapper {
+	width: 100%;
+	margin-top: auto;
+}

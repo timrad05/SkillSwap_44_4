@@ -1,0 +1,20 @@
+@use '../../shared//styles/variables' as *;
+
+.page {
+	width: 100%;
+	background-color: $color-background;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.info-card {
+	--info-bg: #{$color-background};
+}

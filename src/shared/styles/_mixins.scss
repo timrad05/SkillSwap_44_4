@@ -1,0 +1,51 @@
+/* stylelint-disable at-rule-no-unknown */
+@use '../styles/variables' as *;
+
+/* H1 — Jost Medium, 32 / 40 */
+@mixin text-h1 {
+	font-family: $font-heading;
+	font-weight: 500;
+	font-size: 32px;
+	line-height: 40px;
+}
+
+/* H2 — Jost Medium, 24 / 32 */
+@mixin text-h2 {
+	font-family: $font-heading;
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 32px;
+}
+
+/* H3 — Jost Medium, 20 / 24 */
+@mixin text-h3 {
+	font-family: $font-heading;
+	font-weight: 500;
+	font-size: 20px;
+	line-height: 24px;
+}
+
+/* H4 — Roboto Medium, 16 / 24 */
+@mixin text-h4 {
+	font-family: $font-base;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+/* Body — Roboto Regular, 16 / 24 */
+@mixin text-body {
+	font-family: $font-base;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+/* Caption — Roboto Regular, 12 / 16 */
+@mixin text-caption {
+	font-family: $font-base;
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 16px;
+}
+/* stylelint-enable at-rule-no-unknown */

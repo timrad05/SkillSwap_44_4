@@ -1,0 +1,63 @@
+@use '../../styles/variables' as *;
+
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding: 32px 52px 40px;
+	background-color: $color-card;
+	border-radius: 12px;
+	max-width: 1020px;
+	width: 100%;
+}
+
+.icons-row {
+	display: flex;
+	gap: 16px;
+	justify-content: flex-end;
+}
+
+.icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 4px;
+}
+
+.counter {
+	font-size: 16px;
+	color: $color-caption;
+	font-weight: 500;
+	min-width: 20px;
+	text-align: center;
+	line-height: 1;
+	margin-right: -8px;
+	align-self: center;
+}
+
+.content-row {
+	display: flex;
+	gap: 77px;
+	align-items: flex-start;
+	min-height: 324px;
+}
+
+.info-section {
+	flex: 1;
+	min-width: 399px;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.images-section {
+	width: 440px;
+	flex-shrink: 0;
+	height: 324px;
+}

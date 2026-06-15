@@ -1,0 +1,10 @@
+@use '../../shared/styles/variables' as *;
+
+.page {
+	max-width: 1440px;
+	margin-inline: auto;
+	background-color: $color-background;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}

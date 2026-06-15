@@ -1,0 +1,78 @@
+@use '../../shared/styles/variables' as *;
+
+.header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	min-width: 1440px;
+	max-width: 1440px;
+	gap: 32px;
+	padding: 36px 36px 20px;
+	background-color: $color-background;
+}
+
+.logo {
+	font-size: 24px;
+	line-height: 32px;
+}
+
+.icon {
+	background-color: transparent;
+	border: none;
+	min-width: 24px;
+	min-height: 24px;
+	transition: opacity 0.2s ease;
+
+	&:hover {
+		cursor: pointer;
+		opacity: 0.6;
+	}
+}
+
+.auth-buttons {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 20px;
+
+	> :last-child {
+		margin-inline-start: 5px;
+	}
+}
+
+.header-button {
+	max-width: fit-content;
+	padding-inline: 20px;
+}
+
+.un-auth-buttons {
+	font-size: 16px;
+	line-height: 1.5;
+	letter-spacing: 2%;
+	display: flex;
+	flex-direction: row;
+	gap: 8px;
+}
+
+.close-button {
+	display: flex;
+	flex-direction: row;
+	gap: 8px;
+	width: fit-content;
+	padding-inline: 24px;
+	border: none;
+	font-size: 16px;
+	line-height: 1.5;
+	letter-spacing: 2%;
+
+	&:hover {
+		.cross {
+			opacity: 0.6;
+		}
+	}
+}
+
+.cross {
+	transition: all 0.2s ease;
+}

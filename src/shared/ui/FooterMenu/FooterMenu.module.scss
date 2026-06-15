@@ -1,0 +1,22 @@
+@use '../../styles/variables' as *;
+
+.menu {
+	width: 100%;
+}
+
+.list {
+	list-style: none;
+	margin: 0 auto;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(3, minmax(324px, 1fr));
+	gap: 12px 24px;
+	max-width: calc(324px * 3 + 24px * 2);
+	justify-content: center;
+}
+
+.item-wrapper {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+}

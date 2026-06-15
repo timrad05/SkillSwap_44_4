@@ -1,0 +1,42 @@
+@use '../../styles/variables' as *;
+
+.tag {
+	font-family: Roboto, sans-serif;
+	display: inline-flex;
+	align-items: center;
+	padding: 8px 12px;
+	border-radius: 20px;
+	font-size: 12px;
+	font-weight: 400;
+	color: $color-text;
+	white-space: nowrap;
+	letter-spacing: 0.02em;
+}
+
+.business {
+	background-color: $tag-business;
+}
+
+.creativity {
+	background-color: $tag-creativity;
+}
+
+.languages {
+	background-color: $tag-languages;
+}
+
+.education {
+	background-color: $tag-education;
+}
+
+.home {
+	background-color: $tag-home;
+}
+
+.health {
+	background-color: $tag-health;
+}
+
+.plus {
+	background-color: $tag-plus;
+}

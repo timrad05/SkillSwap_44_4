@@ -1,0 +1,62 @@
+@use '../../styles/variables' as *;
+
+.card {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	background-color: $color-card;
+	border-radius: 12px;
+}
+
+.avatar {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	object-fit: cover;
+	flex-shrink: 0;
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.name {
+	font-size: 24px;
+	font-weight: 600;
+	color: $color-text;
+}
+
+.meta {
+	font-size: 16px;
+	color: $color-caption;
+}
+
+.like {
+	display: flex;
+	align-items: center;
+	position: absolute;
+	top: 12px;
+	right: 12px;
+}
+
+.count {
+	font-size: 16px;
+	color: $color-caption;
+	font-weight: 500;
+	min-width: 20px;
+	text-align: center;
+	line-height: 1;
+}
+
+.counter {
+	font-size: 16px;
+	color: $color-caption;
+	font-weight: 500;
+	min-width: 20px;
+	text-align: center;
+	line-height: 1;
+	align-self: center;
+}
